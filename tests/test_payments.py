@@ -27,4 +27,4 @@ class PaymentsTestCase(TestCase):
     def test_payment_sandbox_refund(self):
         payment = PaymentSandboxService.authorize_and_charge(self.order)
         refunded = PaymentSandboxService.process_refund(payment, Decimal('50.00'))
-        self.assertEqual(refunded.status, 'REFUNDED')
+        self.assertEqual(refunded.status, 'PARTIALLY_REFUNDED')
