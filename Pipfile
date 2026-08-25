@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "==5.1.0"
+python-dotenv = "==1.0.1"
+pillow = "==10.4.0"
+coverage = "==7.6.1"
+
+[dev-packages]
+pytest = "==8.3.2"
+pytest-django = "==4.8.0"
+
+[requires]
+python_version = "3.12"
