@@ -1,0 +1,219 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": "cat_101_comp",
+    "fields": {
+      "parent": null,
+      "name": "Computers & Workstations",
+      "slug": "computers-workstations",
+      "description": "High performance laptops, desktop PCs, workstation hardware, and accessories.",
+      "icon_url": "desktop",
+      "is_active": true,
+      "display_order": 1,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": "cat_102_mobl",
+    "fields": {
+      "parent": null,
+      "name": "Smartphones & Mobile",
+      "slug": "smartphones-mobile",
+      "description": "Flagship smartphones, mobile accessories, chargers, and wearable devices.",
+      "icon_url": "mobile",
+      "is_active": true,
+      "display_order": 2,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": "cat_103_audo",
+    "fields": {
+      "parent": null,
+      "name": "Audio & Sound Engineering",
+      "slug": "audio-sound-engineering",
+      "description": "Noise-cancelling headphones, wireless earbuds, studio microphones, and soundbars.",
+      "icon_url": "headphones",
+      "is_active": true,
+      "display_order": 3,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": "cat_104_game",
+    "fields": {
+      "parent": null,
+      "name": "Gaming & Esports Gear",
+      "slug": "gaming-esports-gear",
+      "description": "High refresh rate monitors, mechanical keyboards, precision mice, and gaming headsets.",
+      "icon_url": "gamepad",
+      "is_active": true,
+      "display_order": 4,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": "cat_105_home",
+    "fields": {
+      "parent": null,
+      "name": "Smart Home & Automation",
+      "slug": "smart-home-automation",
+      "description": "Security cameras, smart lighting, environmental sensors, and home hubs.",
+      "icon_url": "home",
+      "is_active": true,
+      "display_order": 5,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.brand",
+    "pk": "brd_201_apex",
+    "fields": {
+      "name": "ApexTech Hardware",
+      "logo_url": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8",
+      "website": "https://apextech.local",
+      "description": "Flagship workstation systems and developer laptops.",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.brand",
+    "pk": "brd_202_sndw",
+    "fields": {
+      "name": "SoundWave Acoustics",
+      "logo_url": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df",
+      "website": "https://soundwave.local",
+      "description": "Professional acoustic audio equipment.",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.brand",
+    "pk": "brd_203_nvot",
+    "fields": {
+      "name": "Novata Systems",
+      "logo_url": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef",
+      "website": "https://novata.local",
+      "description": "Next-generation smartphones and wireless displays.",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": "prd_301_apex15",
+    "fields": {
+      "seller": "sel_001_apex",
+      "category": "cat_101_comp",
+      "brand": "brd_201_apex",
+      "name": "ApexPro X15 Ultra Developer Laptop",
+      "slug": "apexpro-x15-ultra-developer-laptop",
+      "brand_name": "ApexTech Hardware",
+      "description": "Enterprise developer laptop equipped with 8-core CPU, 32GB RAM, 1TB NVMe SSD, and 4K OLED display.",
+      "base_price": "1499.99",
+      "discount_percent": "10.00",
+      "tax_rate": "8.25",
+      "status": "PUBLISHED",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.productvariant",
+    "pk": "var_301_a",
+    "fields": {
+      "product": "prd_301_apex15",
+      "sku": "APX-X15-32GB-GRY",
+      "variant_name": "Space Gray / 32GB RAM / 1TB SSD",
+      "price_override": "1499.99",
+      "attributes_json": "{\"ram\": \"32GB\", \"storage\": \"1TB SSD\", \"color\": \"Space Gray\"}",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.productvariant",
+    "pk": "var_301_b",
+    "fields": {
+      "product": "prd_301_apex15",
+      "sku": "APX-X15-64GB-SLV",
+      "variant_name": "Silver / 64GB RAM / 2TB SSD",
+      "price_override": "1899.99",
+      "attributes_json": "{\"ram\": \"64GB\", \"storage\": \"2TB SSD\", \"color\": \"Silver\"}",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.productspecification",
+    "pk": "spec_301_1",
+    "fields": {
+      "product": "prd_301_apex15",
+      "spec_key": "Processor Architecture",
+      "spec_value": "8-Core Ultra Performance CPU (4.2GHz)",
+      "display_group": "Performance"
+    }
+  },
+  {
+    "model": "catalog.productspecification",
+    "pk": "spec_301_2",
+    "fields": {
+      "product": "prd_301_apex15",
+      "spec_key": "Display Panel",
+      "spec_value": "15.6-inch 4K OLED (3840x2160) 120Hz HDR600",
+      "display_group": "Display"
+    }
+  },
+  {
+    "model": "catalog.productimage",
+    "pk": "img_301_p",
+    "fields": {
+      "product": "prd_301_apex15",
+      "image_url": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80",
+      "is_primary": true,
+      "display_order": 1
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": "prd_302_sndanc",
+    "fields": {
+      "seller": "sel_001_apex",
+      "category": "cat_103_audo",
+      "brand": "brd_202_sndw",
+      "name": "SoundWave Pro Active Noise Cancelling Headphones",
+      "slug": "soundwave-pro-active-noise-cancelling-headphones",
+      "brand_name": "SoundWave Acoustics",
+      "description": "Studio-grade wireless over-ear headphones with hybrid active noise cancellation and 40-hour playtime.",
+      "base_price": "249.99",
+      "discount_percent": "15.00",
+      "tax_rate": "8.25",
+      "status": "PUBLISHED",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.productvariant",
+    "pk": "var_302_a",
+    "fields": {
+      "product": "prd_302_sndanc",
+      "sku": "SW-PRO-BLK",
+      "variant_name": "Midnight Black",
+      "price_override": "249.99",
+      "attributes_json": "{\"color\": \"Midnight Black\", \"anc\": \"Active\"}",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.productimage",
+    "pk": "img_302_p",
+    "fields": {
+      "product": "prd_302_sndanc",
+      "image_url": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80",
+      "is_primary": true,
+      "display_order": 1
+    }
+  }
+]

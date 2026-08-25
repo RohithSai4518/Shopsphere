@@ -1,0 +1,186 @@
+[
+  {
+    "model": "accounts.user",
+    "pk": "usr_seed_admin01",
+    "fields": {
+      "password": "pbkdf2_sha256$800000$synthetic_hash_admin",
+      "last_login": "2026-01-01T00:00:00Z",
+      "is_superuser": true,
+      "username": "admin@shopsphere.local",
+      "first_name": "Platform",
+      "last_name": "Administrator",
+      "email": "admin@shopsphere.local",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2026-01-01T00:00:00Z",
+      "phone": "+15550001111",
+      "role": "ADMIN",
+      "is_verified": true,
+      "status": "ACTIVE"
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": "usr_seed_merchant1",
+    "fields": {
+      "password": "pbkdf2_sha256$800000$synthetic_hash_merchant",
+      "last_login": "2026-01-01T00:00:00Z",
+      "is_superuser": false,
+      "username": "merchant@apextech.com",
+      "first_name": "Apex",
+      "last_name": "Merchant",
+      "email": "merchant@apextech.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-01-01T00:00:00Z",
+      "phone": "+15552223333",
+      "role": "SELLER",
+      "is_verified": true,
+      "status": "ACTIVE"
+    }
+  },
+  {
+    "model": "sellers.seller",
+    "pk": "sel_seed_apex01",
+    "fields": {
+      "user": "usr_seed_merchant1",
+      "business_name": "Apex Electronics Merchant Direct Store",
+      "business_email": "merchant@apextech.com",
+      "business_phone": "+15552223333",
+      "tax_id": "TAX-9988-APEX-GLOBAL",
+      "commission_rate": "8.50",
+      "rating_avg": "4.85",
+      "status": "APPROVED",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": "cat_seed_laptop",
+    "fields": {
+      "parent": null,
+      "name": "High Performance Developer Laptops",
+      "slug": "high-performance-developer-laptops",
+      "description": "Professional workstations for software engineers and data scientists.",
+      "icon_url": "laptop",
+      "is_active": true,
+      "display_order": 1,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": "cat_seed_audio",
+    "fields": {
+      "parent": null,
+      "name": "Studio Acoustics & Headsets",
+      "slug": "studio-acoustics-headsets",
+      "description": "Active noise cancelling wireless headsets and sound gear.",
+      "icon_url": "headphones",
+      "is_active": true,
+      "display_order": 2,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.brand",
+    "pk": "brd_seed_apex",
+    "fields": {
+      "name": "ApexTech Global Enterprise",
+      "logo_url": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8",
+      "website": "https://apextech.local",
+      "description": "Premium Workstation Hardware Manufacturer",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": "prd_seed_pro15",
+    "fields": {
+      "seller": "sel_seed_apex01",
+      "category": "cat_seed_laptop",
+      "brand": "brd_seed_apex",
+      "name": "ApexPro Workstation Laptop 15",
+      "slug": "apexpro-workstation-laptop-15",
+      "brand_name": "ApexTech Global Enterprise",
+      "description": "Workstation laptop with 8-core CPU, 32GB RAM, 1TB NVMe SSD, and 15.6 inch 4K OLED display.",
+      "base_price": "1499.99",
+      "discount_percent": "10.00",
+      "tax_rate": "8.25",
+      "status": "PUBLISHED",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.productvariant",
+    "pk": "var_seed_pro15_32",
+    "fields": {
+      "product": "prd_seed_pro15",
+      "sku": "APX-W15-32GB",
+      "variant_name": "32GB RAM / 1TB SSD",
+      "price_override": "1499.99",
+      "attributes_json": "{\"ram\": \"32GB\", \"ssd\": \"1TB\"}",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.productspecification",
+    "pk": "spec_seed_p1",
+    "fields": {
+      "product": "prd_seed_pro15",
+      "spec_key": "Processor",
+      "spec_value": "8-Core Ultra Chip (4.2GHz)",
+      "display_group": "Performance"
+    }
+  },
+  {
+    "model": "catalog.productimage",
+    "pk": "img_seed_p1",
+    "fields": {
+      "product": "prd_seed_pro15",
+      "image_url": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80",
+      "is_primary": true,
+      "display_order": 1
+    }
+  },
+  {
+    "model": "inventory.warehouselocation",
+    "pk": "wh_seed_west",
+    "fields": {
+      "name": "Pacific Distribution Center",
+      "code": "WH-WEST-01",
+      "address": "500 Logistics Way",
+      "city": "Reno",
+      "state": "NV",
+      "country": "United States"
+    }
+  },
+  {
+    "model": "inventory.inventory",
+    "pk": "inv_seed_p1",
+    "fields": {
+      "variant": "var_seed_pro15_32",
+      "quantity_on_hand": 50,
+      "quantity_reserved": 2,
+      "reorder_threshold": 5,
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "promotions.coupon",
+    "pk": "cpn_seed_w10",
+    "fields": {
+      "code": "WELCOME10",
+      "discount_type": "PERCENTAGE",
+      "discount_value": "10.00",
+      "min_order_subtotal": "50.00",
+      "usage_limit": 1000,
+      "per_user_limit": 1,
+      "starts_at": "2026-01-01T00:00:00Z",
+      "expires_at": "2027-01-01T00:00:00Z",
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  }
+]

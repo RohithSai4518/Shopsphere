@@ -1,0 +1,74 @@
+[
+  {
+    "model": "catalog.brand",
+    "pk": "brd_apex_01",
+    "fields": {
+      "name": "ApexTech Enterprise",
+      "logo_url": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8",
+      "website": "https://apextech.local",
+      "description": "High performance workstation laptops and enterprise hardware.",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": "prd_apex_x15",
+    "fields": {
+      "seller": "sel_001_apex",
+      "category": "cat_001_elec",
+      "brand": "brd_apex_01",
+      "name": "ApexPro X15 Ultra Laptop",
+      "slug": "apexpro-x15-ultra-laptop",
+      "brand_name": "ApexTech Enterprise",
+      "description": "The ApexPro X15 features an 8-core CPU, 32GB RAM, 1TB NVMe SSD, and 15.6-inch 4K OLED display.",
+      "base_price": "1499.99",
+      "discount_percent": "10.00",
+      "tax_rate": "8.25",
+      "status": "PUBLISHED",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.productvariant",
+    "pk": "var_apex_x15_32gb",
+    "fields": {
+      "product": "prd_apex_x15",
+      "sku": "APX-X15-32GB",
+      "variant_name": "32GB RAM / 1TB SSD Workstation",
+      "price_override": "1499.99",
+      "attributes_json": "{\"color\": \"Space Gray\", \"ram\": \"32GB\"}",
+      "created_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "catalog.productspecification",
+    "pk": "spec_x15_cpu",
+    "fields": {
+      "product": "prd_apex_x15",
+      "spec_key": "Processor",
+      "spec_value": "8-Core Ultra Chip 4.2GHz",
+      "display_group": "Performance"
+    }
+  },
+  {
+    "model": "catalog.productspecification",
+    "pk": "spec_x15_ram",
+    "fields": {
+      "product": "prd_apex_x15",
+      "spec_key": "Memory (RAM)",
+      "spec_value": "32GB LPDDR5X",
+      "display_group": "Performance"
+    }
+  },
+  {
+    "model": "catalog.productimage",
+    "pk": "img_x15_main",
+    "fields": {
+      "product": "prd_apex_x15",
+      "image_url": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80",
+      "is_primary": true,
+      "display_order": 1
+    }
+  }
+]

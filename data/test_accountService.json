@@ -1,0 +1,2520 @@
+{
+  "users": [
+    {
+      "id": "usr_admin_001",
+      "email": "admin@shopsphere.local",
+      "password_hash": "$2a$10$tskJL11IDb2enVbWxZkDkeNUQlZg5WAKJHR4QvMwvjA4JRtlLEHp2",
+      "first_name": "Platform",
+      "last_name": "Administrator",
+      "phone": "+15550001111",
+      "role": "ADMIN",
+      "is_verified": 1,
+      "status": "ACTIVE",
+      "created_at": "2026-08-25T05:34:36.655Z",
+      "updated_at": "2026-08-25T05:34:36.655Z"
+    },
+    {
+      "id": "usr_seller_001",
+      "email": "seller@apextech.local",
+      "password_hash": "$2a$10$tskJL11IDb2enVbWxZkDkeNUQlZg5WAKJHR4QvMwvjA4JRtlLEHp2",
+      "first_name": "Alex",
+      "last_name": "Merchant",
+      "phone": "+15550002222",
+      "role": "SELLER",
+      "is_verified": 1,
+      "status": "ACTIVE",
+      "created_at": "2026-08-25T05:34:36.656Z",
+      "updated_at": "2026-08-25T05:34:36.656Z"
+    },
+    {
+      "id": "usr_customer_001",
+      "email": "customer@example.local",
+      "password_hash": "$2a$10$tskJL11IDb2enVbWxZkDkeNUQlZg5WAKJHR4QvMwvjA4JRtlLEHp2",
+      "first_name": "Jane",
+      "last_name": "Shopper-Updated",
+      "phone": "+15559998888",
+      "role": "CUSTOMER",
+      "is_verified": 1,
+      "status": "ACTIVE",
+      "created_at": "2026-08-25T05:34:36.657Z",
+      "updated_at": "2026-08-25T05:34:36.657Z"
+    }
+  ],
+  "roles": [
+    {
+      "id": "role_admin",
+      "created_at": "2026-08-25T05:26:20.888Z",
+      "param_0": "role_admin"
+    },
+    {
+      "id": "role_seller",
+      "created_at": "2026-08-25T05:26:20.890Z",
+      "param_0": "role_seller"
+    },
+    {
+      "id": "role_customer",
+      "created_at": "2026-08-25T05:26:20.890Z",
+      "param_0": "role_customer"
+    },
+    {
+      "id": "role_admin",
+      "created_at": "2026-08-25T05:26:43.287Z",
+      "param_0": "role_admin"
+    },
+    {
+      "id": "role_seller",
+      "created_at": "2026-08-25T05:26:43.289Z",
+      "param_0": "role_seller"
+    },
+    {
+      "id": "role_customer",
+      "created_at": "2026-08-25T05:26:43.290Z",
+      "param_0": "role_customer"
+    },
+    {
+      "id": "role_admin",
+      "created_at": "2026-08-25T05:27:09.076Z",
+      "param_0": "role_admin"
+    },
+    {
+      "id": "role_seller",
+      "created_at": "2026-08-25T05:27:09.078Z",
+      "param_0": "role_seller"
+    },
+    {
+      "id": "role_customer",
+      "created_at": "2026-08-25T05:27:09.079Z",
+      "param_0": "role_customer"
+    },
+    {
+      "id": "role_admin",
+      "created_at": "2026-08-25T05:27:37.651Z",
+      "param_0": "role_admin"
+    },
+    {
+      "id": "role_seller",
+      "created_at": "2026-08-25T05:27:37.653Z",
+      "param_0": "role_seller"
+    },
+    {
+      "id": "role_customer",
+      "created_at": "2026-08-25T05:27:37.654Z",
+      "param_0": "role_customer"
+    },
+    {
+      "id": "role_admin",
+      "created_at": "2026-08-25T05:29:47.935Z",
+      "param_0": "role_admin"
+    },
+    {
+      "id": "role_seller",
+      "created_at": "2026-08-25T05:29:47.938Z",
+      "param_0": "role_seller"
+    },
+    {
+      "id": "role_customer",
+      "created_at": "2026-08-25T05:29:47.940Z",
+      "param_0": "role_customer"
+    },
+    {
+      "id": "role_admin",
+      "created_at": "2026-08-25T05:31:03.030Z",
+      "param_0": "role_admin"
+    },
+    {
+      "id": "role_seller",
+      "created_at": "2026-08-25T05:31:03.032Z",
+      "param_0": "role_seller"
+    },
+    {
+      "id": "role_customer",
+      "created_at": "2026-08-25T05:31:03.034Z",
+      "param_0": "role_customer"
+    },
+    {
+      "id": "role_admin",
+      "created_at": "2026-08-25T05:31:24.074Z",
+      "param_0": "role_admin"
+    },
+    {
+      "id": "role_seller",
+      "created_at": "2026-08-25T05:31:24.076Z",
+      "param_0": "role_seller"
+    },
+    {
+      "id": "role_customer",
+      "created_at": "2026-08-25T05:31:24.077Z",
+      "param_0": "role_customer"
+    },
+    {
+      "id": "role_admin",
+      "created_at": "2026-08-25T05:31:40.149Z",
+      "param_0": "role_admin"
+    },
+    {
+      "id": "role_seller",
+      "created_at": "2026-08-25T05:31:40.151Z",
+      "param_0": "role_seller"
+    },
+    {
+      "id": "role_customer",
+      "created_at": "2026-08-25T05:31:40.152Z",
+      "param_0": "role_customer"
+    },
+    {
+      "id": "role_admin",
+      "created_at": "2026-08-25T05:34:36.644Z",
+      "param_0": "role_admin"
+    },
+    {
+      "id": "role_seller",
+      "created_at": "2026-08-25T05:34:36.652Z",
+      "param_0": "role_seller"
+    },
+    {
+      "id": "role_customer",
+      "created_at": "2026-08-25T05:34:36.653Z",
+      "param_0": "role_customer"
+    }
+  ],
+  "permissions": [],
+  "role_permissions": [],
+  "user_roles": [
+    {
+      "id": "usr_admin_001",
+      "created_at": "2026-08-25T05:26:20.894Z",
+      "param_0": "usr_admin_001",
+      "param_1": "role_admin"
+    },
+    {
+      "id": "usr_seller_001",
+      "created_at": "2026-08-25T05:26:20.895Z",
+      "param_0": "usr_seller_001",
+      "param_1": "role_seller"
+    },
+    {
+      "id": "usr_customer_001",
+      "created_at": "2026-08-25T05:26:20.895Z",
+      "param_0": "usr_customer_001",
+      "param_1": "role_customer"
+    },
+    {
+      "id": "usr_admin_001",
+      "created_at": "2026-08-25T05:26:43.295Z",
+      "param_0": "usr_admin_001",
+      "param_1": "role_admin"
+    },
+    {
+      "id": "usr_seller_001",
+      "created_at": "2026-08-25T05:26:43.297Z",
+      "param_0": "usr_seller_001",
+      "param_1": "role_seller"
+    },
+    {
+      "id": "usr_customer_001",
+      "created_at": "2026-08-25T05:26:43.298Z",
+      "param_0": "usr_customer_001",
+      "param_1": "role_customer"
+    },
+    {
+      "id": "usr_admin_001",
+      "created_at": "2026-08-25T05:27:09.082Z",
+      "param_0": "usr_admin_001",
+      "param_1": "role_admin"
+    },
+    {
+      "id": "usr_seller_001",
+      "created_at": "2026-08-25T05:27:09.083Z",
+      "param_0": "usr_seller_001",
+      "param_1": "role_seller"
+    },
+    {
+      "id": "usr_customer_001",
+      "created_at": "2026-08-25T05:27:09.084Z",
+      "param_0": "usr_customer_001",
+      "param_1": "role_customer"
+    },
+    {
+      "id": "usr_admin_001",
+      "created_at": "2026-08-25T05:27:37.660Z",
+      "param_0": "usr_admin_001",
+      "param_1": "role_admin"
+    },
+    {
+      "id": "usr_seller_001",
+      "created_at": "2026-08-25T05:27:37.661Z",
+      "param_0": "usr_seller_001",
+      "param_1": "role_seller"
+    },
+    {
+      "id": "usr_customer_001",
+      "created_at": "2026-08-25T05:27:37.663Z",
+      "param_0": "usr_customer_001",
+      "param_1": "role_customer"
+    },
+    {
+      "id": "usr_admin_001",
+      "created_at": "2026-08-25T05:29:47.985Z",
+      "param_0": "usr_admin_001",
+      "param_1": "role_admin"
+    },
+    {
+      "id": "usr_seller_001",
+      "created_at": "2026-08-25T05:29:47.986Z",
+      "param_0": "usr_seller_001",
+      "param_1": "role_seller"
+    },
+    {
+      "id": "usr_customer_001",
+      "created_at": "2026-08-25T05:29:47.987Z",
+      "param_0": "usr_customer_001",
+      "param_1": "role_customer"
+    },
+    {
+      "id": "usr_admin_001",
+      "created_at": "2026-08-25T05:31:03.038Z",
+      "param_0": "usr_admin_001",
+      "param_1": "role_admin"
+    },
+    {
+      "id": "usr_seller_001",
+      "created_at": "2026-08-25T05:31:03.041Z",
+      "param_0": "usr_seller_001",
+      "param_1": "role_seller"
+    },
+    {
+      "id": "usr_customer_001",
+      "created_at": "2026-08-25T05:31:03.042Z",
+      "param_0": "usr_customer_001",
+      "param_1": "role_customer"
+    },
+    {
+      "id": "usr_admin_001",
+      "created_at": "2026-08-25T05:31:24.081Z",
+      "param_0": "usr_admin_001",
+      "param_1": "role_admin"
+    },
+    {
+      "id": "usr_seller_001",
+      "created_at": "2026-08-25T05:31:24.083Z",
+      "param_0": "usr_seller_001",
+      "param_1": "role_seller"
+    },
+    {
+      "id": "usr_customer_001",
+      "created_at": "2026-08-25T05:31:24.084Z",
+      "param_0": "usr_customer_001",
+      "param_1": "role_customer"
+    },
+    {
+      "id": "usr_admin_001",
+      "created_at": "2026-08-25T05:31:40.158Z",
+      "param_0": "usr_admin_001",
+      "param_1": "role_admin"
+    },
+    {
+      "id": "usr_seller_001",
+      "created_at": "2026-08-25T05:31:40.160Z",
+      "param_0": "usr_seller_001",
+      "param_1": "role_seller"
+    },
+    {
+      "id": "usr_customer_001",
+      "created_at": "2026-08-25T05:31:40.161Z",
+      "param_0": "usr_customer_001",
+      "param_1": "role_customer"
+    },
+    {
+      "id": "usr_admin_001",
+      "created_at": "2026-08-25T05:34:36.659Z",
+      "param_0": "usr_admin_001",
+      "param_1": "role_admin"
+    },
+    {
+      "id": "usr_seller_001",
+      "created_at": "2026-08-25T05:34:36.660Z",
+      "param_0": "usr_seller_001",
+      "param_1": "role_seller"
+    },
+    {
+      "id": "usr_customer_001",
+      "created_at": "2026-08-25T05:34:36.661Z",
+      "param_0": "usr_customer_001",
+      "param_1": "role_customer"
+    }
+  ],
+  "user_sessions": [],
+  "login_history": [],
+  "user_preferences": [
+    {
+      "id": "usr_customer_001",
+      "created_at": "2026-08-25T05:26:20.896Z",
+      "param_0": "usr_customer_001"
+    },
+    {
+      "id": "usr_customer_001",
+      "created_at": "2026-08-25T05:26:20.944Z",
+      "param_0": "usr_customer_001",
+      "param_1": 1,
+      "param_2": 1,
+      "param_3": 0,
+      "param_4": "DARK",
+      "param_5": "USD"
+    },
+    {
+      "id": "usr_customer_001",
+      "created_at": "2026-08-25T05:26:20.945Z",
+      "param_0": "usr_customer_001"
+    },
+    {
+      "user_id": "usr_customer_001",
+      "email_notifications": 1,
+      "sms_notifications": 1,
+      "promotional_emails": 0,
+      "theme": "DARK",
+      "currency": "USD",
+      "updated_at": "2026-08-25T05:34:36.726Z"
+    }
+  ],
+  "sellers": [
+    {
+      "id": "sel_apex_001",
+      "user_id": "usr_seller_001",
+      "business_name": "Apex Electronics Store",
+      "business_email": "contact@apextech.local",
+      "business_phone": "+15550002222",
+      "tax_id": "TAX-998877",
+      "status": "APPROVED",
+      "commission_rate": 8.5,
+      "rating_avg": 4.85,
+      "created_at": "2026-08-25T05:34:36.665Z"
+    }
+  ],
+  "addresses": [
+    {
+      "id": "addr_cust_01",
+      "created_at": "2026-08-25T05:26:20.897Z",
+      "param_0": "addr_cust_01",
+      "param_1": "usr_customer_001",
+      "param_2": "SHIPPING",
+      "param_3": "Jane Shopper",
+      "param_4": "100 Synthetic Way",
+      "param_5": "Apt 4B",
+      "param_6": "Innovation City",
+      "param_7": "CA",
+      "param_8": "90210",
+      "param_9": "United States"
+    },
+    {
+      "id": "addr_cust_02",
+      "created_at": "2026-08-25T05:26:20.898Z",
+      "param_0": "addr_cust_02",
+      "param_1": "usr_customer_001",
+      "param_2": "BILLING",
+      "param_3": "Jane Shopper",
+      "param_4": "100 Synthetic Way",
+      "param_5": "Apt 4B",
+      "param_6": "Innovation City",
+      "param_7": "CA",
+      "param_8": "90210",
+      "param_9": "United States"
+    },
+    {
+      "id": "addr_1787635580935_2o34",
+      "created_at": "2026-08-25T05:26:20.936Z",
+      "param_0": "addr_1787635580935_2o34",
+      "param_1": "usr_customer_001",
+      "param_2": "SHIPPING",
+      "param_3": "Jane Executive",
+      "param_4": "500 Tech Boulevard",
+      "param_5": null,
+      "param_6": "San Francisco",
+      "param_7": "CA",
+      "param_8": "94105",
+      "param_9": "United States",
+      "param_10": 1
+    },
+    {
+      "id": "addr_cust_01",
+      "user_id": "usr_customer_001",
+      "address_type": "SHIPPING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:26:43.301Z"
+    },
+    {
+      "id": "addr_cust_02",
+      "user_id": "usr_customer_001",
+      "address_type": "BILLING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:26:43.302Z"
+    },
+    {
+      "id": "addr_1787635603341_6hu6",
+      "user_id": "usr_customer_001",
+      "address_type": "SHIPPING",
+      "full_name": "Jane Executive",
+      "street_address_1": "500 Tech Boulevard",
+      "street_address_2": null,
+      "city": "San Francisco",
+      "state": "CA",
+      "postal_code": "94105",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:26:43.342Z"
+    },
+    {
+      "id": "addr_cust_01",
+      "user_id": "usr_customer_001",
+      "address_type": "SHIPPING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:27:09.089Z"
+    },
+    {
+      "id": "addr_cust_02",
+      "user_id": "usr_customer_001",
+      "address_type": "BILLING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:27:09.090Z"
+    },
+    {
+      "id": "addr_1787635629124_zgzv",
+      "user_id": "usr_customer_001",
+      "address_type": "SHIPPING",
+      "full_name": "Jane Executive",
+      "street_address_1": "500 Tech Boulevard",
+      "street_address_2": null,
+      "city": "San Francisco",
+      "state": "CA",
+      "postal_code": "94105",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:27:09.125Z"
+    },
+    {
+      "id": "addr_cust_01",
+      "user_id": "usr_customer_001",
+      "address_type": "SHIPPING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:27:37.666Z"
+    },
+    {
+      "id": "addr_cust_02",
+      "user_id": "usr_customer_001",
+      "address_type": "BILLING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:27:37.666Z"
+    },
+    {
+      "id": "addr_1787635657719_mbsz",
+      "user_id": "usr_customer_001",
+      "address_type": "SHIPPING",
+      "full_name": "Jane Executive",
+      "street_address_1": "500 Tech Boulevard",
+      "street_address_2": null,
+      "city": "San Francisco",
+      "state": "CA",
+      "postal_code": "94105",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:27:37.720Z"
+    },
+    {
+      "id": "addr_cust_01",
+      "user_id": "usr_customer_001",
+      "address_type": "SHIPPING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:29:47.990Z"
+    },
+    {
+      "id": "addr_cust_02",
+      "user_id": "usr_customer_001",
+      "address_type": "BILLING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:29:47.991Z"
+    },
+    {
+      "id": "addr_1787635788115_ktc8",
+      "user_id": "usr_customer_001",
+      "address_type": "SHIPPING",
+      "full_name": "Jane Executive",
+      "street_address_1": "500 Tech Boulevard",
+      "street_address_2": null,
+      "city": "San Francisco",
+      "state": "CA",
+      "postal_code": "94105",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:29:48.116Z"
+    },
+    {
+      "id": "addr_cust_01",
+      "user_id": "usr_customer_001",
+      "address_type": "SHIPPING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:31:03.045Z"
+    },
+    {
+      "id": "addr_cust_02",
+      "user_id": "usr_customer_001",
+      "address_type": "BILLING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:31:03.046Z"
+    },
+    {
+      "id": "addr_1787635863090_upc5",
+      "user_id": "usr_customer_001",
+      "address_type": "SHIPPING",
+      "full_name": "Jane Executive",
+      "street_address_1": "500 Tech Boulevard",
+      "street_address_2": null,
+      "city": "San Francisco",
+      "state": "CA",
+      "postal_code": "94105",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:31:03.092Z"
+    },
+    {
+      "id": "addr_cust_01",
+      "user_id": "usr_customer_001",
+      "address_type": "SHIPPING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:31:24.089Z"
+    },
+    {
+      "id": "addr_cust_02",
+      "user_id": "usr_customer_001",
+      "address_type": "BILLING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:31:24.090Z"
+    },
+    {
+      "id": "addr_1787635884133_1o7b",
+      "user_id": "usr_customer_001",
+      "address_type": "SHIPPING",
+      "full_name": "Jane Executive",
+      "street_address_1": "500 Tech Boulevard",
+      "street_address_2": null,
+      "city": "San Francisco",
+      "state": "CA",
+      "postal_code": "94105",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:31:24.134Z"
+    },
+    {
+      "id": "addr_cust_01",
+      "user_id": "usr_customer_001",
+      "address_type": "SHIPPING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:31:40.165Z"
+    },
+    {
+      "id": "addr_cust_02",
+      "user_id": "usr_customer_001",
+      "address_type": "BILLING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:31:40.166Z"
+    },
+    {
+      "id": "addr_1787635900209_c2d3",
+      "user_id": "usr_customer_001",
+      "address_type": "SHIPPING",
+      "full_name": "Jane Executive",
+      "street_address_1": "500 Tech Boulevard",
+      "street_address_2": null,
+      "city": "San Francisco",
+      "state": "CA",
+      "postal_code": "94105",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:31:40.211Z"
+    },
+    {
+      "id": "addr_cust_01",
+      "user_id": "usr_customer_001",
+      "address_type": "SHIPPING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:34:36.666Z"
+    },
+    {
+      "id": "addr_cust_02",
+      "user_id": "usr_customer_001",
+      "address_type": "BILLING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T05:34:36.667Z"
+    },
+    {
+      "id": "addr_1787636076722_cj4i",
+      "user_id": "usr_customer_001",
+      "address_type": "SHIPPING",
+      "full_name": "Jane Executive",
+      "street_address_1": "500 Tech Boulevard",
+      "street_address_2": null,
+      "city": "San Francisco",
+      "state": "CA",
+      "postal_code": "94105",
+      "country": "United States",
+      "is_default": 1,
+      "created_at": "2026-08-25T05:34:36.724Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat_elec_01",
+      "created_at": "2026-08-25T05:26:20.902Z",
+      "param_0": "cat_elec_01",
+      "param_1": null,
+      "param_2": "Electronics & Gadgets",
+      "param_3": "electronics",
+      "param_4": "High performance consumer electronics and devices",
+      "param_5": 1
+    },
+    {
+      "id": "cat_laptops_02",
+      "created_at": "2026-08-25T05:26:20.903Z",
+      "param_0": "cat_laptops_02",
+      "param_1": "cat_elec_01",
+      "param_2": "Laptops & Computers",
+      "param_3": "laptops",
+      "param_4": "Ultra-portable laptops, workstation laptops, and desktops",
+      "param_5": 2
+    },
+    {
+      "id": "cat_audio_03",
+      "created_at": "2026-08-25T05:26:20.904Z",
+      "param_0": "cat_audio_03",
+      "param_1": "cat_elec_01",
+      "param_2": "Headphones & Audio",
+      "param_3": "audio",
+      "param_4": "Noise-canceling headphones, wireless earbuds, and speakers",
+      "param_5": 3
+    },
+    {
+      "id": "cat_home_04",
+      "created_at": "2026-08-25T05:26:20.904Z",
+      "param_0": "cat_home_04",
+      "param_1": null,
+      "param_2": "Home & Kitchen",
+      "param_3": "home-kitchen",
+      "param_4": "Smart home appliances, kitchenware, and furniture",
+      "param_5": 4
+    },
+    {
+      "id": "cat_elec_01",
+      "created_at": "2026-08-25T05:26:43.304Z",
+      "param_0": "cat_elec_01",
+      "param_1": null,
+      "param_2": "Electronics & Gadgets",
+      "param_3": "electronics",
+      "param_4": "High performance consumer electronics and devices",
+      "param_5": 1
+    },
+    {
+      "id": "cat_laptops_02",
+      "created_at": "2026-08-25T05:26:43.304Z",
+      "param_0": "cat_laptops_02",
+      "param_1": "cat_elec_01",
+      "param_2": "Laptops & Computers",
+      "param_3": "laptops",
+      "param_4": "Ultra-portable laptops, workstation laptops, and desktops",
+      "param_5": 2
+    },
+    {
+      "id": "cat_audio_03",
+      "created_at": "2026-08-25T05:26:43.305Z",
+      "param_0": "cat_audio_03",
+      "param_1": "cat_elec_01",
+      "param_2": "Headphones & Audio",
+      "param_3": "audio",
+      "param_4": "Noise-canceling headphones, wireless earbuds, and speakers",
+      "param_5": 3
+    },
+    {
+      "id": "cat_home_04",
+      "created_at": "2026-08-25T05:26:43.306Z",
+      "param_0": "cat_home_04",
+      "param_1": null,
+      "param_2": "Home & Kitchen",
+      "param_3": "home-kitchen",
+      "param_4": "Smart home appliances, kitchenware, and furniture",
+      "param_5": 4
+    },
+    {
+      "id": "cat_elec_01",
+      "created_at": "2026-08-25T05:27:09.093Z",
+      "param_0": "cat_elec_01",
+      "param_1": null,
+      "param_2": "Electronics & Gadgets",
+      "param_3": "electronics",
+      "param_4": "High performance consumer electronics and devices",
+      "param_5": 1
+    },
+    {
+      "id": "cat_laptops_02",
+      "created_at": "2026-08-25T05:27:09.094Z",
+      "param_0": "cat_laptops_02",
+      "param_1": "cat_elec_01",
+      "param_2": "Laptops & Computers",
+      "param_3": "laptops",
+      "param_4": "Ultra-portable laptops, workstation laptops, and desktops",
+      "param_5": 2
+    },
+    {
+      "id": "cat_audio_03",
+      "created_at": "2026-08-25T05:27:09.094Z",
+      "param_0": "cat_audio_03",
+      "param_1": "cat_elec_01",
+      "param_2": "Headphones & Audio",
+      "param_3": "audio",
+      "param_4": "Noise-canceling headphones, wireless earbuds, and speakers",
+      "param_5": 3
+    },
+    {
+      "id": "cat_home_04",
+      "created_at": "2026-08-25T05:27:09.095Z",
+      "param_0": "cat_home_04",
+      "param_1": null,
+      "param_2": "Home & Kitchen",
+      "param_3": "home-kitchen",
+      "param_4": "Smart home appliances, kitchenware, and furniture",
+      "param_5": 4
+    },
+    {
+      "id": "cat_elec_01",
+      "created_at": "2026-08-25T05:27:37.669Z",
+      "param_0": "cat_elec_01",
+      "param_1": null,
+      "param_2": "Electronics & Gadgets",
+      "param_3": "electronics",
+      "param_4": "High performance consumer electronics and devices",
+      "param_5": 1
+    },
+    {
+      "id": "cat_laptops_02",
+      "created_at": "2026-08-25T05:27:37.670Z",
+      "param_0": "cat_laptops_02",
+      "param_1": "cat_elec_01",
+      "param_2": "Laptops & Computers",
+      "param_3": "laptops",
+      "param_4": "Ultra-portable laptops, workstation laptops, and desktops",
+      "param_5": 2
+    },
+    {
+      "id": "cat_audio_03",
+      "created_at": "2026-08-25T05:27:37.670Z",
+      "param_0": "cat_audio_03",
+      "param_1": "cat_elec_01",
+      "param_2": "Headphones & Audio",
+      "param_3": "audio",
+      "param_4": "Noise-canceling headphones, wireless earbuds, and speakers",
+      "param_5": 3
+    },
+    {
+      "id": "cat_home_04",
+      "created_at": "2026-08-25T05:27:37.671Z",
+      "param_0": "cat_home_04",
+      "param_1": null,
+      "param_2": "Home & Kitchen",
+      "param_3": "home-kitchen",
+      "param_4": "Smart home appliances, kitchenware, and furniture",
+      "param_5": 4
+    },
+    {
+      "id": "cat_elec_01",
+      "created_at": "2026-08-25T05:29:47.994Z",
+      "param_0": "cat_elec_01",
+      "param_1": null,
+      "param_2": "Electronics & Gadgets",
+      "param_3": "electronics",
+      "param_4": "High performance consumer electronics and devices",
+      "param_5": 1
+    },
+    {
+      "id": "cat_laptops_02",
+      "created_at": "2026-08-25T05:29:47.997Z",
+      "param_0": "cat_laptops_02",
+      "param_1": "cat_elec_01",
+      "param_2": "Laptops & Computers",
+      "param_3": "laptops",
+      "param_4": "Ultra-portable laptops, workstation laptops, and desktops",
+      "param_5": 2
+    },
+    {
+      "id": "cat_audio_03",
+      "created_at": "2026-08-25T05:29:47.998Z",
+      "param_0": "cat_audio_03",
+      "param_1": "cat_elec_01",
+      "param_2": "Headphones & Audio",
+      "param_3": "audio",
+      "param_4": "Noise-canceling headphones, wireless earbuds, and speakers",
+      "param_5": 3
+    },
+    {
+      "id": "cat_home_04",
+      "created_at": "2026-08-25T05:29:47.998Z",
+      "param_0": "cat_home_04",
+      "param_1": null,
+      "param_2": "Home & Kitchen",
+      "param_3": "home-kitchen",
+      "param_4": "Smart home appliances, kitchenware, and furniture",
+      "param_5": 4
+    },
+    {
+      "id": "cat_elec_01",
+      "created_at": "2026-08-25T05:31:03.048Z",
+      "param_0": "cat_elec_01",
+      "param_1": null,
+      "param_2": "Electronics & Gadgets",
+      "param_3": "electronics",
+      "param_4": "High performance consumer electronics and devices",
+      "param_5": 1
+    },
+    {
+      "id": "cat_laptops_02",
+      "created_at": "2026-08-25T05:31:03.050Z",
+      "param_0": "cat_laptops_02",
+      "param_1": "cat_elec_01",
+      "param_2": "Laptops & Computers",
+      "param_3": "laptops",
+      "param_4": "Ultra-portable laptops, workstation laptops, and desktops",
+      "param_5": 2
+    },
+    {
+      "id": "cat_audio_03",
+      "created_at": "2026-08-25T05:31:03.050Z",
+      "param_0": "cat_audio_03",
+      "param_1": "cat_elec_01",
+      "param_2": "Headphones & Audio",
+      "param_3": "audio",
+      "param_4": "Noise-canceling headphones, wireless earbuds, and speakers",
+      "param_5": 3
+    },
+    {
+      "id": "cat_home_04",
+      "created_at": "2026-08-25T05:31:03.052Z",
+      "param_0": "cat_home_04",
+      "param_1": null,
+      "param_2": "Home & Kitchen",
+      "param_3": "home-kitchen",
+      "param_4": "Smart home appliances, kitchenware, and furniture",
+      "param_5": 4
+    },
+    {
+      "id": "cat_elec_01",
+      "created_at": "2026-08-25T05:31:24.093Z",
+      "param_0": "cat_elec_01",
+      "param_1": null,
+      "param_2": "Electronics & Gadgets",
+      "param_3": "electronics",
+      "param_4": "High performance consumer electronics and devices",
+      "param_5": 1
+    },
+    {
+      "id": "cat_laptops_02",
+      "created_at": "2026-08-25T05:31:24.094Z",
+      "param_0": "cat_laptops_02",
+      "param_1": "cat_elec_01",
+      "param_2": "Laptops & Computers",
+      "param_3": "laptops",
+      "param_4": "Ultra-portable laptops, workstation laptops, and desktops",
+      "param_5": 2
+    },
+    {
+      "id": "cat_audio_03",
+      "created_at": "2026-08-25T05:31:24.095Z",
+      "param_0": "cat_audio_03",
+      "param_1": "cat_elec_01",
+      "param_2": "Headphones & Audio",
+      "param_3": "audio",
+      "param_4": "Noise-canceling headphones, wireless earbuds, and speakers",
+      "param_5": 3
+    },
+    {
+      "id": "cat_home_04",
+      "created_at": "2026-08-25T05:31:24.097Z",
+      "param_0": "cat_home_04",
+      "param_1": null,
+      "param_2": "Home & Kitchen",
+      "param_3": "home-kitchen",
+      "param_4": "Smart home appliances, kitchenware, and furniture",
+      "param_5": 4
+    },
+    {
+      "id": "cat_elec_01",
+      "created_at": "2026-08-25T05:31:40.172Z",
+      "param_0": "cat_elec_01",
+      "param_1": null,
+      "param_2": "Electronics & Gadgets",
+      "param_3": "electronics",
+      "param_4": "High performance consumer electronics and devices",
+      "param_5": 1
+    },
+    {
+      "id": "cat_laptops_02",
+      "created_at": "2026-08-25T05:31:40.173Z",
+      "param_0": "cat_laptops_02",
+      "param_1": "cat_elec_01",
+      "param_2": "Laptops & Computers",
+      "param_3": "laptops",
+      "param_4": "Ultra-portable laptops, workstation laptops, and desktops",
+      "param_5": 2
+    },
+    {
+      "id": "cat_audio_03",
+      "created_at": "2026-08-25T05:31:40.174Z",
+      "param_0": "cat_audio_03",
+      "param_1": "cat_elec_01",
+      "param_2": "Headphones & Audio",
+      "param_3": "audio",
+      "param_4": "Noise-canceling headphones, wireless earbuds, and speakers",
+      "param_5": 3
+    },
+    {
+      "id": "cat_home_04",
+      "created_at": "2026-08-25T05:31:40.175Z",
+      "param_0": "cat_home_04",
+      "param_1": null,
+      "param_2": "Home & Kitchen",
+      "param_3": "home-kitchen",
+      "param_4": "Smart home appliances, kitchenware, and furniture",
+      "param_5": 4
+    },
+    {
+      "id": "cat_elec_01",
+      "created_at": "2026-08-25T05:34:36.671Z",
+      "param_0": "cat_elec_01",
+      "param_1": null,
+      "param_2": "Electronics & Gadgets",
+      "param_3": "electronics",
+      "param_4": "High performance consumer electronics and devices",
+      "param_5": 1
+    },
+    {
+      "id": "cat_laptops_02",
+      "created_at": "2026-08-25T05:34:36.672Z",
+      "param_0": "cat_laptops_02",
+      "param_1": "cat_elec_01",
+      "param_2": "Laptops & Computers",
+      "param_3": "laptops",
+      "param_4": "Ultra-portable laptops, workstation laptops, and desktops",
+      "param_5": 2
+    },
+    {
+      "id": "cat_audio_03",
+      "created_at": "2026-08-25T05:34:36.674Z",
+      "param_0": "cat_audio_03",
+      "param_1": "cat_elec_01",
+      "param_2": "Headphones & Audio",
+      "param_3": "audio",
+      "param_4": "Noise-canceling headphones, wireless earbuds, and speakers",
+      "param_5": 3
+    },
+    {
+      "id": "cat_home_04",
+      "created_at": "2026-08-25T05:34:36.675Z",
+      "param_0": "cat_home_04",
+      "param_1": null,
+      "param_2": "Home & Kitchen",
+      "param_3": "home-kitchen",
+      "param_4": "Smart home appliances, kitchenware, and furniture",
+      "param_5": 4
+    }
+  ],
+  "brands": [
+    {
+      "id": "brd_apex_01",
+      "created_at": "2026-08-25T05:26:20.900Z",
+      "param_0": "brd_apex_01"
+    },
+    {
+      "id": "brd_sonic_02",
+      "created_at": "2026-08-25T05:26:20.901Z",
+      "param_0": "brd_sonic_02"
+    },
+    {
+      "id": "brd_apex_01",
+      "created_at": "2026-08-25T05:26:43.302Z",
+      "param_0": "brd_apex_01"
+    },
+    {
+      "id": "brd_sonic_02",
+      "created_at": "2026-08-25T05:26:43.303Z",
+      "param_0": "brd_sonic_02"
+    },
+    {
+      "id": "brd_apex_01",
+      "created_at": "2026-08-25T05:27:09.091Z",
+      "param_0": "brd_apex_01"
+    },
+    {
+      "id": "brd_sonic_02",
+      "created_at": "2026-08-25T05:27:09.092Z",
+      "param_0": "brd_sonic_02"
+    },
+    {
+      "id": "brd_apex_01",
+      "created_at": "2026-08-25T05:27:37.667Z",
+      "param_0": "brd_apex_01"
+    },
+    {
+      "id": "brd_sonic_02",
+      "created_at": "2026-08-25T05:27:37.668Z",
+      "param_0": "brd_sonic_02"
+    },
+    {
+      "id": "brd_apex_01",
+      "created_at": "2026-08-25T05:29:47.992Z",
+      "param_0": "brd_apex_01"
+    },
+    {
+      "id": "brd_sonic_02",
+      "created_at": "2026-08-25T05:29:47.993Z",
+      "param_0": "brd_sonic_02"
+    },
+    {
+      "id": "brd_apex_01",
+      "created_at": "2026-08-25T05:31:03.047Z",
+      "param_0": "brd_apex_01"
+    },
+    {
+      "id": "brd_sonic_02",
+      "created_at": "2026-08-25T05:31:03.047Z",
+      "param_0": "brd_sonic_02"
+    },
+    {
+      "id": "brd_apex_01",
+      "created_at": "2026-08-25T05:31:24.091Z",
+      "param_0": "brd_apex_01"
+    },
+    {
+      "id": "brd_sonic_02",
+      "created_at": "2026-08-25T05:31:24.092Z",
+      "param_0": "brd_sonic_02"
+    },
+    {
+      "id": "brd_apex_01",
+      "created_at": "2026-08-25T05:31:40.167Z",
+      "param_0": "brd_apex_01"
+    },
+    {
+      "id": "brd_sonic_02",
+      "created_at": "2026-08-25T05:31:40.170Z",
+      "param_0": "brd_sonic_02"
+    },
+    {
+      "id": "brd_apex_01",
+      "created_at": "2026-08-25T05:34:36.668Z",
+      "param_0": "brd_apex_01"
+    },
+    {
+      "id": "brd_sonic_02",
+      "created_at": "2026-08-25T05:34:36.669Z",
+      "param_0": "brd_sonic_02"
+    }
+  ],
+  "products": [
+    {
+      "id": "prd_laptop_01",
+      "seller_id": "sel_apex_001",
+      "category_id": "cat_laptops_02",
+      "name": "ApexPro X15 Ultra Laptop",
+      "slug": "apexpro-x15-ultra-laptop",
+      "brand": "ApexTech",
+      "description": "The ApexPro X15 features a 15.6-inch QHD OLED display, 16-core processor, 32GB DDR5 RAM, and 1TB NVMe SSD.",
+      "base_price": 1499.99,
+      "discount_percent": 10,
+      "tax_rate": 8.25,
+      "status": "PUBLISHED",
+      "created_at": "2026-08-25T05:34:36.676Z",
+      "updated_at": "2026-08-25T05:34:36.676Z"
+    },
+    {
+      "id": "prd_earbuds_02",
+      "seller_id": "sel_apex_001",
+      "category_id": "cat_audio_03",
+      "name": "SonicWave Pro Wireless Noise-Canceling Earbuds",
+      "slug": "sonicwave-pro-wireless-earbuds",
+      "brand": "SonicWave",
+      "description": "Active Noise Cancellation (ANC) with 36-hour total playback battery life, IPX7 water resistance, and studio mic quality.",
+      "base_price": 199.99,
+      "discount_percent": 15,
+      "tax_rate": 8.25,
+      "status": "PUBLISHED",
+      "created_at": "2026-08-25T05:34:36.677Z",
+      "updated_at": "2026-08-25T05:34:36.677Z"
+    },
+    {
+      "id": "prd_laptop_01",
+      "created_at": "2026-08-25T05:26:43.306Z",
+      "param_0": "prd_laptop_01",
+      "param_1": "sel_apex_001",
+      "param_2": "cat_laptops_02",
+      "param_3": "brd_apex_01",
+      "param_4": "ApexPro X15 Ultra Laptop",
+      "param_5": "apexpro-x15-ultra-laptop",
+      "param_6": "ApexTech",
+      "param_7": "The ApexPro X15 features a 15.6-inch QHD OLED display, 16-core processor, 32GB DDR5 RAM, and 1TB NVMe SSD.",
+      "param_8": 1499.99,
+      "param_9": 10,
+      "param_10": 8.25
+    },
+    {
+      "id": "prd_earbuds_02",
+      "created_at": "2026-08-25T05:26:43.307Z",
+      "param_0": "prd_earbuds_02",
+      "param_1": "sel_apex_001",
+      "param_2": "cat_audio_03",
+      "param_3": "brd_sonic_02",
+      "param_4": "SonicWave Pro Wireless Noise-Canceling Earbuds",
+      "param_5": "sonicwave-pro-wireless-earbuds",
+      "param_6": "SonicWave",
+      "param_7": "Active Noise Cancellation (ANC) with 36-hour total playback battery life, IPX7 water resistance, and studio mic quality.",
+      "param_8": 199.99,
+      "param_9": 15,
+      "param_10": 8.25
+    },
+    {
+      "id": "prd_laptop_01",
+      "created_at": "2026-08-25T05:27:09.096Z",
+      "param_0": "prd_laptop_01",
+      "param_1": "sel_apex_001",
+      "param_2": "cat_laptops_02",
+      "param_3": "brd_apex_01",
+      "param_4": "ApexPro X15 Ultra Laptop",
+      "param_5": "apexpro-x15-ultra-laptop",
+      "param_6": "ApexTech",
+      "param_7": "The ApexPro X15 features a 15.6-inch QHD OLED display, 16-core processor, 32GB DDR5 RAM, and 1TB NVMe SSD.",
+      "param_8": 1499.99,
+      "param_9": 10,
+      "param_10": 8.25
+    },
+    {
+      "id": "prd_earbuds_02",
+      "created_at": "2026-08-25T05:27:09.096Z",
+      "param_0": "prd_earbuds_02",
+      "param_1": "sel_apex_001",
+      "param_2": "cat_audio_03",
+      "param_3": "brd_sonic_02",
+      "param_4": "SonicWave Pro Wireless Noise-Canceling Earbuds",
+      "param_5": "sonicwave-pro-wireless-earbuds",
+      "param_6": "SonicWave",
+      "param_7": "Active Noise Cancellation (ANC) with 36-hour total playback battery life, IPX7 water resistance, and studio mic quality.",
+      "param_8": 199.99,
+      "param_9": 15,
+      "param_10": 8.25
+    }
+  ],
+  "product_variants": [
+    {
+      "id": "var_laptop_01_32gb",
+      "product_id": "prd_laptop_01",
+      "sku": "APEX-X15-32GB-1TB",
+      "variant_name": "32GB RAM / 1TB SSD - Space Gray",
+      "price_override": 1499.99,
+      "attributes_json": "{\"RAM\":\"32GB\",\"Storage\":\"1TB\",\"Color\":\"Space Gray\"}",
+      "created_at": "2026-08-25T05:34:36.687Z"
+    },
+    {
+      "id": "var_earbuds_blk",
+      "product_id": "prd_earbuds_02",
+      "sku": "SONIC-EARBUD-BLK",
+      "variant_name": "Midnight Black",
+      "price_override": 199.99,
+      "attributes_json": "{\"Color\":\"Midnight Black\"}",
+      "created_at": "2026-08-25T05:34:36.689Z"
+    },
+    {
+      "id": "var_laptop_01_32gb",
+      "created_at": "2026-08-25T05:26:43.317Z",
+      "param_0": "var_laptop_01_32gb",
+      "param_1": "prd_laptop_01",
+      "param_2": "APEX-X15-32GB-1TB",
+      "param_3": "32GB RAM / 1TB SSD - Space Gray",
+      "param_4": 1499.99,
+      "param_5": "{\"RAM\":\"32GB\",\"Storage\":\"1TB\",\"Color\":\"Space Gray\"}",
+      "param_6": 1.85,
+      "param_7": 1
+    },
+    {
+      "id": "var_earbuds_blk",
+      "created_at": "2026-08-25T05:26:43.318Z",
+      "param_0": "var_earbuds_blk",
+      "param_1": "prd_earbuds_02",
+      "param_2": "SONIC-EARBUD-BLK",
+      "param_3": "Midnight Black",
+      "param_4": 199.99,
+      "param_5": "{\"Color\":\"Midnight Black\"}",
+      "param_6": 0.25,
+      "param_7": 1
+    },
+    {
+      "id": "var_laptop_01_32gb",
+      "created_at": "2026-08-25T05:27:09.103Z",
+      "param_0": "var_laptop_01_32gb",
+      "param_1": "prd_laptop_01",
+      "param_2": "APEX-X15-32GB-1TB",
+      "param_3": "32GB RAM / 1TB SSD - Space Gray",
+      "param_4": 1499.99,
+      "param_5": "{\"RAM\":\"32GB\",\"Storage\":\"1TB\",\"Color\":\"Space Gray\"}",
+      "param_6": 1.85,
+      "param_7": 1
+    },
+    {
+      "id": "var_earbuds_blk",
+      "created_at": "2026-08-25T05:27:09.104Z",
+      "param_0": "var_earbuds_blk",
+      "param_1": "prd_earbuds_02",
+      "param_2": "SONIC-EARBUD-BLK",
+      "param_3": "Midnight Black",
+      "param_4": 199.99,
+      "param_5": "{\"Color\":\"Midnight Black\"}",
+      "param_6": 0.25,
+      "param_7": 1
+    },
+    {
+      "id": "var_laptop_01_32gb",
+      "created_at": "2026-08-25T05:27:37.688Z",
+      "param_0": "var_laptop_01_32gb",
+      "param_1": "prd_laptop_01",
+      "param_2": "APEX-X15-32GB-1TB",
+      "param_3": "32GB RAM / 1TB SSD - Space Gray",
+      "param_4": 1499.99,
+      "param_5": "{\"RAM\":\"32GB\",\"Storage\":\"1TB\",\"Color\":\"Space Gray\"}",
+      "param_6": 1.85,
+      "param_7": 1
+    },
+    {
+      "id": "var_earbuds_blk",
+      "created_at": "2026-08-25T05:27:37.689Z",
+      "param_0": "var_earbuds_blk",
+      "param_1": "prd_earbuds_02",
+      "param_2": "SONIC-EARBUD-BLK",
+      "param_3": "Midnight Black",
+      "param_4": 199.99,
+      "param_5": "{\"Color\":\"Midnight Black\"}",
+      "param_6": 0.25,
+      "param_7": 1
+    },
+    {
+      "id": "var_laptop_01_32gb",
+      "created_at": "2026-08-25T05:29:48.085Z",
+      "param_0": "var_laptop_01_32gb",
+      "param_1": "prd_laptop_01",
+      "param_2": "APEX-X15-32GB-1TB",
+      "param_3": "32GB RAM / 1TB SSD - Space Gray",
+      "param_4": 1499.99,
+      "param_5": "{\"RAM\":\"32GB\",\"Storage\":\"1TB\",\"Color\":\"Space Gray\"}",
+      "param_6": 1.85,
+      "param_7": 1
+    },
+    {
+      "id": "var_earbuds_blk",
+      "created_at": "2026-08-25T05:29:48.086Z",
+      "param_0": "var_earbuds_blk",
+      "param_1": "prd_earbuds_02",
+      "param_2": "SONIC-EARBUD-BLK",
+      "param_3": "Midnight Black",
+      "param_4": 199.99,
+      "param_5": "{\"Color\":\"Midnight Black\"}",
+      "param_6": 0.25,
+      "param_7": 1
+    },
+    {
+      "id": "var_laptop_01_32gb",
+      "created_at": "2026-08-25T05:31:03.062Z",
+      "param_0": "var_laptop_01_32gb",
+      "param_1": "prd_laptop_01",
+      "param_2": "APEX-X15-32GB-1TB",
+      "param_3": "32GB RAM / 1TB SSD - Space Gray",
+      "param_4": 1499.99,
+      "param_5": "{\"RAM\":\"32GB\",\"Storage\":\"1TB\",\"Color\":\"Space Gray\"}",
+      "param_6": 1.85,
+      "param_7": 1
+    },
+    {
+      "id": "var_earbuds_blk",
+      "created_at": "2026-08-25T05:31:03.063Z",
+      "param_0": "var_earbuds_blk",
+      "param_1": "prd_earbuds_02",
+      "param_2": "SONIC-EARBUD-BLK",
+      "param_3": "Midnight Black",
+      "param_4": 199.99,
+      "param_5": "{\"Color\":\"Midnight Black\"}",
+      "param_6": 0.25,
+      "param_7": 1
+    }
+  ],
+  "product_specifications": [
+    {
+      "id": "spec_01",
+      "created_at": "2026-08-25T05:26:20.906Z",
+      "param_0": "spec_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "Processor",
+      "param_3": "16-Core Ultra CPU 5.2GHz",
+      "param_4": 1
+    },
+    {
+      "id": "spec_02",
+      "created_at": "2026-08-25T05:26:20.907Z",
+      "param_0": "spec_02",
+      "param_1": "prd_laptop_01",
+      "param_2": "RAM",
+      "param_3": "32GB DDR5 5600MHz",
+      "param_4": 2
+    },
+    {
+      "id": "spec_03",
+      "created_at": "2026-08-25T05:26:20.908Z",
+      "param_0": "spec_03",
+      "param_1": "prd_laptop_01",
+      "param_2": "Storage",
+      "param_3": "1TB PCIe Gen4 NVMe SSD",
+      "param_4": 3
+    },
+    {
+      "id": "spec_04",
+      "created_at": "2026-08-25T05:26:20.908Z",
+      "param_0": "spec_04",
+      "param_1": "prd_laptop_01",
+      "param_2": "Display",
+      "param_3": "15.6\" QHD OLED 120Hz 100% DCI-P3",
+      "param_4": 4
+    },
+    {
+      "id": "spec_01",
+      "created_at": "2026-08-25T05:26:43.307Z",
+      "param_0": "spec_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "Processor",
+      "param_3": "16-Core Ultra CPU 5.2GHz",
+      "param_4": 1
+    },
+    {
+      "id": "spec_02",
+      "created_at": "2026-08-25T05:26:43.308Z",
+      "param_0": "spec_02",
+      "param_1": "prd_laptop_01",
+      "param_2": "RAM",
+      "param_3": "32GB DDR5 5600MHz",
+      "param_4": 2
+    },
+    {
+      "id": "spec_03",
+      "created_at": "2026-08-25T05:26:43.309Z",
+      "param_0": "spec_03",
+      "param_1": "prd_laptop_01",
+      "param_2": "Storage",
+      "param_3": "1TB PCIe Gen4 NVMe SSD",
+      "param_4": 3
+    },
+    {
+      "id": "spec_04",
+      "created_at": "2026-08-25T05:26:43.310Z",
+      "param_0": "spec_04",
+      "param_1": "prd_laptop_01",
+      "param_2": "Display",
+      "param_3": "15.6\" QHD OLED 120Hz 100% DCI-P3",
+      "param_4": 4
+    },
+    {
+      "id": "spec_01",
+      "created_at": "2026-08-25T05:27:09.097Z",
+      "param_0": "spec_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "Processor",
+      "param_3": "16-Core Ultra CPU 5.2GHz",
+      "param_4": 1
+    },
+    {
+      "id": "spec_02",
+      "created_at": "2026-08-25T05:27:09.098Z",
+      "param_0": "spec_02",
+      "param_1": "prd_laptop_01",
+      "param_2": "RAM",
+      "param_3": "32GB DDR5 5600MHz",
+      "param_4": 2
+    },
+    {
+      "id": "spec_03",
+      "created_at": "2026-08-25T05:27:09.099Z",
+      "param_0": "spec_03",
+      "param_1": "prd_laptop_01",
+      "param_2": "Storage",
+      "param_3": "1TB PCIe Gen4 NVMe SSD",
+      "param_4": 3
+    },
+    {
+      "id": "spec_04",
+      "created_at": "2026-08-25T05:27:09.099Z",
+      "param_0": "spec_04",
+      "param_1": "prd_laptop_01",
+      "param_2": "Display",
+      "param_3": "15.6\" QHD OLED 120Hz 100% DCI-P3",
+      "param_4": 4
+    },
+    {
+      "id": "spec_01",
+      "created_at": "2026-08-25T05:27:37.683Z",
+      "param_0": "spec_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "Processor",
+      "param_3": "16-Core Ultra CPU 5.2GHz",
+      "param_4": 1
+    },
+    {
+      "id": "spec_02",
+      "created_at": "2026-08-25T05:27:37.685Z",
+      "param_0": "spec_02",
+      "param_1": "prd_laptop_01",
+      "param_2": "RAM",
+      "param_3": "32GB DDR5 5600MHz",
+      "param_4": 2
+    },
+    {
+      "id": "spec_03",
+      "created_at": "2026-08-25T05:27:37.686Z",
+      "param_0": "spec_03",
+      "param_1": "prd_laptop_01",
+      "param_2": "Storage",
+      "param_3": "1TB PCIe Gen4 NVMe SSD",
+      "param_4": 3
+    },
+    {
+      "id": "spec_04",
+      "created_at": "2026-08-25T05:27:37.686Z",
+      "param_0": "spec_04",
+      "param_1": "prd_laptop_01",
+      "param_2": "Display",
+      "param_3": "15.6\" QHD OLED 120Hz 100% DCI-P3",
+      "param_4": 4
+    },
+    {
+      "id": "spec_01",
+      "created_at": "2026-08-25T05:29:48.001Z",
+      "param_0": "spec_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "Processor",
+      "param_3": "16-Core Ultra CPU 5.2GHz",
+      "param_4": 1
+    },
+    {
+      "id": "spec_02",
+      "created_at": "2026-08-25T05:29:48.001Z",
+      "param_0": "spec_02",
+      "param_1": "prd_laptop_01",
+      "param_2": "RAM",
+      "param_3": "32GB DDR5 5600MHz",
+      "param_4": 2
+    },
+    {
+      "id": "spec_03",
+      "created_at": "2026-08-25T05:29:48.002Z",
+      "param_0": "spec_03",
+      "param_1": "prd_laptop_01",
+      "param_2": "Storage",
+      "param_3": "1TB PCIe Gen4 NVMe SSD",
+      "param_4": 3
+    },
+    {
+      "id": "spec_04",
+      "created_at": "2026-08-25T05:29:48.083Z",
+      "param_0": "spec_04",
+      "param_1": "prd_laptop_01",
+      "param_2": "Display",
+      "param_3": "15.6\" QHD OLED 120Hz 100% DCI-P3",
+      "param_4": 4
+    },
+    {
+      "id": "spec_01",
+      "created_at": "2026-08-25T05:31:03.056Z",
+      "param_0": "spec_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "Processor",
+      "param_3": "16-Core Ultra CPU 5.2GHz",
+      "param_4": 1
+    },
+    {
+      "id": "spec_02",
+      "created_at": "2026-08-25T05:31:03.058Z",
+      "param_0": "spec_02",
+      "param_1": "prd_laptop_01",
+      "param_2": "RAM",
+      "param_3": "32GB DDR5 5600MHz",
+      "param_4": 2
+    },
+    {
+      "id": "spec_03",
+      "created_at": "2026-08-25T05:31:03.060Z",
+      "param_0": "spec_03",
+      "param_1": "prd_laptop_01",
+      "param_2": "Storage",
+      "param_3": "1TB PCIe Gen4 NVMe SSD",
+      "param_4": 3
+    },
+    {
+      "id": "spec_04",
+      "created_at": "2026-08-25T05:31:03.061Z",
+      "param_0": "spec_04",
+      "param_1": "prd_laptop_01",
+      "param_2": "Display",
+      "param_3": "15.6\" QHD OLED 120Hz 100% DCI-P3",
+      "param_4": 4
+    },
+    {
+      "id": "spec_01",
+      "created_at": "2026-08-25T05:31:24.100Z",
+      "param_0": "spec_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "Processor",
+      "param_3": "16-Core Ultra CPU 5.2GHz",
+      "param_4": 1
+    },
+    {
+      "id": "spec_02",
+      "created_at": "2026-08-25T05:31:24.102Z",
+      "param_0": "spec_02",
+      "param_1": "prd_laptop_01",
+      "param_2": "RAM",
+      "param_3": "32GB DDR5 5600MHz",
+      "param_4": 2
+    },
+    {
+      "id": "spec_03",
+      "created_at": "2026-08-25T05:31:24.104Z",
+      "param_0": "spec_03",
+      "param_1": "prd_laptop_01",
+      "param_2": "Storage",
+      "param_3": "1TB PCIe Gen4 NVMe SSD",
+      "param_4": 3
+    },
+    {
+      "id": "spec_04",
+      "created_at": "2026-08-25T05:31:24.105Z",
+      "param_0": "spec_04",
+      "param_1": "prd_laptop_01",
+      "param_2": "Display",
+      "param_3": "15.6\" QHD OLED 120Hz 100% DCI-P3",
+      "param_4": 4
+    },
+    {
+      "id": "spec_01",
+      "created_at": "2026-08-25T05:31:40.179Z",
+      "param_0": "spec_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "Processor",
+      "param_3": "16-Core Ultra CPU 5.2GHz",
+      "param_4": 1
+    },
+    {
+      "id": "spec_02",
+      "created_at": "2026-08-25T05:31:40.180Z",
+      "param_0": "spec_02",
+      "param_1": "prd_laptop_01",
+      "param_2": "RAM",
+      "param_3": "32GB DDR5 5600MHz",
+      "param_4": 2
+    },
+    {
+      "id": "spec_03",
+      "created_at": "2026-08-25T05:31:40.180Z",
+      "param_0": "spec_03",
+      "param_1": "prd_laptop_01",
+      "param_2": "Storage",
+      "param_3": "1TB PCIe Gen4 NVMe SSD",
+      "param_4": 3
+    },
+    {
+      "id": "spec_04",
+      "created_at": "2026-08-25T05:31:40.182Z",
+      "param_0": "spec_04",
+      "param_1": "prd_laptop_01",
+      "param_2": "Display",
+      "param_3": "15.6\" QHD OLED 120Hz 100% DCI-P3",
+      "param_4": 4
+    },
+    {
+      "id": "spec_01",
+      "created_at": "2026-08-25T05:34:36.679Z",
+      "param_0": "spec_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "Processor",
+      "param_3": "16-Core Ultra CPU 5.2GHz",
+      "param_4": 1
+    },
+    {
+      "id": "spec_02",
+      "created_at": "2026-08-25T05:34:36.683Z",
+      "param_0": "spec_02",
+      "param_1": "prd_laptop_01",
+      "param_2": "RAM",
+      "param_3": "32GB DDR5 5600MHz",
+      "param_4": 2
+    },
+    {
+      "id": "spec_03",
+      "created_at": "2026-08-25T05:34:36.684Z",
+      "param_0": "spec_03",
+      "param_1": "prd_laptop_01",
+      "param_2": "Storage",
+      "param_3": "1TB PCIe Gen4 NVMe SSD",
+      "param_4": 3
+    },
+    {
+      "id": "spec_04",
+      "created_at": "2026-08-25T05:34:36.686Z",
+      "param_0": "spec_04",
+      "param_1": "prd_laptop_01",
+      "param_2": "Display",
+      "param_3": "15.6\" QHD OLED 120Hz 100% DCI-P3",
+      "param_4": 4
+    }
+  ],
+  "product_images": [
+    {
+      "id": "img_laptop_01",
+      "created_at": "2026-08-25T05:26:20.911Z",
+      "param_0": "img_laptop_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",
+      "param_3": "ApexPro X15 Ultra Laptop",
+      "param_4": 1,
+      "param_5": 1
+    },
+    {
+      "id": "img_earbuds_01",
+      "created_at": "2026-08-25T05:26:20.911Z",
+      "param_0": "img_earbuds_01",
+      "param_1": "prd_earbuds_02",
+      "param_2": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80",
+      "param_3": "SonicWave Pro Earbuds",
+      "param_4": 1,
+      "param_5": 1
+    },
+    {
+      "id": "img_laptop_01",
+      "created_at": "2026-08-25T05:26:43.320Z",
+      "param_0": "img_laptop_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",
+      "param_3": "ApexPro X15 Ultra Laptop",
+      "param_4": 1,
+      "param_5": 1
+    },
+    {
+      "id": "img_earbuds_01",
+      "created_at": "2026-08-25T05:26:43.321Z",
+      "param_0": "img_earbuds_01",
+      "param_1": "prd_earbuds_02",
+      "param_2": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80",
+      "param_3": "SonicWave Pro Earbuds",
+      "param_4": 1,
+      "param_5": 1
+    },
+    {
+      "id": "img_laptop_01",
+      "created_at": "2026-08-25T05:27:09.105Z",
+      "param_0": "img_laptop_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",
+      "param_3": "ApexPro X15 Ultra Laptop",
+      "param_4": 1,
+      "param_5": 1
+    },
+    {
+      "id": "img_earbuds_01",
+      "created_at": "2026-08-25T05:27:09.105Z",
+      "param_0": "img_earbuds_01",
+      "param_1": "prd_earbuds_02",
+      "param_2": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80",
+      "param_3": "SonicWave Pro Earbuds",
+      "param_4": 1,
+      "param_5": 1
+    },
+    {
+      "id": "img_laptop_01",
+      "created_at": "2026-08-25T05:27:37.692Z",
+      "param_0": "img_laptop_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",
+      "param_3": "ApexPro X15 Ultra Laptop",
+      "param_4": 1,
+      "param_5": 1
+    },
+    {
+      "id": "img_earbuds_01",
+      "created_at": "2026-08-25T05:27:37.693Z",
+      "param_0": "img_earbuds_01",
+      "param_1": "prd_earbuds_02",
+      "param_2": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80",
+      "param_3": "SonicWave Pro Earbuds",
+      "param_4": 1,
+      "param_5": 1
+    },
+    {
+      "id": "img_laptop_01",
+      "created_at": "2026-08-25T05:29:48.087Z",
+      "param_0": "img_laptop_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",
+      "param_3": "ApexPro X15 Ultra Laptop",
+      "param_4": 1,
+      "param_5": 1
+    },
+    {
+      "id": "img_earbuds_01",
+      "created_at": "2026-08-25T05:29:48.088Z",
+      "param_0": "img_earbuds_01",
+      "param_1": "prd_earbuds_02",
+      "param_2": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80",
+      "param_3": "SonicWave Pro Earbuds",
+      "param_4": 1,
+      "param_5": 1
+    },
+    {
+      "id": "img_laptop_01",
+      "created_at": "2026-08-25T05:31:03.064Z",
+      "param_0": "img_laptop_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",
+      "param_3": "ApexPro X15 Ultra Laptop",
+      "param_4": 1,
+      "param_5": 1
+    },
+    {
+      "id": "img_earbuds_01",
+      "created_at": "2026-08-25T05:31:03.065Z",
+      "param_0": "img_earbuds_01",
+      "param_1": "prd_earbuds_02",
+      "param_2": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80",
+      "param_3": "SonicWave Pro Earbuds",
+      "param_4": 1,
+      "param_5": 1
+    },
+    {
+      "id": "img_laptop_01",
+      "created_at": "2026-08-25T05:31:24.108Z",
+      "param_0": "img_laptop_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",
+      "param_3": "ApexPro X15 Ultra Laptop",
+      "param_4": 1,
+      "param_5": 1
+    },
+    {
+      "id": "img_earbuds_01",
+      "created_at": "2026-08-25T05:31:24.109Z",
+      "param_0": "img_earbuds_01",
+      "param_1": "prd_earbuds_02",
+      "param_2": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80",
+      "param_3": "SonicWave Pro Earbuds",
+      "param_4": 1,
+      "param_5": 1
+    },
+    {
+      "id": "img_laptop_01",
+      "created_at": "2026-08-25T05:31:40.184Z",
+      "param_0": "img_laptop_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",
+      "param_3": "ApexPro X15 Ultra Laptop",
+      "param_4": 1,
+      "param_5": 1
+    },
+    {
+      "id": "img_earbuds_01",
+      "created_at": "2026-08-25T05:31:40.186Z",
+      "param_0": "img_earbuds_01",
+      "param_1": "prd_earbuds_02",
+      "param_2": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80",
+      "param_3": "SonicWave Pro Earbuds",
+      "param_4": 1,
+      "param_5": 1
+    },
+    {
+      "id": "img_laptop_01",
+      "created_at": "2026-08-25T05:34:36.690Z",
+      "param_0": "img_laptop_01",
+      "param_1": "prd_laptop_01",
+      "param_2": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",
+      "param_3": "ApexPro X15 Ultra Laptop",
+      "param_4": 1,
+      "param_5": 1
+    },
+    {
+      "id": "img_earbuds_01",
+      "created_at": "2026-08-25T05:34:36.691Z",
+      "param_0": "img_earbuds_01",
+      "param_1": "prd_earbuds_02",
+      "param_2": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80",
+      "param_3": "SonicWave Pro Earbuds",
+      "param_4": 1,
+      "param_5": 1
+    }
+  ],
+  "product_bundles": [
+    {
+      "id": "rec_1787635580912_19so",
+      "created_at": "2026-08-25T05:26:20.912Z"
+    },
+    {
+      "id": "rec_1787635603321_zupg",
+      "created_at": "2026-08-25T05:26:43.321Z"
+    },
+    {
+      "id": "rec_1787635629107_iymr",
+      "created_at": "2026-08-25T05:27:09.107Z"
+    },
+    {
+      "id": "rec_1787635657695_9axp",
+      "created_at": "2026-08-25T05:27:37.695Z"
+    },
+    {
+      "id": "rec_1787635788089_2bt6",
+      "created_at": "2026-08-25T05:29:48.089Z"
+    },
+    {
+      "id": "rec_1787635863066_er22",
+      "created_at": "2026-08-25T05:31:03.066Z"
+    },
+    {
+      "id": "rec_1787635884110_r88p",
+      "created_at": "2026-08-25T05:31:24.110Z"
+    },
+    {
+      "id": "rec_1787635900187_r0f2",
+      "created_at": "2026-08-25T05:31:40.187Z"
+    },
+    {
+      "id": "rec_1787636076692_1sdm",
+      "created_at": "2026-08-25T05:34:36.692Z"
+    }
+  ],
+  "bundle_items": [],
+  "warehouse_locations": [],
+  "inventory": [
+    {
+      "id": "inv_01",
+      "variant_id": "var_laptop_01_32gb",
+      "quantity_on_hand": 45,
+      "quantity_reserved": 0,
+      "reorder_threshold": 5,
+      "updated_at": "2026-08-25T05:34:36.694Z"
+    },
+    {
+      "id": "inv_02",
+      "variant_id": "var_earbuds_blk",
+      "quantity_on_hand": 120,
+      "quantity_reserved": 0,
+      "reorder_threshold": 5,
+      "updated_at": "2026-08-25T05:34:36.695Z"
+    }
+  ],
+  "inventory_transactions": [
+    {
+      "id": "rec_1787635580915_v98w",
+      "created_at": "2026-08-25T05:26:20.915Z"
+    },
+    {
+      "id": "rec_1787635603324_bwxc",
+      "created_at": "2026-08-25T05:26:43.324Z"
+    },
+    {
+      "id": "rec_1787635629110_96xl",
+      "created_at": "2026-08-25T05:27:09.110Z"
+    },
+    {
+      "id": "rec_1787635657698_h47x",
+      "created_at": "2026-08-25T05:27:37.698Z"
+    },
+    {
+      "id": "rec_1787635788092_c372",
+      "created_at": "2026-08-25T05:29:48.092Z"
+    },
+    {
+      "id": "rec_1787635863069_7ku8",
+      "created_at": "2026-08-25T05:31:03.069Z"
+    },
+    {
+      "id": "rec_1787635884114_ppz6",
+      "created_at": "2026-08-25T05:31:24.114Z"
+    },
+    {
+      "id": "rec_1787635900190_8g77",
+      "created_at": "2026-08-25T05:31:40.190Z"
+    },
+    {
+      "id": "rec_1787636076696_kj3k",
+      "created_at": "2026-08-25T05:34:36.697Z"
+    }
+  ],
+  "cart_items": [],
+  "wishlists": [
+    {
+      "name": "My Wishlist",
+      "is_public": 0,
+      "created_at": "2026-08-25T05:26:20.918Z"
+    },
+    {
+      "name": "My Wishlist",
+      "is_public": 0,
+      "created_at": "2026-08-25T05:26:43.325Z"
+    },
+    {
+      "name": "My Wishlist",
+      "is_public": 0,
+      "created_at": "2026-08-25T05:27:09.111Z"
+    },
+    {
+      "name": "My Wishlist",
+      "is_public": 0,
+      "created_at": "2026-08-25T05:27:37.699Z"
+    },
+    {
+      "name": "My Wishlist",
+      "is_public": 0,
+      "created_at": "2026-08-25T05:29:48.093Z"
+    },
+    {
+      "name": "My Wishlist",
+      "is_public": 0,
+      "created_at": "2026-08-25T05:31:03.070Z"
+    },
+    {
+      "name": "My Wishlist",
+      "is_public": 0,
+      "created_at": "2026-08-25T05:31:24.115Z"
+    },
+    {
+      "name": "My Wishlist",
+      "is_public": 0,
+      "created_at": "2026-08-25T05:31:40.191Z"
+    },
+    {
+      "name": "My Wishlist",
+      "is_public": 0,
+      "created_at": "2026-08-25T05:34:36.699Z"
+    }
+  ],
+  "wishlist_items": [
+    {
+      "created_at": "2026-08-25T05:26:20.919Z"
+    },
+    {
+      "created_at": "2026-08-25T05:26:43.326Z"
+    },
+    {
+      "created_at": "2026-08-25T05:27:09.112Z"
+    },
+    {
+      "created_at": "2026-08-25T05:27:37.701Z"
+    },
+    {
+      "created_at": "2026-08-25T05:29:48.095Z"
+    },
+    {
+      "created_at": "2026-08-25T05:31:03.071Z"
+    },
+    {
+      "created_at": "2026-08-25T05:31:24.116Z"
+    },
+    {
+      "created_at": "2026-08-25T05:31:40.192Z"
+    },
+    {
+      "created_at": "2026-08-25T05:34:36.701Z"
+    }
+  ],
+  "price_alerts": [
+    {
+      "id": "rec_1787635580919_o3e2",
+      "created_at": "2026-08-25T05:26:20.919Z"
+    },
+    {
+      "id": "rec_1787635603328_q7js",
+      "created_at": "2026-08-25T05:26:43.328Z"
+    },
+    {
+      "id": "rec_1787635629113_bjk9",
+      "created_at": "2026-08-25T05:27:09.113Z"
+    },
+    {
+      "id": "rec_1787635657702_z4xu",
+      "created_at": "2026-08-25T05:27:37.702Z"
+    },
+    {
+      "id": "rec_1787635788098_bb1w",
+      "created_at": "2026-08-25T05:29:48.098Z"
+    },
+    {
+      "id": "rec_1787635863074_rarv",
+      "created_at": "2026-08-25T05:31:03.074Z"
+    },
+    {
+      "id": "rec_1787635884117_2doo",
+      "created_at": "2026-08-25T05:31:24.117Z"
+    },
+    {
+      "id": "rec_1787635900192_l8m6",
+      "created_at": "2026-08-25T05:31:40.192Z"
+    },
+    {
+      "id": "rec_1787636076702_nwar",
+      "created_at": "2026-08-25T05:34:36.702Z"
+    }
+  ],
+  "coupons": [
+    {
+      "id": "cpn_welcome10",
+      "code": "WELCOME10",
+      "discount_type": "PERCENTAGE",
+      "discount_value": 10,
+      "min_order_subtotal": 50,
+      "usage_limit": 1000,
+      "per_user_limit": 1,
+      "starts_at": "2026-01-01T00:00:00Z",
+      "expires_at": "2027-01-01T00:00:00Z",
+      "is_active": 1,
+      "created_at": "2026-08-25T05:34:36.704Z"
+    },
+    {
+      "id": "cpn_flat25",
+      "code": "SAVE25",
+      "discount_type": "FIXED",
+      "discount_value": 25,
+      "min_order_subtotal": 150,
+      "usage_limit": 500,
+      "per_user_limit": 1,
+      "starts_at": "2026-01-01T00:00:00Z",
+      "expires_at": "2027-01-01T00:00:00Z",
+      "is_active": 1,
+      "created_at": "2026-08-25T05:34:36.705Z"
+    }
+  ],
+  "promotional_campaigns": [],
+  "orders": [
+    {
+      "discount_amount": 0,
+      "created_at": "2026-08-25T05:29:48.103Z",
+      "updated_at": "2026-08-25T05:29:48.103Z"
+    },
+    {
+      "discount_amount": 0,
+      "created_at": "2026-08-25T05:31:03.077Z",
+      "updated_at": "2026-08-25T05:31:03.077Z"
+    },
+    {
+      "discount_amount": 0,
+      "created_at": "2026-08-25T05:31:24.122Z",
+      "updated_at": "2026-08-25T05:31:24.122Z"
+    },
+    {
+      "id": "ord_seed_01",
+      "order_number": "ORD-20260101-1001",
+      "user_id": "usr_customer_001",
+      "status": "CONFIRMED",
+      "subtotal": 1349.99,
+      "tax_amount": 111.37,
+      "shipping_amount": 0,
+      "discount_amount": 135,
+      "total_amount": 1326.36,
+      "created_at": "2026-08-25T05:31:40.196Z",
+      "updated_at": "2026-08-25T05:31:40.196Z"
+    },
+    {
+      "id": "ord_seed_01",
+      "order_number": "ORD-20260101-1001",
+      "user_id": "usr_customer_001",
+      "status": "CONFIRMED",
+      "subtotal": 1349.99,
+      "tax_amount": 111.37,
+      "shipping_amount": 0,
+      "discount_amount": 135,
+      "total_amount": 1326.36,
+      "created_at": "2026-08-25T05:34:36.707Z",
+      "updated_at": "2026-08-25T05:34:36.707Z"
+    }
+  ],
+  "order_items": [
+    {
+      "discount_amount": 0,
+      "tax_amount": 0,
+      "item_status": "PENDING",
+      "created_at": "2026-08-25T05:29:48.105Z"
+    },
+    {
+      "discount_amount": 0,
+      "tax_amount": 0,
+      "item_status": "PENDING",
+      "created_at": "2026-08-25T05:31:03.078Z"
+    },
+    {
+      "discount_amount": 0,
+      "tax_amount": 0,
+      "item_status": "PENDING",
+      "created_at": "2026-08-25T05:31:24.123Z"
+    },
+    {
+      "id": "ori_seed_item_01",
+      "order_id": "ord_seed_01",
+      "variant_id": "var_laptop_01_32gb",
+      "seller_id": "sel_apex_001",
+      "unit_price": 1349.99,
+      "discount_amount": 135,
+      "tax_amount": 111.37,
+      "quantity": 1,
+      "total_price": 1349.99,
+      "item_status": "PENDING",
+      "created_at": "2026-08-25T05:31:40.197Z"
+    },
+    {
+      "id": "ori_seed_item_01",
+      "order_id": "ord_seed_01",
+      "variant_id": "var_laptop_01_32gb",
+      "seller_id": "sel_apex_001",
+      "unit_price": 1349.99,
+      "discount_amount": 135,
+      "tax_amount": 111.37,
+      "quantity": 1,
+      "total_price": 1349.99,
+      "item_status": "PENDING",
+      "created_at": "2026-08-25T05:34:36.708Z"
+    }
+  ],
+  "payments": [],
+  "shipments": [],
+  "return_requests": [],
+  "reviews": [
+    {
+      "id": "rev_01",
+      "product_id": "prd_laptop_01",
+      "user_id": "usr_customer_001",
+      "rating": 5,
+      "title": "Exceptional Workstation Laptop",
+      "comment": "Superb build quality, blazing fast render times, and accurate color screen.",
+      "is_verified_purchase": 1,
+      "status": "APPROVED",
+      "helpful_votes": 0,
+      "unhelpful_votes": 0,
+      "created_at": "2026-08-25T05:34:36.709Z"
+    },
+    {
+      "id": "rev_02",
+      "product_id": "prd_earbuds_02",
+      "user_id": "usr_customer_001",
+      "rating": 5,
+      "title": "Great ANC and Battery Life",
+      "comment": "Noise cancellation works amazingly during flights and battery lasts all week.",
+      "is_verified_purchase": 1,
+      "status": "APPROVED",
+      "helpful_votes": 0,
+      "unhelpful_votes": 0,
+      "created_at": "2026-08-25T05:34:36.711Z"
+    }
+  ],
+  "review_votes": [],
+  "support_tickets": [
+    {
+      "priority": "MEDIUM",
+      "status": "OPEN",
+      "created_at": "2026-08-25T05:26:20.926Z",
+      "updated_at": "2026-08-25T05:26:20.926Z"
+    },
+    {
+      "priority": "MEDIUM",
+      "status": "OPEN",
+      "created_at": "2026-08-25T05:26:43.334Z",
+      "updated_at": "2026-08-25T05:26:43.334Z"
+    },
+    {
+      "priority": "MEDIUM",
+      "status": "OPEN",
+      "created_at": "2026-08-25T05:27:09.116Z",
+      "updated_at": "2026-08-25T05:27:09.116Z"
+    },
+    {
+      "priority": "MEDIUM",
+      "status": "OPEN",
+      "created_at": "2026-08-25T05:27:37.711Z",
+      "updated_at": "2026-08-25T05:27:37.711Z"
+    },
+    {
+      "priority": "MEDIUM",
+      "status": "OPEN",
+      "created_at": "2026-08-25T05:29:48.108Z",
+      "updated_at": "2026-08-25T05:29:48.108Z"
+    },
+    {
+      "priority": "MEDIUM",
+      "status": "OPEN",
+      "created_at": "2026-08-25T05:31:03.081Z",
+      "updated_at": "2026-08-25T05:31:03.081Z"
+    },
+    {
+      "priority": "MEDIUM",
+      "status": "OPEN",
+      "created_at": "2026-08-25T05:31:24.125Z",
+      "updated_at": "2026-08-25T05:31:24.125Z"
+    },
+    {
+      "priority": "MEDIUM",
+      "status": "OPEN",
+      "created_at": "2026-08-25T05:31:40.200Z",
+      "updated_at": "2026-08-25T05:31:40.200Z"
+    },
+    {
+      "priority": "MEDIUM",
+      "status": "OPEN",
+      "created_at": "2026-08-25T05:34:36.711Z",
+      "updated_at": "2026-08-25T05:34:36.711Z"
+    }
+  ],
+  "support_messages": [
+    {
+      "is_internal_note": 0,
+      "created_at": "2026-08-25T05:26:20.927Z"
+    },
+    {
+      "is_internal_note": 0,
+      "created_at": "2026-08-25T05:26:43.335Z"
+    },
+    {
+      "is_internal_note": 0,
+      "created_at": "2026-08-25T05:27:09.117Z"
+    },
+    {
+      "is_internal_note": 0,
+      "created_at": "2026-08-25T05:27:37.712Z"
+    },
+    {
+      "is_internal_note": 0,
+      "created_at": "2026-08-25T05:29:48.108Z"
+    },
+    {
+      "is_internal_note": 0,
+      "created_at": "2026-08-25T05:31:03.082Z"
+    },
+    {
+      "is_internal_note": 0,
+      "created_at": "2026-08-25T05:31:24.126Z"
+    },
+    {
+      "is_internal_note": 0,
+      "created_at": "2026-08-25T05:31:40.201Z"
+    },
+    {
+      "is_internal_note": 0,
+      "created_at": "2026-08-25T05:34:36.713Z"
+    }
+  ],
+  "recently_viewed": [
+    {
+      "id": "usr_customer_001",
+      "created_at": "2026-08-25T05:26:20.946Z",
+      "param_0": "usr_customer_001",
+      "param_1": "prd_laptop_01"
+    },
+    {
+      "user_id": "usr_customer_001",
+      "product_id": "prd_laptop_01",
+      "viewed_at": "2026-08-25T05:34:36.728Z"
+    }
+  ],
+  "search_history": [],
+  "security_audit_logs": [
+    {
+      "id": "rec_1787635580927_pnnx",
+      "created_at": "2026-08-25T05:26:20.927Z"
+    },
+    {
+      "id": "rec_1787635603335_mktu",
+      "created_at": "2026-08-25T05:26:43.335Z"
+    },
+    {
+      "id": "rec_1787635629119_4zg0",
+      "created_at": "2026-08-25T05:27:09.119Z"
+    },
+    {
+      "id": "rec_1787635657713_cdoo",
+      "created_at": "2026-08-25T05:27:37.713Z"
+    },
+    {
+      "id": "rec_1787635788109_rwhh",
+      "created_at": "2026-08-25T05:29:48.109Z"
+    },
+    {
+      "id": "rec_1787635863083_byug",
+      "created_at": "2026-08-25T05:31:03.083Z"
+    },
+    {
+      "id": "rec_1787635884127_fgfz",
+      "created_at": "2026-08-25T05:31:24.127Z"
+    },
+    {
+      "id": "rec_1787635900203_0ur6",
+      "created_at": "2026-08-25T05:31:40.203Z"
+    },
+    {
+      "id": "rec_1787636076715_08jo",
+      "created_at": "2026-08-25T05:34:36.715Z"
+    }
+  ],
+  "a": [
+    {
+      "id": "addr_cust_01",
+      "created_at": "2026-08-25T05:24:34.647Z",
+      "param_0": "addr_cust_01",
+      "param_1": "usr_customer_001",
+      "param_2": "SHIPPING",
+      "param_3": "Jane Shopper",
+      "param_4": "100 Synthetic Way",
+      "param_5": "Apt 4B",
+      "param_6": "Innovation City",
+      "param_7": "CA",
+      "param_8": "90210",
+      "param_9": "United States"
+    },
+    {
+      "id": "addr_cust_02",
+      "created_at": "2026-08-25T05:24:34.648Z",
+      "param_0": "addr_cust_02",
+      "param_1": "usr_customer_001",
+      "param_2": "BILLING",
+      "param_3": "Jane Shopper",
+      "param_4": "100 Synthetic Way",
+      "param_5": "Apt 4B",
+      "param_6": "Innovation City",
+      "param_7": "CA",
+      "param_8": "90210",
+      "param_9": "United States"
+    },
+    {
+      "id": "addr_1787635474698_398l",
+      "created_at": "2026-08-25T05:24:34.699Z",
+      "param_0": "addr_1787635474698_398l",
+      "param_1": "usr_customer_001",
+      "param_2": "SHIPPING",
+      "param_3": "Jane Executive",
+      "param_4": "500 Tech Boulevard",
+      "param_5": null,
+      "param_6": "San Francisco",
+      "param_7": "CA",
+      "param_8": "94105",
+      "param_9": "United States",
+      "param_10": 1
+    }
+  ]
+}
