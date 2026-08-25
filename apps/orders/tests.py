@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from apps.sellers.models import Seller
 from apps.catalog.models import Category, Product, ProductVariant
 from apps.orders.models import Order, OrderItem
+from .tests_expanded import CartAndCheckoutExpandedTestSuite
 
 User = get_user_model()
 
@@ -49,3 +50,6 @@ class OrdersModelTests(TestCase):
         )
         self.assertEqual(order.items.count(), 1)
         self.assertEqual(item.order.order_number, 'ORD-TEST-100')
+
+class FullCartAndCheckoutExpandedTests(CartAndCheckoutExpandedTestSuite):
+    pass
