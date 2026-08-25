@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}ShopSphere — Premier Enterprise Electronics Marketplace{% endblock %}
+{% block title %}ShopSphere — Premier Multi-Category Marketplace{% endblock %}
 
 {% block content %}
 <div class="hero-banner">
     <div class="hero-text">
         <span class="hero-badge">⚡ NEXT-GEN MARKETPLACE</span>
         <h1>Everything you need, in one sharper marketplace.</h1>
-        <p>From phones and cameras to home essentials and high-performance hardware, discover products selected for modern life.</p>
+        <p>From smartphones and laptops to home essentials, fashion, fitness, and gaming gear — discover curated products for modern life.</p>
         <div class="hero-actions">
             <a href="{% url 'catalog:product_list' %}" class="btn-hero-primary">Explore {{ product_count }} Products</a>
             <a href="{% url 'accounts:register' %}" class="btn-hero-secondary">Become a Seller</a>
@@ -28,15 +28,15 @@
 
 <!-- Category Taxonomy Grid -->
 <section class="section-container">
-    <h2 class="section-title">Shop by Category</h2>
+    <h2 class="section-title">Shop by Category ({{ categories|length }}+ Types)</h2>
     <div class="category-grid">
         {% for cat in categories %}
         <a href="{% url 'catalog:product_list' %}?category={{ cat.slug }}" class="category-card">
             <div class="cat-icon">
-                {% if 'smartphone' in cat.slug %}▣{% elif 'camera' in cat.slug %}◉{% elif 'home' in cat.slug %}⌂{% elif 'fashion' in cat.slug %}◇{% elif 'beauty' in cat.slug %}✦{% elif 'sport' in cat.slug %}↗{% elif 'book' in cat.slug %}▤{% elif 'office' in cat.slug %}▥{% else %}▦{% endif %}
+                {% if 'smartphones' in cat.slug %}📱{% elif 'laptops' in cat.slug %}💻{% elif 'audio' in cat.slug %}🎧{% elif 'smartwatches' in cat.slug %}⌚{% elif 'clothing' in cat.slug %}👕{% elif 'shoes' in cat.slug %}👟{% elif 'bags' in cat.slug %}🎒{% elif 'home' in cat.slug %}🍳{% elif 'beauty' in cat.slug %}✨{% elif 'sports' in cat.slug %}🏋️{% elif 'books' in cat.slug %}📚{% elif 'gaming' in cat.slug %}🎮{% else %}⚡{% endif %}
             </div>
             <h3>{{ cat.name }}</h3>
-            <p>{{ cat.description|truncatewords:6 }}</p>
+            <p>{{ cat.description|default:""|truncatewords:8 }}</p>
         </a>
         {% endfor %}
     </div>
@@ -46,7 +46,7 @@
     <div>
         <span class="eyebrow">JUST LANDED</span>
         <h2>Fresh picks for your next upgrade.</h2>
-        <p>New finds across the categories people are browsing today.</p>
+        <p>New finds across all 13 categories people are browsing today.</p>
     </div>
     <a href="{% url 'catalog:product_list' %}?sort=newest" class="btn-primary-sm">See all new arrivals</a>
 </section>
@@ -60,7 +60,15 @@
         {% for product in new_arrivals %}
         <div class="product-card">
             <div class="card-image-wrap"><img src="{{ product.primary_image }}" alt="{{ product.name }}" class="product-img"><span class="new-badge">NEW</span></div>
-            <div class="card-body"><span class="brand-tag">{{ product.brand_name }}</span><h3 class="product-name"><a href="{% url 'catalog:product_detail' slug=product.slug %}">{{ product.name }}</a></h3><div class="price-row"><span class="current-price">${{ product.effective_price }}</span></div><div class="card-actions"><a href="{% url 'catalog:product_detail' slug=product.slug %}" class="btn-card-view">View Details</a><a href="{% url 'wishlist:add_to_wishlist' product_id=product.id %}" class="btn-card-wish">♡</a></div></div>
+            <div class="card-body">
+                <span class="brand-tag">{{ product.brand_name }}</span>
+                <h3 class="product-name"><a href="{% url 'catalog:product_detail' slug=product.slug %}">{{ product.name }}</a></h3>
+                <div class="price-row"><span class="current-price">${{ product.effective_price }}</span></div>
+                <div class="card-actions">
+                    <a href="{% url 'catalog:product_detail' slug=product.slug %}" class="btn-card-view">View Details</a>
+                    <a href="{% url 'wishlist:add_to_wishlist' product_id=product.id %}" class="btn-card-wish">♡</a>
+                </div>
+            </div>
         </div>
         {% endfor %}
     </div>
@@ -118,25 +126,4 @@
         {% endfor %}
     </div>
 </section>
-
-<!-- Promotional Bundles -->
-{% if bundles %}
-<section class="section-container">
-    <h2 class="section-title">Curated Product Bundles (Save Extra 10%)</h2>
-    <div class="bundle-grid">
-        {% for bundle in bundles %}
-        <div class="bundle-card">
-            <h3>🎁 {{ bundle.name }}</h3>
-            <p>Save {{ bundle.discount_percentage }}% when you purchase this complete hardware package.</p>
-            <div class="bundle-items">
-                {% for bitem in bundle.items.all %}
-                    <span class="bundle-item-chip">• {{ bitem.product.name }}</span>
-                {% endfor %}
-            </div>
-            <a href="{% url 'catalog:product_list' %}" class="btn-bundle">Shop Bundle Packages</a>
-        </div>
-        {% endfor %}
-    </div>
-</section>
-{% endif %}
 {% endblock %}
