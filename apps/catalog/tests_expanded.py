@@ -173,7 +173,7 @@ class ExpandedCatalogTestSuite(TestCase):
         self.assertEqual(self.p1.effective_price, Decimal('1349.99'))
 
     def test_search_suggestions_api(self):
-        url = reverse('catalog:api_search_suggestions') + '?q=Apex'
+        url = reverse('catalog:search_suggestions') + '?q=Apex'
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         data = response.json()

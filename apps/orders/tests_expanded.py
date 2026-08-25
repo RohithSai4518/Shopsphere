@@ -11,7 +11,7 @@ from decimal import Decimal
 from apps.accounts.models import User, Address
 from apps.sellers.models import Seller
 from apps.catalog.models import Category, Brand, Product, ProductVariant
-from apps.cart.models import Cart, CartItem
+from apps.cart.models import CartItem
 from apps.orders.models import Order, OrderItem
 from apps.inventory.models import Inventory
 
@@ -93,44 +93,40 @@ class CartAndCheckoutExpandedTestSuite(TestCase):
         response = self.client.post(url, {'quantity': 2}, follow=True)
         self.assertEqual(response.status_code, 200)
 
-        cart = Cart.objects.get(user=self.user)
-        self.assertEqual(cart.items.count(), 1)
-        item = cart.items.first()
+        items = CartItem.objects.filter(user=self.user)
+        self.assertEqual(items.count(), 1)
+        item = items.first()
         self.assertEqual(item.quantity, 2)
-        # 2 * 900.00 = 1800.00
-        self.assertEqual(cart.subtotal, Decimal('1800.00'))
+        self.assertEqual(item.subtotal, Decimal('1800.00'))
 
     def test_add_multiple_category_products_to_cart(self):
         self.client.post(reverse('cart:add_to_cart', kwargs={'variant_id': self.v1.id}), {'quantity': 1})
         self.client.post(reverse('cart:add_to_cart', kwargs={'variant_id': self.v2.id}), {'quantity': 2})
 
-        cart = Cart.objects.get(user=self.user)
-        self.assertEqual(cart.items.count(), 2)
-        # Laptop: 1 * 900 = 900. Headphones: 2 * 200 = 400. Total Subtotal = 1300.00
-        self.assertEqual(cart.subtotal, Decimal('1300.00'))
+        items = CartItem.objects.filter(user=self.user)
+        self.assertEqual(items.count(), 2)
+        total_subtotal = sum(i.subtotal for i in items)
+        self.assertEqual(total_subtotal, Decimal('1300.00'))
 
     def test_update_cart_item_quantity(self):
         self.client.post(reverse('cart:add_to_cart', kwargs={'variant_id': self.v1.id}), {'quantity': 1})
-        cart = Cart.objects.get(user=self.user)
-        item = cart.items.first()
+        item = CartItem.objects.filter(user=self.user).first()
 
         update_url = reverse('cart:update_cart', kwargs={'item_id': item.id})
         self.client.post(update_url, {'quantity': 3})
 
         item.refresh_from_db()
         self.assertEqual(item.quantity, 3)
-        self.assertEqual(cart.subtotal, Decimal('2700.00'))
+        self.assertEqual(item.subtotal, Decimal('2700.00'))
 
     def test_remove_item_from_cart(self):
         self.client.post(reverse('cart:add_to_cart', kwargs={'variant_id': self.v1.id}), {'quantity': 1})
-        cart = Cart.objects.get(user=self.user)
-        item = cart.items.first()
+        item = CartItem.objects.filter(user=self.user).first()
 
         remove_url = reverse('cart:remove_from_cart', kwargs={'item_id': item.id})
         self.client.post(remove_url)
 
-        self.assertEqual(cart.items.count(), 0)
-        self.assertEqual(cart.subtotal, Decimal('0.00'))
+        self.assertEqual(CartItem.objects.filter(user=self.user).count(), 0)
 
     def test_checkout_page_renders_address_and_summary(self):
         self.client.post(reverse('cart:add_to_cart', kwargs={'variant_id': self.v1.id}), {'quantity': 1})
@@ -150,5 +146,4 @@ class CartAndCheckoutExpandedTestSuite(TestCase):
         order = orders.first()
         self.assertEqual(order.items.count(), 1)
 
-        cart = Cart.objects.get(user=self.user)
-        self.assertEqual(cart.items.count(), 0)
+        self.assertEqual(CartItem.objects.filter(user=self.user).count(), 0)
