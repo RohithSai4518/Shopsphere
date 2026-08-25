@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Open Ticket — ShopSphere Support{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: 3rem; display: flex; justify-content: center;">
+  <div class="glass-panel" style="padding: 2.5rem; max-width: 550px; width: 100%;">
+    <h1 style="font-size: 1.8rem; font-weight: 800; margin-top: 0; margin-bottom: 1.5rem;">Open Support Ticket</h1>
+
+    <form method="POST" style="display: flex; flex-direction: column; gap: 1.25rem;">
+      {% csrf_token %}
+      <div>
+        <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Subject</label>
+        <input type="text" name="subject" class="input-control" placeholder="Brief issue summary..." required />
+      </div>
+      <div>
+        <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Category</label>
+        <select name="category" class="input-control">
+          <option value="GENERAL">General Query</option>
+          <option value="ORDER_ISSUE">Order Issue / Shipping</option>
+          <option value="REFUND">Refund / RMA Request</option>
+          <option value="TECHNICAL">Technical Platform Support</option>
+        </select>
+      </div>
+      <div>
+        <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Detailed Message</label>
+        <textarea name="initial_message" rows="4" class="input-control" placeholder="Describe your inquiry..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="padding: 0.85rem;">Submit Ticket</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Ticket #{{ ticket.ticket_number }} — ShopSphere Support{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <div class="dash-header">
+        <h2>Ticket #{{ ticket.ticket_number }}: {{ ticket.subject }}</h2>
+        <span class="order-status-badge status-{{ ticket.status|lower }}">{{ ticket.status }}</span>
+    </div>
+
+    <div class="ticket-thread-container">
+        {% for msg in messages_list %}
+        <div class="message-card {% if msg.sender == user %}my-message{% else %}agent-message{% endif %}">
+            <div class="message-meta">
+                <strong>{{ msg.sender.first_name }} {{ msg.sender.last_name }}</strong> ({{ msg.sender.role }})
+                <span>{{ msg.created_at|date:"N j, H:i" }}</span>
+            </div>
+            <p class="message-text">{{ msg.message }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Reply Form -->
+    <div class="card-panel" style="margin-top:20px;">
+        <h3>Reply to Support Thread</h3>
+        <form method="POST" action="{% url 'support:ticket_detail' ticket_id=ticket.id %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <textarea name="reply" rows="4" required placeholder="Type your reply..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary-sm">Send Reply</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

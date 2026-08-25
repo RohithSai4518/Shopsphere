@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Request RMA Return — ShopSphere{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Submit RMA Return Request</h2>
+        <p>Item: <strong>{{ order_item.variant.product.name }}</strong> (Qty: {{ order_item.quantity }})</p>
+
+        <form method="POST" action="{% url 'returns:create_return' order_item_id=order_item.id %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Reason for Return</label>
+                <select name="reason">
+                    <option value="DEFECTIVE">Item Defective or Malfunctioning</option>
+                    <option value="WRONG_ITEM">Wrong Item Delivered</option>
+                    <option value="DAMAGED_IN_SHIPPING">Damaged During Transit</option>
+                    <option value="CHANGED_MIND">Buyer Changed Mind</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Comments / Explanation</label>
+                <textarea name="comments" rows="4" placeholder="Describe the defect or reason..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-auth-primary">Submit RMA Return Request</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

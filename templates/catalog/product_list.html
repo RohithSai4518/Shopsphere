@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}Catalog Search & Browse — ShopSphere{% endblock %}
+
+{% block content %}
+<div class="catalog-layout">
+    <!-- Filter Sidebar -->
+    <aside class="filter-sidebar">
+        <h3 class="filter-heading">Filters & Refinements</h3>
+        <form method="GET" action="{% url 'catalog:product_list' %}" class="filter-form">
+            <input type="hidden" name="q" value="{{ query }}">
+
+            <div class="filter-group">
+                <label>Category</label>
+                <select name="category" onchange="this.form.submit()">
+                    <option value="">All Categories</option>
+                    {% for cat in categories %}
+                        <option value="{{ cat.slug }}" {% if category_slug == cat.slug %}selected{% endif %}>{{ cat.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Manufacturer Brand</label>
+                <select name="brand" onchange="this.form.submit()">
+                    <option value="">All Brands</option>
+                    {% for brd in brands %}
+                        <option value="{{ brd.id }}" {% if brand_id == brd.id %}selected{% endif %}>{{ brd.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Price Range ($)</label>
+                <div class="price-inputs">
+                    <input type="number" name="min_price" placeholder="Min" value="{{ request.GET.min_price }}">
+                    <input type="number" name="max_price" placeholder="Max" value="{{ request.GET.max_price }}">
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label>Sort By</label>
+                <select name="sort" onchange="this.form.submit()">
+                    <option value="newest" {% if sort_by == 'newest' %}selected{% endif %}>Newest Arrivals</option>
+                    <option value="price_asc" {% if sort_by == 'price_asc' %}selected{% endif %}>Price: Low to High</option>
+                    <option value="price_desc" {% if sort_by == 'price_desc' %}selected{% endif %}>Price: High to Low</option>
+                    <option value="popular" {% if sort_by == 'popular' %}selected{% endif %}>Most Popular / Bestsellers</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-filter-apply">Apply Filters</button>
+            <a href="{% url 'catalog:product_list' %}" class="btn-filter-reset">Reset All</a>
+        </form>
+    </aside>
+
+    <!-- Product Grid Content -->
+    <section class="catalog-results">
+        <div class="results-header">
+            <h2>
+                {% if query %}
+                    Search results for "{{ query }}" ({{ products.count }} items)
+                {% else %}
+                    All Products ({{ products.count }} items)
+                {% endif %}
+            </h2>
+        </div>
+
+        {% if products %}
+        <div class="product-grid">
+            {% for product in products %}
+            <div class="product-card">
+                <div class="card-image-wrap">
+                    <img src="{{ product.primary_image }}" alt="{{ product.name }}" class="product-img">
+                    {% if product.discount_percent > 0 %}
+                        <span class="discount-badge">-{{ product.discount_percent }}%</span>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <span class="brand-tag">{{ product.brand_name }}</span>
+                    <h3 class="product-name"><a href="{% url 'catalog:product_detail' slug=product.slug %}">{{ product.name }}</a></h3>
+                    <div class="price-row">
+                        <span class="current-price">${{ product.effective_price }}</span>
+                        {% if product.discount_percent > 0 %}
+                            <span class="original-price">${{ product.base_price }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="card-actions">
+                        <a href="{% url 'catalog:product_detail' slug=product.slug %}" class="btn-card-view">View Specs</a>
+                        {% if product.variants.first %}
+                        <form action="{% url 'cart:add_to_cart' variant_id=product.variants.first.id %}" method="POST" class="quick-cart-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit" class="btn-card-cart" title="Add to cart">＋</button>
+                        </form>
+                        {% endif %}
+                        <a href="{% url 'wishlist:add_to_wishlist' product_id=product.id %}" class="btn-card-wish">❤️</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h3>No products found matching your search criteria.</h3>
+            <p>Try searching for workstation laptops, displays, or resetting your filter criteria.</p>
+            <a href="{% url 'catalog:product_list' %}" class="btn-primary-sm">View Full Catalog</a>
+        </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

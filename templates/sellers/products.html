@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Merchant Product Catalog — ShopSphere Seller Center{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <div class="dash-header">
+        <h2>Merchant Products Catalog</h2>
+        <a href="{% url 'sellers:product_create' %}" class="btn-primary-sm">+ Add New Product Listing</a>
+    </div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Brand</th>
+                <th>Base Price</th>
+                <th>Status</th>
+                <th>Stock (Total)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prod in products %}
+            <tr>
+                <td><strong>{{ prod.name }}</strong></td>
+                <td>{{ prod.category.name }}</td>
+                <td>{{ prod.brand_name }}</td>
+                <td>${{ prod.base_price }}</td>
+                <td><span class="badge-status">{{ prod.status }}</span></td>
+                <td>
+                    {% for var in prod.variants.all %}
+                        <div>{{ var.variant_name }}: {{ var.inventory.quantity_on_hand|default:0 }} units</div>
+                    {% endfor %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">No products listed. Click 'Add New Product Listing' above to add items.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

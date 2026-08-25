@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign In — ShopSphere{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Sign in to ShopSphere</h2>
+        <form method="POST" action="{% url 'accounts:login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" name="email" required placeholder="user@domain.local">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn-auth-primary">Sign In</button>
+        </form>
+        <p class="auth-switch">New to ShopSphere? <a href="{% url 'accounts:register' %}">Create an account</a></p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Seller Merchant Center — ShopSphere{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <div class="dash-header">
+        <h2>Seller Merchant Dashboard: {{ seller.business_name }}</h2>
+        <span class="badge-seller">Status: {{ seller.status }}</span>
+    </div>
+
+    <!-- Metrics Cards -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <span class="metric-label">Gross Sales Revenue</span>
+            <span class="metric-value">${{ metrics.total_revenue }}</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Units Sold</span>
+            <span class="metric-value">{{ metrics.total_units_sold }}</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Platform Commission ({{ metrics.commission_rate }}%)</span>
+            <span class="metric-value">-${{ metrics.commission_paid }}</span>
+        </div>
+        <div class="metric-card highlight">
+            <span class="metric-label">Net Merchant Payout</span>
+            <span class="metric-value">${{ metrics.net_payout }}</span>
+        </div>
+    </div>
+
+    <div class="dash-nav-bar">
+        <a href="{% url 'sellers:products' %}" class="btn-primary-sm">Manage Products & SKUs</a>
+        <a href="{% url 'sellers:product_create' %}" class="btn-primary-sm">+ Add New Product Listing</a>
+        <a href="{% url 'sellers:orders' %}" class="btn-secondary-sm">Order Fulfillment Queue</a>
+    </div>
+
+    <!-- Recent Seller Orders -->
+    <div class="card-panel">
+        <h3>Recent Order Items Pending Fulfillment</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Order #</th>
+                    <th>Product / SKU</th>
+                    <th>Qty</th>
+                    <th>Total Price</th>
+                    <th>Item Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in recent_items %}
+                <tr>
+                    <td>{{ item.order.order_number }}</td>
+                    <td>{{ item.variant.product.name }} ({{ item.variant.sku }})</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.total_price }}</td>
+                    <td><span class="order-status-badge status-{{ item.item_status|lower }}">{{ item.item_status }}</span></td>
+                    <td>
+                        {% if item.item_status == 'PENDING' or item.item_status == 'PACKED' %}
+                            <a href="{% url 'sellers:fulfill_item' item_id=item.id %}" class="btn-primary-sm">Ship Item</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6">No recent order items.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Open Support Ticket — ShopSphere{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card" style="max-width:650px;">
+        <h2>Open Support Ticket</h2>
+        <form method="POST" action="{% url 'support:create_ticket' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Subject / Brief Summary</label>
+                <input type="text" name="subject" required placeholder="e.g. Inquiry regarding order delivery estimate">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="category">
+                        <option value="GENERAL">General Query</option>
+                        <option value="ORDER_ISSUE">Order Issue / Shipping</option>
+                        <option value="REFUND">Refund / RMA Request</option>
+                        <option value="TECHNICAL">Technical Platform Support</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Priority SLA</label>
+                    <select name="priority">
+                        <option value="LOW">Low Priority</option>
+                        <option value="MEDIUM" selected>Medium SLA Priority</option>
+                        <option value="HIGH">High Priority</option>
+                        <option value="URGENT">Urgent Escalation</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Message Details</label>
+                <textarea name="message" rows="5" required placeholder="Describe your inquiry..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-auth-primary">Submit Support Ticket</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

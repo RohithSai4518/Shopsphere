@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Order History — ShopSphere{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <h2>Your Order History</h2>
+
+    <div class="orders-list">
+        {% for order in orders %}
+        <div class="order-card">
+            <div class="order-header">
+                <div>
+                    <span class="order-num">Order #{{ order.order_number }}</span>
+                    <span class="order-date">Placed on {{ order.created_at|date:"N j, Y" }}</span>
+                </div>
+                <div>
+                    <span class="order-status-badge status-{{ order.status|lower }}">{{ order.status }}</span>
+                    <strong class="order-total">${{ order.total_amount }}</strong>
+                </div>
+            </div>
+
+            <div class="order-items-preview">
+                {% for item in order.items.all %}
+                <div class="order-item-chip">
+                    <img src="{{ item.variant.product.primary_image }}" alt="{{ item.variant.product.name }}">
+                    <div>
+                        <strong>{{ item.variant.product.name }}</strong>
+                        <p>Qty: {{ item.quantity }} • ${{ item.total_price }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="order-footer">
+                <a href="{% url 'orders:order_detail' order_id=order.id %}" class="btn-primary-sm">View Order Details & Tracking</a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="empty-state">
+            <p>You haven't placed any orders yet.</p>
+            <a href="{% url 'catalog:product_list' %}" class="btn-primary-sm">Start Shopping</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

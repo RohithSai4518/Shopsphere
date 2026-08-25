@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Customer Help Desk — ShopSphere Support{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <div class="dash-header">
+        <h2>Customer Support SLA Help Desk</h2>
+        <a href="{% url 'support:create_ticket' %}" class="btn-primary-sm">+ Open New Support Ticket</a>
+    </div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Ticket #</th>
+                <th>Subject</th>
+                <th>Category</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Date Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tkt in tickets %}
+            <tr>
+                <td><code><a href="{% url 'support:ticket_detail' ticket_id=tkt.id %}">{{ tkt.ticket_number }}</a></code></td>
+                <td><strong><a href="{% url 'support:ticket_detail' ticket_id=tkt.id %}">{{ tkt.subject }}</a></strong></td>
+                <td>{{ tkt.category }}</td>
+                <td><span class="badge-status">{{ tkt.priority }}</span></td>
+                <td><span class="order-status-badge status-{{ tkt.status|lower }}">{{ tkt.status }}</span></td>
+                <td>{{ tkt.created_at|date:"N j, Y" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">No support tickets found. Click 'Open New Support Ticket' above to reach customer care.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

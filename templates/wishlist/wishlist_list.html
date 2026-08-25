@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Saved Wishlists & Price Alerts — ShopSphere{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <h2>Your Wishlists & Saved Price Drop Alerts</h2>
+
+    <!-- Wishlists Grid -->
+    <div class="card-panel">
+        <h3>Saved Products</h3>
+        {% for wl in wishlists %}
+            <h4 style="margin-top:15px;">📋 {{ wl.name }}</h4>
+            <div class="product-grid">
+                {% for item in wl.items.all %}
+                <div class="product-card">
+                    <div class="card-image-wrap">
+                        <img src="{{ item.product.primary_image }}" alt="{{ item.product.name }}" class="product-img">
+                    </div>
+                    <div class="card-body">
+                        <h4 class="product-name"><a href="{% url 'catalog:product_detail' slug=item.product.slug %}">{{ item.product.name }}</a></h4>
+                        <p class="current-price">${{ item.product.effective_price }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No products added to this wishlist yet.</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Price Drop Alerts Table -->
+    <div class="card-panel">
+        <h3>Price Drop Alerts</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Current Price</th>
+                    <th>Target Alert Price</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for palr in price_alerts %}
+                <tr>
+                    <td>{{ palr.product.name }}</td>
+                    <td>${{ palr.product.effective_price }}</td>
+                    <td>${{ palr.target_price }}</td>
+                    <td>{% if palr.is_triggered %}<span class="badge-status">TRIGGERED 🔔</span>{% else %}<span class="badge-status">Active Monitoring</span>{% endif %}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4">No price drop alerts set.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

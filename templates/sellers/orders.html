@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Order Fulfillment Queue — ShopSphere Seller Center{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <h2>Merchant Order Fulfillment Queue</h2>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Order Number</th>
+                <th>Item / Variant</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Item Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.order.order_number }}</td>
+                <td>{{ item.variant.product.name }} (SKU: {{ item.variant.sku }})</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ item.total_price }}</td>
+                <td><span class="order-status-badge status-{{ item.item_status|lower }}">{{ item.item_status }}</span></td>
+                <td>
+                    {% if item.item_status == 'PENDING' or item.item_status == 'PACKED' %}
+                        <a href="{% url 'sellers:fulfill_item' item_id=item.id %}" class="btn-primary-sm">Mark Shipped & Deduct Stock</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">No orders pending fulfillment.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

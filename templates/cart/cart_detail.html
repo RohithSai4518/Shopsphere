@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Shopping Cart — ShopSphere{% endblock %}
+
+{% block content %}
+<div class="cart-layout">
+    <div class="cart-heading">
+        <div>
+            <p class="eyebrow">YOUR SHOPPING BAG</p>
+            <h2>Shopping cart</h2>
+            <p class="cart-subtitle">Review your items before you continue to secure checkout.</p>
+        </div>
+        <span class="cart-count">{{ cart.item_count }} item{{ cart.item_count|pluralize }}</span>
+    </div>
+
+    {% if cart.items %}
+    <div class="cart-grid">
+        <div class="cart-items-panel">
+            <div class="cart-panel-heading"><h3>Cart items</h3><span>Price</span></div>
+            {% for item in cart.items %}
+            <div class="cart-item-row">
+                <img src="{{ item.variant.product.primary_image }}" alt="{{ item.variant.product.name }}" class="cart-item-img">
+                <div class="cart-item-details">
+                    <p class="cart-item-brand">{{ item.variant.product.brand_name }}</p>
+                    <h4><a href="{% url 'catalog:product_detail' slug=item.variant.product.slug %}">{{ item.variant.product.name }}</a></h4>
+                    <p class="sku-meta">{{ item.variant.variant_name }} <span>SKU: {{ item.variant.sku }}</span></p>
+                    <p class="unit-price-meta">${{ item.effective_unit_price }} <span>per item</span></p>
+
+                    <div class="cart-item-actions">
+                        <form action="{% url 'cart:update_cart' item_id=item.id %}" method="POST" class="qty-form">
+                            {% csrf_token %}
+                            <label for="quantity-{{ item.id }}">Qty</label>
+                            <input id="quantity-{{ item.id }}" type="number" name="quantity" value="{{ item.quantity }}" min="1" max="10">
+                            <button type="submit" class="btn-update-qty">Update</button>
+                        </form>
+                        <a href="{% url 'cart:remove_cart' item_id=item.id %}" class="btn-remove-cart">Remove item</a>
+                    </div>
+                </div>
+                <div class="cart-item-subtotal">
+                    ${{ item.subtotal }}
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="save-cart-bar">
+                <a href="{% url 'cart:save_for_later' %}" class="btn-secondary-sm">Save cart for later</a>
+            </div>
+        </div>
+
+        <!-- Cart Summary Box -->
+        <div class="cart-summary-card">
+            <div class="cart-summary-heading"><h3>Order summary</h3><span>USD</span></div>
+            <div class="summary-line"><span>Subtotal:</span> <strong>${{ cart.subtotal }}</strong></div>
+            {% if cart.discount_amount > 0 %}
+                <div class="summary-line discount-text"><span>Coupon Discount:</span> <strong>-${{ cart.discount_amount }}</strong></div>
+            {% endif %}
+            <div class="summary-line"><span>Estimated Tax (8.25%):</span> <strong>${{ cart.tax_amount }}</strong></div>
+            <div class="summary-line"><span>Shipping:</span> <strong>FREE</strong></div>
+            <hr>
+            <div class="summary-line total-line"><span>Total:</span> <strong>${{ cart.total_amount }}</strong></div>
+
+            <!-- Promo Code Input Form -->
+            <form method="GET" action="{% url 'cart:cart_detail' %}" class="coupon-form">
+                <input type="text" name="coupon" placeholder="Promo Code (e.g. WELCOME10)" value="{{ coupon.code|default:'' }}">
+                <button type="submit" class="btn-coupon-apply">Apply</button>
+            </form>
+            {% if coupon_error %}
+                <p class="error-msg">{{ coupon_error }}</p>
+            {% endif %}
+
+            <a href="{% url 'orders:checkout' %}{% if coupon %}?coupon={{ coupon.code }}{% endif %}" class="btn-checkout-primary">Proceed to checkout <span>&rarr;</span></a>
+            <p class="cart-secure-note">&#128274; Secure payment sandbox &middot; Free shipping</p>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <h3>Your shopping cart is empty.</h3>
+        <p>Explore our workstation laptops, monitors, and audio hardware to start shopping.</p>
+        <a href="{% url 'catalog:product_list' %}" class="btn-primary-sm">Browse Catalog</a>
+    </div>
+    {% endif %}
+
+    <!-- Saved Carts Section -->
+    {% if saved_carts %}
+    <div class="saved-carts-section">
+        <h3>Saved Carts</h3>
+        {% for sc in saved_carts %}
+        <div class="saved-cart-card">
+            <strong>{{ sc.name }}</strong> (Saved on {{ sc.created_at|date:"N j, Y" }})
+            <a href="{% url 'cart:restore_saved_cart' saved_cart_id=sc.id %}" class="btn-primary-sm">Restore to Cart</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

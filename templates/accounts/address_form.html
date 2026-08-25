@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Address — ShopSphere{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: 3rem; display: flex; justify-content: center;">
+  <div class="glass-panel" style="padding: 2.5rem; max-width: 500px; width: 100%;">
+    <h1 style="font-size: 1.8rem; font-weight: 800; margin-top: 0; margin-bottom: 1.5rem;">Add Shipping Address</h1>
+
+    <form method="POST" style="display: flex; flex-direction: column; gap: 1rem;">
+      {% csrf_token %}
+      <div>
+        <label style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.35rem;">Full Recipient Name</label>
+        {{ form.full_name }}
+      </div>
+      <div>
+        <label style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.35rem;">Street Address</label>
+        {{ form.street_address_1 }}
+      </div>
+      <div>
+        <label style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.35rem;">Apartment / Suite (Optional)</label>
+        {{ form.street_address_2 }}
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+        <div>
+          <label style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.35rem;">City</label>
+          {{ form.city }}
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.35rem;">State</label>
+          {{ form.state }}
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+        <div>
+          <label style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.35rem;">Postal Code</label>
+          {{ form.postal_code }}
+        </div>
+        <div>
+          <label style="display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.35rem;">Country</label>
+          {{ form.country }}
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
+        {{ form.is_default }}
+        <label style="font-size: 0.9rem; font-weight: 600;">Set as Default Shipping Address</label>
+      </div>
+      <button type="submit" class="btn btn-primary" style="padding: 0.85rem; font-size: 1rem; margin-top: 0.5rem;">
+        Save Address
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

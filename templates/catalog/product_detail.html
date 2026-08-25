@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} — ShopSphere Specifications{% endblock %}
+
+{% block content %}
+<div class="product-detail-layout">
+    <!-- Gallery -->
+    <div class="product-gallery">
+        <img src="{{ product.primary_image }}" alt="{{ product.name }}" class="main-detail-img">
+        <div class="gallery-thumbs">
+            {% for img in product.images.all %}
+                <img src="{{ img.image_url }}" alt="Thumbnail" class="thumb-img">
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Product Summary & Add to Cart -->
+    <div class="product-info-panel">
+        <span class="brand-badge">{{ product.brand_name }}</span>
+        <h1 class="detail-title">{{ product.name }}</h1>
+        <p class="seller-meta">Merchant Seller: <strong>{{ product.seller.business_name }}</strong> (⭐ {{ product.seller.rating_avg }}/5.0)</p>
+
+        <div class="detail-price-box">
+            <span class="detail-price">${{ product.effective_price }}</span>
+            {% if product.discount_percent > 0 %}
+                <span class="detail-orig-price">${{ product.base_price }}</span>
+                <span class="detail-discount-chip">Save {{ product.discount_percent }}%</span>
+            {% endif %}
+        </div>
+
+        <p class="detail-description">{{ product.description }}</p>
+
+        <!-- Variant Selector Form -->
+        {% if variants %}
+        <form action="" method="POST" class="variant-select-form">
+            <div class="form-group">
+                <label>Select Hardware Configuration / Edition:</label>
+                <select name="variant_id" id="variant-select">
+                    {% for var in variants %}
+                        <option value="{{ var.id }}" data-price="{{ var.price_override|default:product.effective_price }}">
+                            {{ var.variant_name }} (SKU: {{ var.sku }}) — ${{ var.price_override|default:product.effective_price }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+        {% endif %}
+
+        <!-- Purchase Actions -->
+        {% if variants.first %}
+        <form action="{% url 'cart:add_to_cart' variant_id=variants.first.id %}" method="POST" class="add-to-cart-form">
+            {% csrf_token %}
+            <div class="qty-wrap">
+                <label>Qty:</label>
+                <input type="number" name="quantity" value="1" min="1" max="10">
+            </div>
+            <button type="submit" class="btn-add-cart">🛒 Add to Shopping Cart</button>
+            <a href="{% url 'wishlist:add_to_wishlist' product_id=product.id %}" class="btn-wishlist">❤️ Add to Wishlist</a>
+        </form>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Specs Table -->
+<section class="section-container">
+    <h2 class="section-title">Technical Specifications</h2>
+    <table class="specs-table">
+        <tbody>
+            {% for spec in specs %}
+            <tr>
+                <td class="spec-key">{{ spec.spec_key }}</td>
+                <td class="spec-val">{{ spec.spec_value }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="2">No detailed specifications published yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<!-- Customer Reviews -->
+<section class="section-container">
+    <h2 class="section-title">Customer Reviews & Ratings</h2>
+    <div class="reviews-list">
+        {% for rev in reviews %}
+        <div class="review-card">
+            <div class="review-header">
+                <span class="stars">{"⭐"|rjust:rev.rating}</span>
+                <strong>{{ rev.title }}</strong>
+                <span class="reviewer">by {{ rev.user.first_name }} ({% if rev.is_verified_purchase %}Verified Purchase{% endif %})</span>
+            </div>
+            <p class="review-text">{{ rev.comment }}</p>
+        </div>
+        {% empty %}
+        <p>No customer reviews published yet. Be the first to review this product!</p>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Customer Q&A -->
+<section class="section-container">
+    <h2 class="section-title">Customer Questions & Answers</h2>
+    <div class="qna-list">
+        {% for q in questions %}
+        <div class="qna-card">
+            <p class="q-text"><strong>Q: {{ q.question_text }}</strong> <small>by {{ q.user.first_name }}</small></p>
+            {% for a in q.answers.all %}
+                <p class="a-text"><strong>A:</strong> {{ a.answer_text }} {% if a.is_seller_answer %}<span class="seller-ans-tag">(Official Seller Answer)</span>{% endif %}</p>
+            {% empty %}
+                <p class="a-text text-muted">No answers yet.</p>
+            {% endfor %}
+        </div>
+        {% empty %}
+        <p>Have a technical question about this product? Ask below!</p>
+        {% endfor %}
+    </div>
+
+    {% if user.is_authenticated %}
+    <form action="{% url 'catalog:ask_question' product_id=product.id %}" method="POST" class="ask-form">
+        {% csrf_token %}
+        <input type="text" name="question_text" placeholder="Ask a question about this product..." required>
+        <button type="submit" class="btn-primary-sm">Submit Question</button>
+    </form>
+    {% endif %}
+</section>
+
+<!-- Frequently Bought Together -->
+{% if recommendations %}
+<section class="section-container">
+    <h2 class="section-title">Frequently Bought Together / Related Items</h2>
+    <div class="product-grid">
+        {% for rec in recommendations %}
+        <div class="product-card">
+            <div class="card-image-wrap">
+                <img src="{{ rec.primary_image }}" alt="{{ rec.name }}" class="product-img">
+            </div>
+            <div class="card-body">
+                <h4 class="product-name"><a href="{% url 'catalog:product_detail' slug=rec.slug %}">{{ rec.name }}</a></h4>
+                <p class="current-price">${{ rec.effective_price }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}

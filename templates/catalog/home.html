@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block title %}ShopSphere — Premier Enterprise Electronics Marketplace{% endblock %}
+
+{% block content %}
+<div class="hero-banner">
+    <div class="hero-text">
+        <span class="hero-badge">⚡ NEXT-GEN MARKETPLACE</span>
+        <h1>Everything you need, in one sharper marketplace.</h1>
+        <p>From phones and cameras to home essentials and high-performance hardware, discover products selected for modern life.</p>
+        <div class="hero-actions">
+            <a href="{% url 'catalog:product_list' %}" class="btn-hero-primary">Explore {{ product_count }} Products</a>
+            <a href="{% url 'accounts:register' %}" class="btn-hero-secondary">Become a Seller</a>
+        </div>
+        <div class="hero-stats">
+            <span><strong>{{ category_count }}</strong> product categories</span>
+            <span><strong>24/7</strong> buyer support</span>
+            <span><strong>Secure</strong> checkout</span>
+        </div>
+    </div>
+</div>
+
+<section class="trust-strip" aria-label="ShopSphere benefits">
+    <div><span class="trust-icon">✦</span><strong>Curated selection</strong><small>Products worth your attention</small></div>
+    <div><span class="trust-icon">↗</span><strong>Fast discovery</strong><small>Smart filters and clear pricing</small></div>
+    <div><span class="trust-icon">✓</span><strong>Protected shopping</strong><small>Reliable support when needed</small></div>
+</section>
+
+<!-- Category Taxonomy Grid -->
+<section class="section-container">
+    <h2 class="section-title">Shop by Category</h2>
+    <div class="category-grid">
+        {% for cat in categories %}
+        <a href="{% url 'catalog:product_list' %}?category={{ cat.slug }}" class="category-card">
+            <div class="cat-icon">
+                {% if 'smartphone' in cat.slug %}▣{% elif 'camera' in cat.slug %}◉{% elif 'home' in cat.slug %}⌂{% elif 'fashion' in cat.slug %}◇{% elif 'beauty' in cat.slug %}✦{% elif 'sport' in cat.slug %}↗{% elif 'book' in cat.slug %}▤{% elif 'office' in cat.slug %}▥{% else %}▦{% endif %}
+            </div>
+            <h3>{{ cat.name }}</h3>
+            <p>{{ cat.description|truncatewords:6 }}</p>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section-container editorial-band">
+    <div>
+        <span class="eyebrow">JUST LANDED</span>
+        <h2>Fresh picks for your next upgrade.</h2>
+        <p>New finds across the categories people are browsing today.</p>
+    </div>
+    <a href="{% url 'catalog:product_list' %}?sort=newest" class="btn-primary-sm">See all new arrivals</a>
+</section>
+
+<section class="section-container">
+    <div class="section-heading-row">
+        <h2 class="section-title">New Arrivals</h2>
+        <a href="{% url 'catalog:product_list' %}?sort=newest" class="section-link">View all →</a>
+    </div>
+    <div class="product-grid product-grid-compact">
+        {% for product in new_arrivals %}
+        <div class="product-card">
+            <div class="card-image-wrap"><img src="{{ product.primary_image }}" alt="{{ product.name }}" class="product-img"><span class="new-badge">NEW</span></div>
+            <div class="card-body"><span class="brand-tag">{{ product.brand_name }}</span><h3 class="product-name"><a href="{% url 'catalog:product_detail' slug=product.slug %}">{{ product.name }}</a></h3><div class="price-row"><span class="current-price">${{ product.effective_price }}</span></div><div class="card-actions"><a href="{% url 'catalog:product_detail' slug=product.slug %}" class="btn-card-view">View Details</a><a href="{% url 'wishlist:add_to_wishlist' product_id=product.id %}" class="btn-card-wish">♡</a></div></div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section-container split-showcase">
+    <div class="showcase-panel showcase-orange">
+        <span class="eyebrow">TRENDING NOW</span>
+        <h2>What shoppers are opening today.</h2>
+        <p>Popular picks with momentum across the marketplace.</p>
+        <a href="{% url 'catalog:product_list' %}?sort=popular" class="showcase-link">Shop trending products →</a>
+    </div>
+    <div class="showcase-panel showcase-blue">
+        <span class="eyebrow">SMART SHOPPING</span>
+        <h2>Compare before you commit.</h2>
+        <p>Line up products, prices, and specifications side by side.</p>
+        <a href="{% url 'catalog:compare' %}" class="showcase-link">Open comparison tool →</a>
+    </div>
+</section>
+
+<!-- Featured Flagship Products -->
+<section class="section-container">
+    <h2 class="section-title">Featured Flagship Products</h2>
+    <div class="product-grid">
+        {% for product in featured_products %}
+        <div class="product-card">
+            <div class="card-image-wrap">
+                <img src="{{ product.primary_image }}" alt="{{ product.name }}" class="product-img">
+                {% if product.discount_percent > 0 %}
+                    <span class="discount-badge">-{{ product.discount_percent }}%</span>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <span class="brand-tag">{{ product.brand_name }}</span>
+                <h3 class="product-name"><a href="{% url 'catalog:product_detail' slug=product.slug %}">{{ product.name }}</a></h3>
+                <div class="price-row">
+                    <span class="current-price">${{ product.effective_price }}</span>
+                    {% if product.discount_percent > 0 %}
+                        <span class="original-price">${{ product.base_price }}</span>
+                    {% endif %}
+                </div>
+                <div class="card-actions">
+                    <a href="{% url 'catalog:product_detail' slug=product.slug %}" class="btn-card-view">View Details</a>
+                    {% if product.variants.first %}
+                    <form action="{% url 'cart:add_to_cart' variant_id=product.variants.first.id %}" method="POST" class="quick-cart-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="btn-card-cart" title="Add to cart">＋</button>
+                    </form>
+                    {% endif %}
+                    <a href="{% url 'wishlist:add_to_wishlist' product_id=product.id %}" class="btn-card-wish">❤️</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Promotional Bundles -->
+{% if bundles %}
+<section class="section-container">
+    <h2 class="section-title">Curated Product Bundles (Save Extra 10%)</h2>
+    <div class="bundle-grid">
+        {% for bundle in bundles %}
+        <div class="bundle-card">
+            <h3>🎁 {{ bundle.name }}</h3>
+            <p>Save {{ bundle.discount_percentage }}% when you purchase this complete hardware package.</p>
+            <div class="bundle-items">
+                {% for bitem in bundle.items.all %}
+                    <span class="bundle-item-chip">• {{ bitem.product.name }}</span>
+                {% endfor %}
+            </div>
+            <a href="{% url 'catalog:product_list' %}" class="btn-bundle">Shop Bundle Packages</a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}

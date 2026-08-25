@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Security Audit Logs — ShopSphere Governance{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <h2>Security Audit Trail</h2>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>User / Account</th>
+                <th>Action</th>
+                <th>Module</th>
+                <th>Entity Reference</th>
+                <th>IP Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td><code>{{ log.created_at|date:"Y-m-d H:i:s" }}</code></td>
+                <td>{{ log.user.email|default:"System Engine" }}</td>
+                <td><strong>{{ log.action }}</strong></td>
+                <td><span class="badge-status">{{ log.module }}</span></td>
+                <td><code>{{ log.entity_type }}: {{ log.entity_id }}</code></td>
+                <td><code>{{ log.ip_address|default:"127.0.0.1" }}</code></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

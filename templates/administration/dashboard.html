@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Platform Governance Console — ShopSphere Admin{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <h2>ShopSphere Platform Governance Console</h2>
+
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <span class="metric-label">Active Customers</span>
+            <span class="metric-value">{{ total_customers }}</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Registered Merchants</span>
+            <span class="metric-value">{{ total_sellers }}</span>
+        </div>
+        <div class="metric-card highlight">
+            <span class="metric-label">Pending Merchant Approvals</span>
+            <span class="metric-value">{{ pending_sellers }}</span>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Catalog Products</span>
+            <span class="metric-value">{{ total_products }}</span>
+        </div>
+    </div>
+
+    <div class="dash-nav-bar">
+        <a href="{% url 'administration:manage_sellers' %}" class="btn-primary-sm">Vet & Approve Merchants</a>
+        <a href="{% url 'administration:manage_products' %}" class="btn-primary-sm">Catalog Moderation</a>
+        <a href="{% url 'administration:audit_logs' %}" class="btn-secondary-sm">Security Audit Trail</a>
+    </div>
+
+    <!-- Security Audit Trail Table -->
+    <div class="card-panel">
+        <h3>Platform Audit Logs</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>User</th>
+                    <th>Action</th>
+                    <th>Module</th>
+                    <th>IP Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in audit_logs %}
+                <tr>
+                    <td><code>{{ log.created_at|date:"N j, H:i:s" }}</code></td>
+                    <td>{{ log.user.email|default:"System" }}</td>
+                    <td><strong>{{ log.action }}</strong></td>
+                    <td><span class="badge-status">{{ log.module }}</span></td>
+                    <td><code>{{ log.ip_address|default:"127.0.0.1" }}</code></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

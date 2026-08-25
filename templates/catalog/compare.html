@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Compare Products — ShopSphere Hardware Matrix{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <h2>Product Comparison Matrix</h2>
+
+    {% if products %}
+    <table class="data-table specs-table">
+        <thead>
+            <tr>
+                <th>Specification</th>
+                {% for prod in products %}
+                    <th>
+                        <img src="{{ prod.primary_image }}" alt="{{ prod.name }}" style="width:80px; height:80px; object-fit:cover; display:block; margin:0 auto 10px;">
+                        <a href="{% url 'catalog:product_detail' slug=prod.slug %}">{{ prod.name }}</a>
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Brand</strong></td>
+                {% for prod in products %}<td>{{ prod.brand_name }}</td>{% endfor %}
+            </tr>
+            <tr>
+                <td><strong>Category</strong></td>
+                {% for prod in products %}<td>{{ prod.category.name }}</td>{% endfor %}
+            </tr>
+            <tr>
+                <td><strong>Price</strong></td>
+                {% for prod in products %}<td><strong>${{ prod.effective_price }}</strong></td>{% endfor %}
+            </tr>
+            <tr>
+                <td><strong>Merchant Seller</strong></td>
+                {% for prod in products %}<td>{{ prod.seller.business_name }}</td>{% endfor %}
+            </tr>
+            <tr>
+                <td><strong>Discount</strong></td>
+                {% for prod in products %}<td>{{ prod.discount_percent }}%</td>{% endfor %}
+            </tr>
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+        <p>No products selected for comparison. Select products from the catalog to compare specifications.</p>
+        <a href="{% url 'catalog:product_list' %}" class="btn-primary-sm">Browse Catalog</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

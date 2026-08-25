@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Product Moderation — ShopSphere Governance{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <h2>Catalog Product Moderation</h2>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Seller</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Moderation Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prod in products %}
+            <tr>
+                <td><strong>{{ prod.name }}</strong></td>
+                <td>{{ prod.seller.business_name }}</td>
+                <td>{{ prod.category.name }}</td>
+                <td>${{ prod.base_price }}</td>
+                <td><span class="badge-status">{{ prod.status }}</span></td>
+                <td>
+                    <form method="POST" action="{% url 'administration:moderate_product' product_id=prod.id %}" style="display:inline-flex; gap:6px;">
+                        {% csrf_token %}
+                        <select name="status">
+                            <option value="PUBLISHED" {% if prod.status == 'PUBLISHED' %}selected{% endif %}>Publish</option>
+                            <option value="DRAFT" {% if prod.status == 'DRAFT' %}selected{% endif %}>Draft</option>
+                            <option value="ARCHIVED" {% if prod.status == 'ARCHIVED' %}selected{% endif %}>Archive</option>
+                        </select>
+                        <button type="submit" class="btn-secondary-sm">Update</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout — ShopSphere Payment & Shipping{% endblock %}
+
+{% block content %}
+<div class="checkout-layout">
+    <div class="checkout-heading">
+        <div>
+            <p class="eyebrow">SHOPSPHERE CHECKOUT</p>
+            <h2>Complete your order</h2>
+            <p class="checkout-subtitle">Review your delivery details and payment before placing your order.</p>
+        </div>
+        <div class="checkout-security"><span class="security-mark">&#128274;</span> Secure checkout</div>
+    </div>
+
+    <div class="checkout-steps" aria-label="Checkout progress">
+        <div class="checkout-step is-complete"><span>1</span><strong>Delivery</strong></div>
+        <div class="step-line"></div>
+        <div class="checkout-step is-current"><span>2</span><strong>Payment</strong></div>
+        <div class="step-line"></div>
+        <div class="checkout-step"><span>3</span><strong>Confirmation</strong></div>
+    </div>
+
+    <form method="POST" action="{% url 'orders:checkout' %}">
+        {% csrf_token %}
+        <div class="checkout-grid">
+            <div class="checkout-form-panel">
+                <section class="checkout-section">
+                    <div class="section-heading">
+                        <div class="section-number">1</div>
+                        <div><h3>Delivery address</h3><p>Where should we send your order?</p></div>
+                    </div>
+                <div class="address-select-list">
+                    {% for addr in addresses %}
+                    <label class="address-option">
+                        <input type="radio" name="address_id" value="{{ addr.id }}" {% if addr.is_default or forloop.first %}checked{% endif %}>
+                        <div class="option-details">
+                            <div class="address-title"><strong>{{ addr.full_name }}</strong>{% if addr.is_default %}<span class="address-badge">DEFAULT</span>{% endif %}</div>
+                            <p>{{ addr.street_address_1 }}{% if addr.street_address_2 %}, {{ addr.street_address_2 }}{% endif %}</p>
+                            <p>{{ addr.city }}, {{ addr.state }} {{ addr.postal_code }} &middot; {{ addr.country }}</p>
+                        </div>
+                    </label>
+                    {% empty %}
+                    <div class="empty-address">
+                        <strong>No delivery address saved</strong>
+                        <p>Add an address to continue with checkout.</p>
+                        <a href="{% url 'accounts:profile' %}" class="btn-secondary-sm">Add an address</a>
+                    </div>
+                    {% endfor %}
+                </div>
+                </section>
+
+                <section class="checkout-section">
+                <div class="section-heading">
+                    <div class="section-number">2</div>
+                    <div><h3>Payment method</h3><p>Your payment details are protected.</p></div>
+                </div>
+                <div class="payment-box">
+                    <div class="payment-copy"><span class="payment-icon">&#128179;</span><div><strong>ShopSphere Secure Sandbox</strong><p>Payment is authorized securely. No card details are stored.</p></div></div>
+                    <div class="synthetic-card-preview">
+                        <span>VISA <small>Synthetic payment reference</small></span><strong>4242</strong>
+                    </div>
+                </div>
+                </section>
+            </div>
+
+            <div class="checkout-summary-panel">
+                <div class="summary-heading"><div class="section-number">3</div><div><h3>Order summary</h3><p>{{ cart_items|length }} item{{ cart_items|length|pluralize }}</p></div></div>
+                <div class="checkout-items-list">
+                    {% for item in cart_items %}
+                    <div class="checkout-item">
+                        <div><strong>{{ item.variant.product.name }}</strong><span>Qty {{ item.quantity }} &middot; {{ item.variant.variant_name }}</span></div>
+                        <strong>${{ item.subtotal }}</strong>
+                    </div>
+                    {% endfor %}
+                </div>
+                <hr>
+                <div class="summary-line"><span>Subtotal:</span> <strong>${{ subtotal }}</strong></div>
+                {% if discount > 0 %}
+                    <div class="summary-line discount-text"><span>Discount:</span> <strong>-${{ discount }}</strong></div>
+                {% endif %}
+                <div class="summary-line"><span>Tax (8.25%):</span> <strong>${{ tax }}</strong></div>
+                <div class="summary-line"><span>Shipping:</span> <strong>FREE</strong></div>
+                <hr>
+                <div class="summary-line total-line"><span>Total</span> <strong>${{ total }}</strong></div>
+
+                <button type="submit" class="btn-place-order" {% if not addresses %}disabled{% endif %}>Place order <span>&rarr;</span></button>
+                <p class="checkout-note">By placing your order, you agree to ShopSphere's purchase terms.</p>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

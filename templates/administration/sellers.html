@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Merchant Vetting & Approval — ShopSphere Governance{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <h2>Merchant Vetting & Approval Management</h2>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Business Name</th>
+                <th>Email</th>
+                <th>Tax ID</th>
+                <th>Commission Rate</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for seller in sellers %}
+            <tr>
+                <td><strong>{{ seller.business_name }}</strong></td>
+                <td>{{ seller.business_email }}</td>
+                <td><code>{{ seller.tax_id|default:"Pending" }}</code></td>
+                <td>{{ seller.commission_rate }}%</td>
+                <td><span class="badge-status">{{ seller.status }}</span></td>
+                <td>
+                    {% if seller.status == 'PENDING' %}
+                        <a href="{% url 'administration:approve_seller' seller_id=seller.id %}" class="btn-primary-sm">Approve Merchant</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

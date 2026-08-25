@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Order #{{ order.order_number }} Details — ShopSphere{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <div class="order-detail-header">
+        <h2>Order #{{ order.order_number }}</h2>
+        <span class="order-status-badge status-{{ order.status|lower }}">{{ order.status }}</span>
+    </div>
+
+    <!-- Timeline Status Step Indicator -->
+    <div class="status-timeline">
+        <div class="step {% if order.status != 'CANCELLED' %}active{% endif %}">Confirmed</div>
+        <div class="step {% if order.status == 'PACKED' or order.status == 'SHIPPED' or order.status == 'DELIVERED' %}active{% endif %}">Packed</div>
+        <div class="step {% if order.status == 'SHIPPED' or order.status == 'DELIVERED' %}active{% endif %}">Shipped</div>
+        <div class="step {% if order.status == 'DELIVERED' %}active{% endif %}">Delivered</div>
+    </div>
+
+    <div class="order-detail-grid">
+        <div class="card-panel">
+            <h3>Items in Order</h3>
+            {% for item in order.items.all %}
+            <div class="order-item-row">
+                <img src="{{ item.variant.product.primary_image }}" alt="{{ item.variant.product.name }}" class="cart-item-img">
+                <div class="item-info">
+                    <h4>{{ item.variant.product.name }}</h4>
+                    <p>Edition/SKU: {{ item.variant.variant_name }} ({{ item.variant.sku }})</p>
+                    <p>Seller: {{ item.seller.business_name }}</p>
+                    <p>Qty: {{ item.quantity }} x ${{ item.unit_price }} = <strong>${{ item.total_price }}</strong></p>
+                </div>
+                <div class="item-actions">
+                    {% if order.status == 'DELIVERED' %}
+                        <a href="{% url 'returns:create_return' order_item_id=item.id %}" class="btn-secondary-sm">Return Item</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="card-panel">
+            <h3>Order Summary & Address</h3>
+            <p><strong>Subtotal:</strong> ${{ order.subtotal }}</p>
+            <p><strong>Tax:</strong> ${{ order.tax_amount }}</p>
+            <p><strong>Discount:</strong> -${{ order.discount_amount }}</p>
+            <h4><strong>Total:</strong> ${{ order.total_amount }}</h4>
+
+            {% if order.status == 'CONFIRMED' or order.status == 'PROCESSING' %}
+                <a href="{% url 'orders:cancel_order' order_id=order.id %}" class="btn-danger-sm" onclick="return confirm('Are you sure you want to cancel this order?');">Cancel Order</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Tracking Shipments -->
+    {% if shipments %}
+    <div class="card-panel">
+        <h3>Carrier Tracking & Package Events</h3>
+        {% for shp in shipments %}
+        <div class="shipment-block">
+            <p>Carrier: <strong>{{ shp.carrier }}</strong> • Tracking #: <code>{{ shp.tracking_number }}</code> • Status: <strong>{{ shp.status }}</strong></p>
+            <ul class="tracking-events">
+                {% for ev in shp.events.all %}
+                <li><code>{{ ev.event_timestamp|date:"N j, H:i" }}</code> — {{ ev.location }}: {{ ev.status_description }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

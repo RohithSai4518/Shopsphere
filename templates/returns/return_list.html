@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}RMA Returns & Refunds — ShopSphere{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <h2>RMA Returns & Refund Status</h2>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>RMA ID</th>
+                <th>Order Number</th>
+                <th>Returned Product</th>
+                <th>Reason</th>
+                <th>Refund Amount</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ret in returns %}
+            <tr>
+                <td><code>{{ ret.id }}</code></td>
+                <td>{{ ret.order.order_number }}</td>
+                <td>{{ ret.order_item.variant.product.name }}</td>
+                <td>{{ ret.get_reason_display }}</td>
+                <td>${{ ret.refund_amount|default:"Calculating..." }}</td>
+                <td><span class="badge-status">{{ ret.status }}</span></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">No return requests submitted.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
