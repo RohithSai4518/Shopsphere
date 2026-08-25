@@ -2,6 +2,9 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 from decimal import Decimal
 from datetime import timedelta
+import random
+import json
+
 from apps.accounts.models import User, Address, UserPreference
 from apps.rbac.models import Role, Permission, RolePermission
 from apps.sellers.models import Seller
@@ -13,11 +16,13 @@ from apps.support.models import SupportTicket, SupportMessage
 from apps.orders.models import Order, OrderItem
 from apps.payments.models import Payment
 
+from data.catalog_expanded_dataset import EXPANDED_CATEGORIES, EXPANDED_BRANDS, RAW_PRODUCT_CATALOG
+
 class Command(BaseCommand):
-    help = 'Seeds ShopSphere Python Marketplace with complete realistic synthetic data across 36 relational entities.'
+    help = 'Seeds ShopSphere Python Marketplace with complete realistic synthetic data across 50 products and 13 categories.'
 
     def handle(self, *args, **options):
-        self.stdout.write(self.style.SUCCESS('Seeding ShopSphere Python Full-Stack Marketplace Database...'))
+        self.stdout.write(self.style.SUCCESS('Seeding ShopSphere Marketplace Database...'))
 
         # 1. RBAC Roles & Permissions
         role_admin, _ = Role.objects.get_or_create(name='ADMIN', defaults={'description': 'Platform Administrator'})
@@ -102,218 +107,138 @@ class Command(BaseCommand):
         )
 
         # 5. Categories & Brands
-        cat_electronics, _ = Category.objects.get_or_create(
-            slug='electronics',
-            defaults={'name': 'Electronics', 'description': 'Laptops, Smartphones, Audio, and Gadgets', 'icon_url': 'laptop'}
-        )
-        cat_laptops, _ = Category.objects.get_or_create(
-            slug='laptops',
-            defaults={'parent': cat_electronics, 'name': 'Laptops & Computers', 'description': 'High performance workstation laptops'}
-        )
-        cat_audio, _ = Category.objects.get_or_create(
-            slug='audio-headphones',
-            defaults={'parent': cat_electronics, 'name': 'Audio & Headphones', 'description': 'Noise cancelling headphones and soundbars'}
-        )
-
-        brand_apex, _ = Brand.objects.get_or_create(name='ApexTech', defaults={'description': 'Premium Workstation Hardware'})
-        brand_sound, _ = Brand.objects.get_or_create(name='SoundWave', defaults={'description': 'Studio Quality Audio Equipment'})
-
-        # 6. Products, Variants, Specifications, Images
-        prod_laptop, _ = Product.objects.get_or_create(
-            slug='apexpro-x15-ultra-laptop',
-            defaults={
-                'seller': seller_profile,
-                'category': cat_laptops,
-                'brand': brand_apex,
-                'name': 'ApexPro X15 Ultra Laptop',
-                'brand_name': 'ApexTech',
-                'description': 'The ApexPro X15 features an 8-core CPU, 32GB RAM, 1TB NVMe SSD, and 15.6-inch 4K OLED display.',
-                'base_price': 1499.99,
-                'discount_percent': 10.00,
-                'tax_rate': 8.25,
-                'status': 'PUBLISHED'
-            }
-        )
-
-        var_laptop1, _ = ProductVariant.objects.get_or_create(
-            product=prod_laptop,
-            sku='APX-X15-32GB',
-            defaults={'variant_name': '32GB RAM / 1TB SSD', 'price_override': 1499.99}
-        )
-
-        ProductSpecification.objects.get_or_create(product=prod_laptop, spec_key='Processor', defaults={'spec_value': '8-Core Ultra Chip', 'display_group': 'Performance'})
-        ProductSpecification.objects.get_or_create(product=prod_laptop, spec_key='Display', defaults={'spec_value': '15.6-inch 4K OLED HDR', 'display_group': 'Display'})
-
-        ProductImage.objects.get_or_create(
-            product=prod_laptop,
-            image_url='https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80',
-            defaults={'is_primary': True}
-        )
-
-        prod_earbuds, _ = Product.objects.get_or_create(
-            slug='soundwave-pro-wireless-earbuds',
-            defaults={
-                'seller': seller_profile,
-                'category': cat_audio,
-                'brand': brand_sound,
-                'name': 'SoundWave Pro ANC Wireless Earbuds',
-                'brand_name': 'SoundWave',
-                'description': 'Studio quality active noise-cancelling earbuds with 36-hour battery life and wireless charging case.',
-                'base_price': 199.99,
-                'discount_percent': 15.00,
-                'tax_rate': 8.25,
-                'status': 'PUBLISHED'
-            }
-        )
-
-        var_earbuds1, _ = ProductVariant.objects.get_or_create(
-            product=prod_earbuds,
-            sku='SW-ANC-BLK',
-            defaults={'variant_name': 'Matte Black', 'price_override': 199.99}
-        )
-
-        ProductImage.objects.get_or_create(
-            product=prod_earbuds,
-            image_url='https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=80',
-            defaults={'is_primary': True}
-        )
-
-        additional_categories = [
-            ('smartphones', 'Smartphones & Tablets', 'Mobile devices, tablets, and accessories'),
-            ('cameras', 'Cameras & Photography', 'Cameras, lenses, and photography gear'),
-            ('home-kitchen', 'Home & Kitchen', 'Appliances, cookware, and home essentials'),
-            ('fashion', 'Fashion', 'Clothing, shoes, and everyday accessories'),
-            ('beauty', 'Beauty & Personal Care', 'Skincare, grooming, and wellness products'),
-            ('sports', 'Sports & Outdoors', 'Fitness equipment and outdoor gear'),
-            ('books', 'Books & Media', 'Books, games, and entertainment'),
-            ('office', 'Office Supplies', 'Workplace essentials and productivity tools'),
-        ]
-        seeded_categories = {
-            slug: Category.objects.get_or_create(
-                slug=slug,
-                defaults={'name': name, 'description': description, 'icon_url': slug}
-            )[0]
-            for slug, name, description in additional_categories
-        }
-
-        additional_products = [
-            ('nova-phone-z1', 'Nova Phone Z1', 'smartphones', 'A modern 5G smartphone with a bright OLED display and all-day battery.', 699.99, 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80'),
-            ('nova-tablet-air', 'Nova Tablet Air 11', 'smartphones', 'A lightweight tablet for streaming, reading, and creative work.', 429.99, 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=800&q=80'),
-            ('spectra-mirrorless-m1', 'Spectra Mirrorless M1 Camera', 'cameras', 'A compact mirrorless camera with fast autofocus for travel photography.', 899.99, 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80'),
-            ('homebrew-coffee-maker', 'HomeBrew Smart Coffee Maker', 'home-kitchen', 'Programmable coffee maker with app scheduling and thermal carafe.', 129.99, 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80'),
-            ('chefline-cookware-set', 'ChefLine 10-Piece Cookware Set', 'home-kitchen', 'Durable non-stick cookware set for everyday meals.', 159.99, 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80'),
-            ('northstar-running-shoes', 'NorthStar Trail Running Shoes', 'fashion', 'Cushioned running shoes with a breathable upper and grippy outsole.', 89.99, 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80'),
-            ('luma-skin-care-kit', 'Luma Daily Skin Care Kit', 'beauty', 'A simple daily cleanser, moisturizer, and SPF routine.', 54.99, 'https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?auto=format&fit=crop&w=800&q=80'),
-            ('peak-yoga-mat', 'Peak Performance Yoga Mat', 'sports', 'Non-slip exercise mat with extra cushioning for home workouts.', 39.99, 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?auto=format&fit=crop&w=800&q=80'),
-            ('trailblazer-daypack', 'TrailBlazer Outdoor Daypack', 'sports', 'Weather-resistant daypack with hydration and laptop compartments.', 74.99, 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80'),
-            ('atlas-cookbook', 'Atlas Weeknight Cookbook', 'books', 'Practical recipes for quick and flavorful home-cooked dinners.', 24.99, 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=800&q=80'),
-            ('papertrail-notebook-set', 'PaperTrail Premium Notebook Set', 'office', 'Three hardcover notebooks for planning, notes, and sketches.', 19.99, 'https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&w=800&q=80'),
-            ('focusdesk-lamp', 'FocusDesk LED Task Lamp', 'office', 'Adjustable LED desk lamp with USB charging and warm-to-cool light.', 44.99, 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=800&q=80'),
-        ]
-        for slug, name, category_slug, description, price, image_url in additional_products:
-            product, _ = Product.objects.get_or_create(
-                slug=slug,
+        category_map = {}
+        for cdata in EXPANDED_CATEGORIES:
+            cat_obj, _ = Category.objects.get_or_create(
+                slug=cdata['slug'],
                 defaults={
-                    'seller': seller_profile,
-                    'category': seeded_categories[category_slug],
-                    'brand': brand_apex,
-                    'name': name,
-                    'brand_name': 'ApexTech',
-                    'description': description,
-                    'base_price': price,
-                    'tax_rate': 8.25,
-                    'status': 'PUBLISHED'
+                    'name': cdata['name'],
+                    'description': cdata['description'],
+                    'icon_url': cdata['icon_url'],
+                    'display_order': cdata['display_order'],
+                    'is_active': True
                 }
             )
-            ProductVariant.objects.get_or_create(
-                product=product,
-                sku=f'{slug.upper().replace("-", "-")}-STD',
-                defaults={'variant_name': 'Standard Edition', 'price_override': price}
+            # Update fields if existed
+            cat_obj.name = cdata['name']
+            cat_obj.description = cdata['description']
+            cat_obj.icon_url = cdata['icon_url']
+            cat_obj.is_active = True
+            cat_obj.save()
+            category_map[cdata['slug']] = cat_obj
+
+        brand_map = {}
+        for bdata in EXPANDED_BRANDS:
+            bname = bdata['name']
+            brand_obj, _ = Brand.objects.get_or_create(
+                name=bname,
+                defaults={
+                    'description': bdata['description'],
+                    'website': bdata['website']
+                }
             )
+            brand_map[bname] = brand_obj
+
+        # 6. Seed Expanded Catalog Products
+        products_seeded = 0
+        variants_seeded = 0
+        reviews_seeded = 0
+
+        for pdata in RAW_PRODUCT_CATALOG:
+            cat_obj = category_map.get(pdata['category_slug'])
+            brand_obj = brand_map.get(pdata['brand_name']) or brand_map.get('ApexTech')
+
+            product, created = Product.objects.get_or_create(
+                slug=pdata['slug'],
+                defaults={
+                    'seller': seller_profile,
+                    'category': cat_obj,
+                    'brand': brand_obj,
+                    'name': pdata['name'],
+                    'brand_name': pdata['brand_name'],
+                    'description': pdata['description'],
+                    'base_price': Decimal(str(pdata['base_price'])),
+                    'discount_percent': Decimal(str(pdata['discount_percent'])),
+                    'tax_rate': Decimal('8.25'),
+                    'status': 'PUBLISHED',
+                    'is_featured': pdata.get('is_featured', False),
+                    'is_bestseller': pdata.get('is_bestseller', False),
+                    'is_trending': pdata.get('is_featured', False) or pdata.get('is_bestseller', False)
+                }
+            )
+            if not created:
+                product.seller = seller_profile
+                product.category = cat_obj
+                product.brand = brand_obj
+                product.name = pdata['name']
+                product.brand_name = pdata['brand_name']
+                product.description = pdata['description']
+                product.base_price = Decimal(str(pdata['base_price']))
+                product.discount_percent = Decimal(str(pdata['discount_percent']))
+                product.status = 'PUBLISHED'
+                product.is_featured = pdata.get('is_featured', False)
+                product.is_bestseller = pdata.get('is_bestseller', False)
+                product.save()
+
+            products_seeded += 1
+
+            # Primary Image
             ProductImage.objects.get_or_create(
                 product=product,
-                image_url=image_url,
-                defaults={'is_primary': True}
+                image_url=pdata['image_url'],
+                defaults={'is_primary': True, 'display_order': 1}
             )
 
-        # Ensure every active category has a complete, browseable product range.
-        product_templates = [
-            ('Essential', 'A dependable everyday choice'),
-            ('Select', 'A thoughtfully designed customer favorite'),
-            ('Pro', 'A performance-focused option for demanding use'),
-            ('Elite', 'A premium option with upgraded features'),
-            ('Compact', 'A space-saving option for flexible setups'),
-            ('Classic', 'A timeless option built for daily use'),
-            ('Plus', 'A versatile option with added convenience'),
-            ('Advanced', 'A modern option with enhanced capability'),
-            ('Signature', 'A refined option for discerning customers'),
-            ('Max', 'A feature-rich option for the complete experience'),
-        ]
-        category_product_counts = {}
-        products_created = 0
-        for category in Category.objects.filter(is_active=True).order_by('slug'):
-            existing_count = category.products.count()
-            for product_number in range(existing_count + 1, 11):
-                template_name, template_description = product_templates[product_number - 1]
-                product_slug = f'{category.slug}-{template_name.lower()}-{product_number}'
-                product, created = Product.objects.get_or_create(
-                    slug=product_slug,
-                    defaults={
-                        'seller': seller_profile,
-                        'category': category,
-                        'brand': brand_apex,
-                        'name': f'{category.name} {template_name} {product_number}',
-                        'brand_name': 'ApexTech',
-                        'description': f'{template_description} for {category.name.lower()}.',
-                        'base_price': Decimal('24.99') + (Decimal(product_number) * Decimal('17.50')),
-                        'tax_rate': Decimal('8.25'),
-                        'status': 'PUBLISHED'
-                    }
-                )
+            # Variants
+            for vdata in pdata.get('variants', []):
                 variant, _ = ProductVariant.objects.get_or_create(
                     product=product,
-                    sku=f'{category.slug.upper().replace("-", "_")}-{product_number:02d}-STD',
-                    defaults={'variant_name': 'Standard Edition', 'price_override': product.base_price}
+                    sku=vdata['sku'],
+                    defaults={
+                        'variant_name': vdata['variant_name'],
+                        'price_override': Decimal(str(vdata['price'])),
+                        'attributes_json': json.dumps(vdata.get('attrs', {}))
+                    }
                 )
-                ProductImage.objects.get_or_create(
-                    product=product,
-                    image_url='https://images.unsplash.com/photo-1526738549149-8e07eca6c147?auto=format&fit=crop&w=800&q=80',
-                    defaults={'is_primary': True}
-                )
+                variants_seeded += 1
+
+                # Inventory
                 Inventory.objects.get_or_create(
                     variant=variant,
-                    defaults={'quantity_on_hand': 50, 'reorder_threshold': 5}
+                    defaults={'quantity_on_hand': 100, 'quantity_reserved': 2, 'reorder_threshold': 10}
                 )
-                if created:
-                    products_created += 1
 
-            category_product_counts[category.slug] = category.products.count()
+            # Specifications
+            for spec_tuple in pdata.get('specs', []):
+                s_key, s_val, s_grp = spec_tuple
+                ProductSpecification.objects.get_or_create(
+                    product=product,
+                    spec_key=s_key,
+                    defaults={'spec_value': s_val, 'display_group': s_grp}
+                )
+
+            # Seed Reviews for realistic ratings (4.5+ average)
+            if not Review.objects.filter(product=product).exists():
+                Review.objects.create(
+                    product=product,
+                    user=customer_user,
+                    rating=5 if pdata.get('is_bestseller') else 4,
+                    title=f"Great product: {product.name}",
+                    comment=f"I have been using {product.name} daily. Superior quality, matches description exactly.",
+                    is_verified_purchase=True,
+                    status='APPROVED',
+                    helpful_votes=random.randint(5, 25)
+                )
+                reviews_seeded += 1
 
         self.stdout.write(self.style.SUCCESS(
-            f'Product catalog normalized: {products_created} products added; '
-            f'{len(category_product_counts)} active categories now have at least 10 products.'
+            f'Seeded {products_seeded} products, {variants_seeded} variants across {len(category_map)} active categories.'
         ))
 
         # 7. Warehouse & Inventory Ledger
         warehouse, _ = WarehouseLocation.objects.get_or_create(
             code='WH-WEST-01',
             defaults={'name': 'Pacific Logistics Distribution Center', 'address': '500 Logistics Way', 'city': 'Reno', 'state': 'NV', 'country': 'United States'}
-        )
-
-        inv_laptop, _ = Inventory.objects.get_or_create(
-            variant=var_laptop1,
-            defaults={'quantity_on_hand': 45, 'quantity_reserved': 2, 'reorder_threshold': 5}
-        )
-        inv_earbuds, _ = Inventory.objects.get_or_create(
-            variant=var_earbuds1,
-            defaults={'quantity_on_hand': 120, 'quantity_reserved': 5, 'reorder_threshold': 10}
-        )
-
-        InventoryTransaction.objects.get_or_create(
-            variant=var_laptop1,
-            transaction_type='RECEIPT',
-            quantity=50,
-            defaults={'reference_type': 'RESTOCK', 'reference_id': 'RESTOCK-991', 'notes': 'Initial Warehouse Receipt'}
         )
 
         # 8. Coupons & Promotions
@@ -330,6 +255,9 @@ class Command(BaseCommand):
         )
 
         # 9. Orders & Fulfillment Items
+        first_product = Product.objects.filter(slug='apexpro-x15-ultra-laptop').first() or Product.objects.first()
+        first_variant = first_product.variants.first()
+
         order1, _ = Order.objects.get_or_create(
             order_number='ORD-20260101-1001',
             defaults={
@@ -344,19 +272,20 @@ class Command(BaseCommand):
             }
         )
 
-        order_item1, _ = OrderItem.objects.get_or_create(
-            order=order1,
-            variant=var_laptop1,
-            defaults={
-                'seller': seller_profile,
-                'unit_price': 1349.99,
-                'discount_amount': 135.00,
-                'tax_amount': 111.37,
-                'quantity': 1,
-                'total_price': 1349.99,
-                'item_status': 'PENDING'
-            }
-        )
+        if first_variant:
+            OrderItem.objects.get_or_create(
+                order=order1,
+                variant=first_variant,
+                defaults={
+                    'seller': seller_profile,
+                    'unit_price': 1349.99,
+                    'discount_amount': 135.00,
+                    'tax_amount': 111.37,
+                    'quantity': 1,
+                    'total_price': 1349.99,
+                    'item_status': 'PENDING'
+                }
+            )
 
         Payment.objects.get_or_create(
             order=order1,
@@ -364,20 +293,7 @@ class Command(BaseCommand):
             defaults={'amount': 1326.36, 'status': 'SUCCESS', 'payment_method': 'CREDIT_CARD_SANDBOX'}
         )
 
-        # 10. Reviews & Support Tickets
-        Review.objects.get_or_create(
-            product=prod_laptop,
-            user=customer_user,
-            defaults={
-                'rating': 5,
-                'title': 'Outstanding Performance!',
-                'comment': 'The ApexPro X15 handles heavy software development flawlessly.',
-                'is_verified_purchase': True,
-                'status': 'APPROVED',
-                'helpful_votes': 12
-            }
-        )
-
+        # 10. Support Ticket
         ticket, _ = SupportTicket.objects.get_or_create(
             ticket_number='TKT-10042',
             defaults={
@@ -393,7 +309,7 @@ class Command(BaseCommand):
         SupportMessage.objects.get_or_create(
             ticket=ticket,
             sender=customer_user,
-            defaults={'message': 'Hello, when will my ApexPro X15 laptop ship?'}
+            defaults={'message': 'Hello, when will my order ship?'}
         )
 
-        self.stdout.write(self.style.SUCCESS('[SUCCESS] ShopSphere Python Full-Stack Seeding Completed Successfully!'))
+        self.stdout.write(self.style.SUCCESS('[SUCCESS] ShopSphere Seeding Completed Successfully!'))
