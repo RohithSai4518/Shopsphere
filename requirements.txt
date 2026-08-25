@@ -1,0 +1,4 @@
+# ShopSphere Dependencies — Strict MIT / BSD License Policy
+Django==5.1.0
+python-dotenv==1.0.1
+Pillow==10.4.0

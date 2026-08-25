@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  shopsphere:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - DJANGO_SECRET_KEY=synthetic_shopsphere_django_secret_key_2026_prod_secure_998877
+      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
+    restart: always

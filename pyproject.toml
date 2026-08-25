@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "shopsphere"
+version = "2.0.0"
+description = "ShopSphere Enterprise Python Full-Stack Marketplace Platform"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "ShopSphere Engineering", email = "engineering@shopsphere.local" }
+]
+dependencies = [
+    "Django==5.1.0",
+    "python-dotenv==1.0.1",
+    "Pillow==10.4.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.3.2",
+    "pytest-django==4.8.0",
+]

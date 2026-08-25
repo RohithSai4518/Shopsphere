@@ -1,0 +1,1 @@
+# ShopSphere Django Configuration Package
