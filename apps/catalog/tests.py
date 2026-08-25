@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from apps.sellers.models import Seller
 from apps.catalog.models import Category, Brand, Product, ProductVariant
+from .tests_expanded import ExpandedCatalogTestSuite
 
 User = get_user_model()
 
@@ -40,3 +41,6 @@ class CatalogModelTests(TestCase):
         )
         self.assertEqual(variant.price_override, 950.00)
         self.assertEqual(variant.product.name, 'Apex Laptop 15')
+
+class FullExpandedCatalogTests(ExpandedCatalogTestSuite):
+    pass

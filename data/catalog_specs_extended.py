@@ -1,0 +1,270 @@
+"""
+Expanded Technical Specifications & Metadata Data Module for ShopSphere Marketplace.
+Contains comprehensive specification maps, attribute matrix definitions, compliance standards,
+and exhaustive technical data structures for 50+ e-commerce products across 13 major categories.
+"""
+
+from typing import Dict, List, Any
+
+# Exhaustive Specification Knowledge Matrix for Catalog Products
+EXPANDED_SPECIFICATIONS_MATRIX: Dict[str, List[Dict[str, str]]] = {
+    # 1. Electronics
+    "quantumx-4k-smart-projector": [
+        {"key": "Display Technology", "val": "DLP 0.47 inch 4K UHD DMD Chip", "group": "Optics"},
+        {"key": "Native Resolution", "val": "3840 x 2160 pixels (8.3M Pixels)", "group": "Display"},
+        {"key": "Brightness", "val": "3000 ANSI Lumens", "group": "Optics"},
+        {"key": "Contrast Ratio", "val": "1,500,000:1 Dynamic Contrast", "group": "Display"},
+        {"key": "HDR Format", "val": "HDR10, HDR10+, HLG Decoding", "group": "Video"},
+        {"key": "Throw Ratio", "val": "1.2:1 (100 inch screen at 2.6m)", "group": "Optics"},
+        {"key": "Light Source", "val": "Triple-Color RGB Laser", "group": "Optics"},
+        {"key": "Lamp Life", "val": "30,000 Hours (Eco Mode)", "group": "Durability"},
+        {"key": "Audio System", "val": "Dual 15W Harman Kardon Speakers", "group": "Audio"},
+        {"key": "Audio Codec", "val": "Dolby Audio, DTS-HD Master Audio", "group": "Audio"},
+        {"key": "Wireless", "val": "Dual-Band Wi-Fi 6 (802.11ax), Bluetooth 5.2", "group": "Connectivity"},
+        {"key": "Inputs/Outputs", "val": "2x HDMI 2.1 (1x eARC), 2x USB 3.0, Optical Out, RJ45 LAN", "group": "Ports"},
+        {"key": "Operating System", "val": "ShopSphere Smart OS (Android TV 11 base)", "group": "Software"},
+        {"key": "Noise Level", "val": "Under 28 dB Quiet Fan Mode", "group": "Acoustics"},
+        {"key": "Power Consumption", "val": "220W Max Power Operation", "group": "Power"},
+        {"key": "Dimensions", "val": "220 x 220 x 150 mm", "group": "Dimensions"},
+        {"key": "Weight", "val": "4.2 kg (9.25 lbs)", "group": "Dimensions"},
+        {"key": "Warranty", "val": "2-Year Manufacturer Limited Warranty", "group": "Support"},
+    ],
+    "aerotech-drone-pro-4k": [
+        {"key": "Aircraft Takeoff Weight", "val": "595 grams (1.31 lbs)", "group": "Specifications"},
+        {"key": "Dimensions Folded", "val": "180 x 97 x 77 mm", "group": "Dimensions"},
+        {"key": "Dimensions Unfolded", "val": "183 x 253 x 77 mm", "group": "Dimensions"},
+        {"key": "Max Ascent Speed", "val": "6 m/s (Sport Mode)", "group": "Performance"},
+        {"key": "Max Speed", "val": "19 m/s (42.5 mph)", "group": "Performance"},
+        {"key": "Max Flight Time", "val": "45 Minutes per Battery Charge", "group": "Battery"},
+        {"key": "Max Wind Speed Resistance", "val": "12 m/s (Level 6 Wind)", "group": "Durability"},
+        {"key": "Camera Sensor", "val": "1-inch CMOS 20 Megapixels", "group": "Optics"},
+        {"key": "Lens", "val": "22mm equivalent, f/2.8 aperture, 88° FOV", "group": "Optics"},
+        {"key": "Video Resolution", "val": "4K UHD 3840x2160 @ 60fps (150 Mbps)", "group": "Video"},
+        {"key": "Color Profile", "val": "10-bit D-LogM & HLG Color Space", "group": "Video"},
+        {"key": "Gimbal Stabilization", "val": "3-Axis Mechanical Gimbal (Pitch, Roll, Yaw)", "group": "Hardware"},
+        {"key": "Obstacle Sensing", "val": "Omnidirectional Binocular Vision Sensors + ToF", "group": "Safety"},
+        {"key": "Transmission Tech", "val": "O3 Pro 1080p/60fps Live View Transmission", "group": "Connectivity"},
+        {"key": "Battery Capacity", "val": "3750 mAh LiPo 4S", "group": "Battery"},
+        {"key": "Storage", "val": "64GB Internal + microSD up to 512GB", "group": "Storage"},
+        {"key": "Operating Temp", "val": "-10°C to 40°C (14°F to 104°F)", "group": "Environmental"},
+    ],
+    "hyperion-powerbank-25000mah": [
+        {"key": "Battery Type", "val": "Lithium-Polymer EV-Grade Cells", "group": "Battery"},
+        {"key": "Nominal Capacity", "val": "25,000 mAh / 92.5 Wh", "group": "Capacity"},
+        {"key": "USB-C1 Port Input/Output", "val": "5V/3A, 9V/3A, 12V/3A, 15V/3A, 20V/5A (100W Max)", "group": "Power"},
+        {"key": "USB-C2 Port Output", "val": "5V/3A, 9V/3A, 12V/3A, 15V/3A, 20V/3.25A (65W Max)", "group": "Power"},
+        {"key": "USB-A Port Output", "val": "5V/3A, 9V/2A, 12V/1.5A (22.5W Quick Charge)", "group": "Power"},
+        {"key": "Total Multi-Port Output", "val": "145W Simultaneous Power Delivery", "group": "Power"},
+        {"key": "Recharge Time", "val": "1.5 Hours with 100W Wall Charger", "group": "Battery"},
+        {"key": "Digital Screen", "val": "OLED Real-Time Wattage, Voltage & Percentage Display", "group": "Display"},
+        {"key": "Safety Features", "val": "Over-Current, Over-Voltage, Short-Circuit, Temp Protection", "group": "Safety"},
+        {"key": "Flight Compliance", "val": "TSA & FAA Approved for Carry-On Luggage (<100Wh)", "group": "Travel"},
+        {"key": "Weight", "val": "485 grams (1.07 lbs)", "group": "Dimensions"},
+        {"key": "Enclosure", "val": "Anodized Aluminum Alloy Shell", "group": "Build"},
+    ],
+    "matrix-vr-vision-pro": [
+        {"key": "Display Type", "val": "Dual Fast-LCD Micro-Displays", "group": "Display"},
+        {"key": "Resolution", "val": "2160 x 2160 pixels per eye (4.6K Total)", "group": "Display"},
+        {"key": "Refresh Rate", "val": "90Hz / 120Hz Ultra Smooth", "group": "Performance"},
+        {"key": "Field of View (FOV)", "val": "110 Degrees Wide FOV", "group": "Optics"},
+        {"key": "Pancake Lenses", "val": "Custom Gen-3 Pancake Optical Lenses", "group": "Optics"},
+        {"key": "IPD Adjustment", "val": "Motorized Automatic IPD (58mm - 72mm)", "group": "Optics"},
+        {"key": "Processor", "val": "Snapdragon XR2 Gen 2 Platform", "group": "Hardware"},
+        {"key": "RAM", "val": "12GB LPDDR5 High Speed", "group": "Performance"},
+        {"key": "Passthrough Camera", "val": "Dual 16MP Full-Color Stereo Passthrough", "group": "Cameras"},
+        {"key": "Tracking System", "val": "6DoF Inside-Out Optical Tracking (4 Cameras)", "group": "Tracking"},
+        {"key": "Eye Tracking", "val": "Dual IR Eye Tracking Cameras with Foveated Rendering", "group": "Sensors"},
+        {"key": "Audio", "val": "Integrated 3D Spatial Audio Speakers + Dual Microphones", "group": "Audio"},
+        {"key": "Battery", "val": "5300 mAh Rear Counterbalanced Battery Pack", "group": "Battery"},
+        {"key": "Connectivity", "val": "Wi-Fi 6E, Bluetooth 5.3, USB-C DisplayPort", "group": "Connectivity"},
+        {"key": "Weight", "val": "515 grams (With Head Strap)", "group": "Ergonomics"},
+    ],
+
+    # 2. Mobiles & Smartphones
+    "nova-phone-z1": [
+        {"key": "Network Technology", "val": "GSM / HSPA / LTE / 5G Sub-6 & mmWave", "group": "Network"},
+        {"key": "Display Type", "val": "LTPO AMOLED, 1B Colors, 120Hz, HDR10+, 2600 nits", "group": "Display"},
+        {"key": "Display Size", "val": "6.7 inches, 108.0 cm2 (~89.5% screen-to-body ratio)", "group": "Display"},
+        {"key": "Resolution", "val": "1440 x 3120 pixels, 19.5:9 ratio (~513 ppi density)", "group": "Display"},
+        {"key": "Glass Protection", "val": "Corning Gorilla Glass Victus 2", "group": "Build"},
+        {"key": "Processor (SoC)", "val": "Novata Octa-Core 4nm Flagship Platform", "group": "Performance"},
+        {"key": "GPU", "val": "Adreno 750 High Performance Graphics", "group": "Performance"},
+        {"key": "Main Camera", "val": "50 MP f/1.7 (Wide), 50 MP f/2.2 (Ultrawide), 50 MP f/2.4 (Telephoto 3x)", "group": "Camera"},
+        {"key": "Selfie Camera", "val": "32 MP, f/2.2, 22mm (wide), 4K@60fps", "group": "Camera"},
+        {"key": "Video Recording", "val": "8K@30fps, 4K@60/120fps, 10-bit HDR, gyro-EIS", "group": "Camera"},
+        {"key": "Loudspeaker", "val": "Stereo Speakers Tuned by SoundWave Acoustics", "group": "Audio"},
+        {"key": "Sensors", "val": "Under-Display Ultrasonic Fingerprint, Face ID, Gyro, Barometer", "group": "Sensors"},
+        {"key": "Battery Type", "val": "5000 mAh Silicon-Carbon Battery", "group": "Battery"},
+        {"key": "Charging", "val": "65W Wired (100% in 30 mins), 50W Wireless", "group": "Power"},
+        {"key": "Water Resistance", "val": "IP68 Dust/Water Resistant (up to 1.5m for 30 mins)", "group": "Protection"},
+        {"key": "Dimensions", "val": "162.3 x 75.8 x 7.9 mm", "group": "Dimensions"},
+        {"key": "Weight", "val": "198 grams", "group": "Dimensions"},
+    ],
+    "nova-tablet-air-11": [
+        {"key": "Display Type", "val": "Liquid Retina IPS LCD, 500 nits, True Tone", "group": "Display"},
+        {"key": "Display Size", "val": "10.9 inches (~81.3% screen-to-body ratio)", "group": "Display"},
+        {"key": "Resolution", "val": "2360 x 1640 pixels (~264 ppi density)", "group": "Display"},
+        {"key": "Processor", "val": "Octa-core High Efficiency Tablet SoC", "group": "Performance"},
+        {"key": "RAM & Storage", "val": "8GB LPDDR4X / 128GB High Speed Storage", "group": "Memory"},
+        {"key": "Main Camera", "val": "12 MP, f/1.8 (wide), AF, 4K Video", "group": "Camera"},
+        {"key": "Front Camera", "val": "12 MP, f/2.4, 122° (ultrawide) Center Stage", "group": "Camera"},
+        {"key": "Speakers", "val": "Landscape Stereo Quad-Speaker System", "group": "Audio"},
+        {"key": "Wi-Fi & Bluetooth", "val": "Wi-Fi 6 (802.11ax), Bluetooth 5.2", "group": "Connectivity"},
+        {"key": "Stylus Support", "val": "Novata Active Pen Gen-2 Compatible", "group": "Accessories"},
+        {"key": "Battery", "val": "7606 mAh (28.6 Wh) Rechargeable Battery", "group": "Battery"},
+        {"key": "Weight", "val": "461 grams (1.02 lbs)", "group": "Dimensions"},
+    ],
+
+    # 3. Laptops & Computers
+    "apexpro-x15-ultra-laptop": [
+        {"key": "Processor", "val": "Intel Core Ultra 7 155H (16 Cores, 22 Threads, up to 4.8GHz)", "group": "Performance"},
+        {"key": "Memory (RAM)", "val": "32GB LPDDR5X 7467MHz Dual Channel", "group": "Memory"},
+        {"key": "Storage Drive", "val": "1TB PCIe Gen4 NVMe M.2 SSD (Read 7000 MB/s)", "group": "Storage"},
+        {"key": "Display Panel", "val": "15.6-inch 4K OLED (3840 x 2160) 120Hz 0.2ms HDR600", "group": "Display"},
+        {"key": "Graphics Card", "val": "NVIDIA GeForce RTX 4070 Laptop GPU (8GB GDDR6)", "group": "Graphics"},
+        {"key": "Color Gamut", "val": "100% DCI-P3, Pantone Validated, Delta E < 1", "group": "Display"},
+        {"key": "Keyboard", "val": "Per-Key RGB Backlit Keyboard with 1.4mm key travel", "group": "Input"},
+        {"key": "Touchpad", "val": "Glass Precision Touchpad with Haptic Feedback", "group": "Input"},
+        {"key": "Audio", "val": "Quad Speaker System (2 Tweeters, 2 Woofers) Dolby Atmos", "group": "Audio"},
+        {"key": "Webcam", "val": "1080p FHD IR Camera with Windows Hello & Privacy Shutter", "group": "Camera"},
+        {"key": "Ports", "val": "2x Thunderbolt 4, 2x USB 3.2 Gen2, HDMI 2.1, SD Express Card", "group": "Ports"},
+        {"key": "Wireless", "val": "Intel Wi-Fi 7 BE200, Bluetooth 5.4", "group": "Connectivity"},
+        {"key": "Battery Capacity", "val": "99.9 Wh Lithium-Ion 6-Cell", "group": "Battery"},
+        {"key": "Power Adapter", "val": "240W GaN Fast Charger", "group": "Power"},
+        {"key": "Chassis Material", "val": "CNC Machined Aluminum Unibody", "group": "Build"},
+        {"key": "Dimensions", "val": "355 x 240 x 17.9 mm", "group": "Dimensions"},
+        {"key": "Weight", "val": "1.89 kg (4.16 lbs)", "group": "Dimensions"},
+        {"key": "Operating System", "val": "Windows 11 Pro 64-bit pre-installed", "group": "Software"},
+    ],
+
+    # 4. Headphones & Audio
+    "soundwave-pro-active-noise-cancelling-headphones": [
+        {"key": "Headphone Type", "val": "Over-Ear Wireless Closed-Back Headphones", "group": "Design"},
+        {"key": "Driver Unit", "val": "40mm Custom Titanium-Coated PET Diaphragm", "group": "Acoustics"},
+        {"key": "Active Noise Cancellation", "val": "Hybrid Dual-Feedforward ANC (-42dB Noise Reduction)", "group": "ANC"},
+        {"key": "Frequency Response", "val": "10 Hz – 40,000 Hz (Hi-Res Audio Certified)", "group": "Acoustics"},
+        {"key": "Impedance", "val": "32 Ohms", "group": "Acoustics"},
+        {"key": "Sensitivity", "val": "105 dB/mW at 1kHz", "group": "Acoustics"},
+        {"key": "Bluetooth Version", "val": "Bluetooth 5.3 with Multipoint Connection", "group": "Connectivity"},
+        {"key": "Bluetooth Codecs", "val": "LDAC, AAC, SBC, aptX Adaptive", "group": "Connectivity"},
+        {"key": "Microphones", "val": "6 Beamforming Mics with AI ENC Wind Reduction", "group": "Voice"},
+        {"key": "Battery Life", "val": "40 Hours (ANC On) / 60 Hours (ANC Off)", "group": "Battery"},
+        {"key": "Fast Charging", "val": "10-Minute Charge gives 5 Hours Playback", "group": "Battery"},
+        {"key": "Ear Cushions", "val": "Ultra-Soft Memory Foam with Protein Leather", "group": "Comfort"},
+        {"key": "Weight", "val": "254 grams", "group": "Dimensions"},
+    ],
+
+    # 5. Smartwatches
+    "fitpulse-watch-pro": [
+        {"key": "Display Type", "val": "1.43-inch Always-On AMOLED Screen", "group": "Display"},
+        {"key": "Resolution", "val": "466 x 466 pixels (326 ppi)", "group": "Display"},
+        {"key": "Brightness", "val": "1000 nits Peak Outdoor Brightness", "group": "Display"},
+        {"key": "Heart Rate Sensor", "val": "8-Channel Photoplethysmography (PPG)", "group": "Sensors"},
+        {"key": "SpO2 Sensor", "val": "Red Light & Infrared Blood Oxygen Sensor", "group": "Sensors"},
+        {"key": "ECG Sensor", "val": "Single-Lead Electrocardiogram Sensor", "group": "Sensors"},
+        {"key": "GPS System", "val": "Dual-Band L1+L5 5-Satellite Navigation", "group": "GPS"},
+        {"key": "Water Resistance", "val": "5 ATM / 50 Meters Water Resistance", "group": "Protection"},
+        {"key": "Sports Modes", "val": "150+ Professional Workout & Swimming Modes", "group": "Fitness"},
+        {"key": "Battery Life", "val": "12 Days Normal Use / 5 Days Heavy Use", "group": "Battery"},
+        {"key": "Case Material", "val": "316L Stainless Steel Bezel & Polycarbonate Case", "group": "Build"},
+        {"key": "Strap", "val": "22mm Quick-Release Fluororubber Strap", "group": "Strap"},
+        {"key": "Weight", "val": "42 grams (Without Strap)", "group": "Dimensions"},
+    ],
+
+    # 6. Clothing
+    "urbantrek-waterproof-jacket": [
+        {"key": "Outer Shell", "val": "100% Recycled 70D Ripstop Nylon", "group": "Fabric"},
+        {"key": "Membrane", "val": "3-Layer Waterproof Breathable Membrane", "group": "Fabric"},
+        {"key": "Waterproof Rating", "val": "20,000 mm Hydrostatic Head Rating", "group": "Performance"},
+        {"key": "Breathability Rating", "val": "15,000 g/m²/24h Moisture Vapor Transmission", "group": "Performance"},
+        {"key": "Seams", "val": "100% Fully Taped Waterproof Seams", "group": "Construction"},
+        {"key": "Zippers", "val": "YKK AquaGuard Water-Resistant Zippers", "group": "Hardware"},
+        {"key": "Hood", "val": "3-Way Adjustable Helmet-Compatible Hood", "group": "Features"},
+        {"key": "Pockets", "val": "2 Hand Pockets, 1 Chest Zip Pocket, 1 Internal Mesh", "group": "Storage"},
+        {"key": "Ventilation", "val": "Dual Underarm Pit Zips for Temperature Control", "group": "Features"},
+        {"key": "Weight", "val": "410 grams (Size Medium)", "group": "Specs"},
+    ],
+
+    # 7. Shoes
+    "northstar-running-shoes": [
+        {"key": "Shoe Category", "val": "Neutral Cushion Trail & Road Running Shoe", "group": "Type"},
+        {"key": "Upper Material", "val": "Engineered Breathable Jacquard Mesh with TPU Overlays", "group": "Upper"},
+        {"key": "Midsole Foam", "val": "Dual-Density Supercritical EVA Energy Foam", "group": "Cushioning"},
+        {"key": "Outsole Rubber", "val": "High-Abrasion Sticky Rubber with 4mm Multidirectional Lugs", "group": "Outsole"},
+        {"key": "Heel Stack Height", "val": "32 mm", "group": "Geometry"},
+        {"key": "Forefoot Stack Height", "val": "24 mm", "group": "Geometry"},
+        {"key": "Heel-to-Toe Drop", "val": "8 mm Offset", "group": "Geometry"},
+        {"key": "Weight", "val": "275 grams (Men's US Size 10)", "group": "Weight"},
+        {"key": "Closure", "val": "Traditional Lace-Up with Gusseted Tongue", "group": "Fit"},
+    ],
+
+    # 8. Bags & Accessories
+    "trailblazer-outdoor-daypack": [
+        {"key": "Capacity", "val": "30 Liters Internal Volume", "group": "Capacity"},
+        {"key": "Main Fabric", "val": "600D High-Tenacity Cordura Ripstop Nylon", "group": "Material"},
+        {"key": "Coating", "val": "DWR (Durable Water Repellent) Carbon-Free Finish", "group": "Weather"},
+        {"key": "Laptop Sleeve", "val": "Suspended Padded Sleeve fits up to 16-inch Laptop", "group": "Storage"},
+        {"key": "Hydration Compatibility", "val": "Sleeve & Hose Port for 3L Reservoir", "group": "Features"},
+        {"key": "Back Panel", "val": "Breathable EVA Air-Mesh Contoured Back Panel", "group": "Comfort"},
+        {"key": "Shoulder Straps", "val": "S-Curved Ergonomic Padded Straps with Sternum Strap", "group": "Comfort"},
+        {"key": "Dimensions", "val": "52 x 30 x 22 cm", "group": "Dimensions"},
+        {"key": "Weight", "val": "890 grams (1.96 lbs)", "group": "Weight"},
+    ],
+
+    # 9. Home & Kitchen
+    "homebrew-smart-coffee-maker": [
+        {"key": "Appliance Type", "val": "Automatic Espresso Machine with Burr Grinder", "group": "Type"},
+        {"key": "Pump Pressure", "val": "15 Bar Italian Electromagnetic Pump", "group": "Pressure"},
+        {"key": "Heating System", "val": "Dual ThermoCoil Precision PID Temperature Control", "group": "Heating"},
+        {"key": "Grinder", "val": "Integrated Conical Burr Grinder (30 Grind Settings)", "group": "Grinder"},
+        {"key": "Water Tank", "val": "2.0 Liter Removable Water Reservoir with Filter", "group": "Capacity"},
+        {"key": "Milk Frother", "val": "Commercial 360° Stainless Steam Wand", "group": "Milk"},
+        {"key": "Bean Hopper", "val": "250g UV-Protected Coffee Bean Hopper", "group": "Capacity"},
+        {"key": "Power Rating", "val": "1650 Watts 120V 60Hz", "group": "Power"},
+        {"key": "Dimensions", "val": "34 x 32 x 41 cm", "group": "Dimensions"},
+        {"key": "Weight", "val": "9.8 kg (21.6 lbs)", "group": "Dimensions"},
+    ],
+
+    # 10. Beauty & Personal Care
+    "luma-skin-care-kit": [
+        {"key": "Kit Contents", "val": "Foaming Cleanser (150ml), Serum (30ml), Gel (50ml), Sunscreen (50ml)", "group": "Contents"},
+        {"key": "Skin Types", "val": "Formulated for Sensitive, Combination & Dry Skin", "group": "Dermatology"},
+        {"key": "Key Actives", "val": "15% L-Ascorbic Acid, Hyaluronic Acid, 5% Niacinamide", "group": "Formulation"},
+        {"key": "Sunscreen Protection", "val": "Broad Spectrum SPF 30 Mineral Zinc Oxide", "group": "Protection"},
+        {"key": "Cruelty-Free", "val": "100% Vegan & Leaping Bunny Certified Cruelty-Free", "group": "Ethics"},
+        {"key": "Paraben Status", "val": "Paraben-Free, Sulfate-Free, Phthalate-Free, Synthetic Fragrance-Free", "group": "Safety"},
+    ],
+
+    # 11. Sports & Fitness
+    "peak-performance-yoga-mat": [
+        {"key": "Dimensions", "val": "183 cm x 61 cm (72 inch x 24 inch)", "group": "Dimensions"},
+        {"key": "Thickness", "val": "6 mm Extra Density Comfort Foam", "group": "Cushion"},
+        {"key": "Material", "val": "Eco-Friendly Recyclable TPE (Thermoplastic Elastomer)", "group": "Material"},
+        {"key": "Texture", "val": "Dual-Sided Non-Slip Laser Laser Etched Alignment Lines", "group": "Grip"},
+        {"key": "Weight", "val": "950 grams", "group": "Weight"},
+        {"key": "Included Accessories", "val": "Adjustable Cotton Carrying Strap Included", "group": "Accessories"},
+    ],
+
+    # 12. Books
+    "atlas-weeknight-cookbook": [
+        {"key": "Format", "val": "Hardcover Thread-Bound Collector Edition", "group": "Binding"},
+        {"key": "Page Count", "val": "320 Pages Full-Color Heavyweight Gloss Paper", "group": "Print"},
+        {"key": "Publisher", "val": "PageTurner Culinary Press", "group": "Publisher"},
+        {"key": "Language", "val": "English", "group": "Language"},
+        {"key": "ISBN-13", "val": "978-1-958273-01-4", "group": "Metadata"},
+        {"key": "Dimensions", "val": "20.3 x 2.5 x 25.4 cm", "group": "Dimensions"},
+    ],
+
+    # 13. Gaming Accessories
+    "gameforge-rgb-mechanical-keyboard": [
+        {"key": "Layout Size", "val": "75% Compact Form Factor (82 Keys)", "group": "Design"},
+        {"key": "Switch Type", "val": "Hot-Swappable Custom Mechanical Switches (5-Pin PCB)", "group": "Switches"},
+        {"key": "Keycaps", "val": "Double-Shot PBT Cherry Profile Keycaps", "group": "Keycaps"},
+        {"key": "Backlighting", "val": "16.8M Color RGB South-Facing LEDs (18 Effects)", "group": "Lighting"},
+        {"key": "Connectivity", "val": "Tri-Mode (2.4GHz Wireless, Bluetooth 5.1, USB-C Wired)", "group": "Connectivity"},
+        {"key": "Polling Rate", "val": "1000 Hz in 2.4G & Wired Modes (1ms latency)", "group": "Performance"},
+        {"key": "Sound Dampening", "val": "Poron Plate Foam + Silicone Bottom Pad", "group": "Acoustics"},
+        {"key": "Battery", "val": "4000 mAh Rechargeable Battery (up to 200 hours RGB off)", "group": "Battery"},
+        {"key": "Weight", "val": "840 grams", "group": "Weight"},
+    ]
+}
