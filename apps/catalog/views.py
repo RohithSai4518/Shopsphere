@@ -7,7 +7,7 @@ from .services import CatalogService
 from apps.analytics.services import AnalyticsService
 
 def home_view(request):
-    categories = Category.objects.filter(is_active=True, parent__isnull=True)[:8]
+    categories = Category.objects.filter(is_active=True, parent__isnull=True).order_by('display_order', 'name')
     featured_products = Product.objects.filter(status='PUBLISHED', is_featured=True)[:8]
     if not featured_products.exists():
         featured_products = Product.objects.filter(status='PUBLISHED')[:8]
@@ -53,8 +53,8 @@ def product_list_view(request):
     if query:
         AnalyticsService.record_search_query(request.user, query, products.count())
 
-    categories = Category.objects.filter(is_active=True, parent__isnull=True)
-    brands = Brand.objects.all()[:15]
+    categories = Category.objects.filter(is_active=True, parent__isnull=True).order_by('display_order', 'name')
+    brands = Brand.objects.all()[:20]
     tags = Tag.objects.all()[:10]
 
     return render(request, 'catalog/product_list.html', {
