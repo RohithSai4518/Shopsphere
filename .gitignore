@@ -11,7 +11,7 @@ yarn-error.log*
 # Environment & Secrets
 .env
 .env.*
-!.env.example
+!example.env
 *.pem
 *.key
 *.crt

@@ -34,7 +34,7 @@ cd Amazon_Clone
 pip install -r requirements.txt
 
 # Create local environment configuration
-copy .env.example .env
+copy example.env .env
 ```
 
 ### 3. Database Initialization & Seeding
@@ -51,6 +51,12 @@ python manage.py seed_shopsphere
 python manage.py runserver
 ```
 Navigate to `http://127.0.0.1:8000/` in your browser.
+
+### 5. Build Verification
+```bash
+python manage.py check
+python manage.py test tests
+```
 
 ---
 
@@ -69,6 +75,12 @@ python scripts/license_audit.py
 ### Measure Meaningful Source LOC
 ```bash
 python scripts/count_loc.py
+```
+
+### Test Coverage
+```bash
+coverage run manage.py test tests
+coverage report
 ```
 
 ---

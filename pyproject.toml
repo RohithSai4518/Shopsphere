@@ -22,4 +22,13 @@ dependencies = [
 dev = [
     "pytest==8.3.2",
     "pytest-django==4.8.0",
+    "coverage==7.6.1",
 ]
+
+[tool.coverage.run]
+branch = true
+source = ["apps", "config"]
+
+[tool.coverage.report]
+omit = ["*/migrations/*"]
+show_missing = true
