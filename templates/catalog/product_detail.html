@@ -143,4 +143,17 @@
     </div>
 </section>
 {% endif %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const mainImg = document.querySelector('.main-detail-img');
+        document.querySelectorAll('.thumb-img').forEach(function(thumb) {
+            thumb.addEventListener('click', function() {
+                if (mainImg) {
+                    mainImg.src = this.src;
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}

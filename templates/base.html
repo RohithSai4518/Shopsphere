@@ -89,5 +89,13 @@
             <p>&copy; 2026 ShopSphere Marketplace Inc. All rights reserved. Powered by Python 3.12 & Django 5.1.</p>
         </div>
     </footer>
+    <script>
+        document.addEventListener('error', function(e) {
+            if (e.target && e.target.tagName && e.target.tagName.toLowerCase() === 'img') {
+                e.target.onerror = null;
+                e.target.src = 'https://images.unsplash.com/photo-1526738549149-8e07eca6c147?auto=format&fit=crop&w=800&q=80';
+            }
+        }, true);
+    </script>
 </body>
 </html>

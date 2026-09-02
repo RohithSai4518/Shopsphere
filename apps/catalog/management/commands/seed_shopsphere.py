@@ -183,11 +183,18 @@ class Command(BaseCommand):
             products_seeded += 1
 
             # Primary Image
-            ProductImage.objects.get_or_create(
-                product=product,
-                image_url=pdata['image_url'],
-                defaults={'is_primary': True, 'display_order': 1}
-            )
+            primary_img = ProductImage.objects.filter(product=product, is_primary=True).first()
+            if primary_img:
+                if primary_img.image_url != pdata['image_url']:
+                    primary_img.image_url = pdata['image_url']
+                    primary_img.save()
+            else:
+                ProductImage.objects.create(
+                    product=product,
+                    image_url=pdata['image_url'],
+                    is_primary=True,
+                    display_order=1
+                )
 
             # Variants
             for vdata in pdata.get('variants', []):

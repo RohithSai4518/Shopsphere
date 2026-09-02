@@ -162,7 +162,7 @@ RAW_PRODUCT_CATALOG = [
         "description": "High-capacity portable battery pack capable of fast charging laptops, tablets, and phones simultaneously with dual USB-C Power Delivery ports.",
         "base_price": 79.99,
         "discount_percent": 5.00,
-        "image_url": "https://images.unsplash.com/photo-1609592424074-1a98075bc7ea?auto=format&fit=crop&w=800&q=80",
+        "image_url": "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?auto=format&fit=crop&w=800&q=80",
         "is_featured": False,
         "is_bestseller": False,
         "variants": [
@@ -181,7 +181,7 @@ RAW_PRODUCT_CATALOG = [
         "description": "Next-generation standalone virtual reality headset featuring 4K per-eye resolution, spatial audio, pass-through color cameras, and ergonomic counterbalanced head strap.",
         "base_price": 599.99,
         "discount_percent": 0.00,
-        "image_url": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1bd?auto=format&fit=crop&w=800&q=80",
+        "image_url": "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&w=800&q=80",
         "is_featured": True,
         "is_bestseller": False,
         "variants": [
@@ -1041,7 +1041,7 @@ RAW_PRODUCT_CATALOG = [
         "description": "Extra-large 900x400mm desk mat featuring micro-woven cloth surface, anti-slip rubber base, and reinforced anti-fray stitched borders.",
         "base_price": 29.99,
         "discount_percent": 0.00,
-        "image_url": "https://images.unsplash.com/photo-1616440342855-49e0c5f2b842?auto=format&fit=crop&w=800&q=80",
+        "image_url": "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?auto=format&fit=crop&w=800&q=80",
         "is_featured": False,
         "is_bestseller": False,
         "variants": [
