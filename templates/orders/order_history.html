@@ -4,42 +4,58 @@
 
 {% block content %}
 <div class="dashboard-layout">
-    <h2>Your Order History</h2>
+    <div class="section-heading-row">
+        <div>
+            <span class="eyebrow">YOUR PURCHASES</span>
+            <h2 class="section-title">Order History & Deliveries</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">Track ongoing shipments, review invoices, and manage post-purchase returns.</p>
+        </div>
+        <a href="{% url 'catalog:product_list' %}" class="btn-primary-sm">Browse Catalog</a>
+    </div>
 
-    <div class="orders-list">
+    <div style="display: grid; gap: 20px;">
         {% for order in orders %}
-        <div class="order-card">
-            <div class="order-header">
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 24px; transition: border-color 0.2s;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
                 <div>
-                    <span class="order-num">Order #{{ order.order_number }}</span>
-                    <span class="order-date">Placed on {{ order.created_at|date:"N j, Y" }}</span>
+                    <span style="color: #60a5fa; font-family: monospace; font-size: 0.95rem; font-weight: 700;">Order #{{ order.order_number }}</span>
+                    <span style="color: var(--text-muted); font-size: 0.85rem; margin-left: 12px;">Placed on {{ order.created_at|date:"N j, Y" }}</span>
                 </div>
-                <div>
-                    <span class="order-status-badge status-{{ order.status|lower }}">{{ order.status }}</span>
-                    <strong class="order-total">${{ order.total_amount }}</strong>
+                <div style="display:flex; align-items:center; gap: 16px;">
+                    <span class="status-badge {% if order.status == 'DELIVERED' %}delivered{% elif order.status == 'CANCELLED' %}cancelled{% else %}processing{% endif %}">
+                        {{ order.status }}
+                    </span>
+                    <strong style="font-size: 1.25rem; color: #ffffff;">${{ order.total_amount }}</strong>
                 </div>
             </div>
 
-            <div class="order-items-preview">
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px;">
                 {% for item in order.items.all %}
-                <div class="order-item-chip">
-                    <img src="{{ item.variant.product.primary_image }}" alt="{{ item.variant.product.name }}">
-                    <div>
-                        <strong>{{ item.variant.product.name }}</strong>
-                        <p>Qty: {{ item.quantity }} • ${{ item.total_price }}</p>
+                <div style="display:flex; gap:14px; align-items:center; background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-md); padding: 12px;">
+                    <img src="{{ item.variant.product.primary_image }}" alt="{{ item.variant.product.name }}" style="width:60px; height:60px; object-fit:cover; border-radius: var(--border-radius-sm); background:#020617;">
+                    <div style="min-width:0;">
+                        <strong style="color:#ffffff; font-size:0.9rem; display:block; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">{{ item.variant.product.name }}</strong>
+                        <p style="color:var(--text-muted); font-size:0.8rem; margin-top:2px;">Qty: {{ item.quantity }} • ${{ item.total_price }}</p>
                     </div>
                 </div>
                 {% endfor %}
             </div>
 
-            <div class="order-footer">
-                <a href="{% url 'orders:order_detail' order_id=order.id %}" class="btn-primary-sm">View Order Details & Tracking</a>
+            <div style="display:flex; justify-content:flex-end;">
+                <a href="{% url 'orders:order_detail' order_id=order.id %}" class="btn-secondary-sm">
+                    <span>View Tracking & Order Details</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
             </div>
         </div>
         {% empty %}
-        <div class="empty-state">
-            <p>You haven't placed any orders yet.</p>
-            <a href="{% url 'catalog:product_list' %}" class="btn-primary-sm">Start Shopping</a>
+        <div class="empty-catalog-state">
+            <div class="empty-icon">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            </div>
+            <h3>No orders placed yet</h3>
+            <p>You haven't purchased any items on ShopSphere. Start browsing our 16 departments.</p>
+            <a href="{% url 'catalog:product_list' %}" class="btn-primary">Start Shopping</a>
         </div>
         {% endfor %}
     </div>

@@ -4,90 +4,110 @@
 
 {% block content %}
 <div class="dashboard-layout">
-    <h2>Account Settings & Saved Addresses</h2>
+    <div class="section-heading-row">
+        <div>
+            <span class="eyebrow">YOUR ACCOUNT</span>
+            <h2 class="section-title">Account Profile & Saved Addresses</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">Manage contact details, default delivery addresses, and notification preferences.</p>
+        </div>
+    </div>
 
-    <!-- Profile Details Form -->
-    <div class="card-panel">
-        <h3>User Profile & Preferences</h3>
-        <form method="POST" action="{% url 'accounts:profile' %}">
-            {% csrf_token %}
-            <div class="form-row">
-                <div class="form-group">
-                    <label>First Name</label>
-                    <input type="text" name="first_name" value="{{ user.first_name }}">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
+        <!-- Profile Details Form -->
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 32px;">
+            <h3 style="font-size: 1.2rem; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle);">Profile Details</h3>
+            <form method="POST" action="{% url 'accounts:profile' %}">
+                {% csrf_token %}
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" name="first_name" value="{{ user.first_name }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" name="last_name" value="{{ user.last_name }}">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Last Name</label>
-                    <input type="text" name="last_name" value="{{ user.last_name }}">
-                </div>
-            </div>
-            <div class="form-row">
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" value="{{ user.email }}" disabled class="disabled-input">
+                    <input type="email" value="{{ user.email }}" disabled style="opacity: 0.6; cursor: not-allowed;">
                 </div>
                 <div class="form-group">
                     <label>Phone Number</label>
-                    <input type="text" name="phone" value="{{ user.phone|default:'' }}">
+                    <input type="text" name="phone" value="{{ user.phone|default:'' }}" placeholder="+1 (555) 000-0000">
                 </div>
-            </div>
-            <div class="form-group checkbox-group">
-                <label>
-                    <input type="checkbox" name="email_notifications" {% if preference.email_notifications %}checked{% endif %}>
-                    Receive Order & Delivery Email Notifications
-                </label>
-            </div>
-            <button type="submit" class="btn-primary-sm">Save Profile</button>
-        </form>
-    </div>
-
-    <!-- Address Book -->
-    <div class="card-panel">
-        <h3>Saved Addresses</h3>
-        <div class="address-grid">
-            {% for addr in addresses %}
-            <div class="address-card">
-                <strong>{{ addr.full_name }}</strong> {% if addr.is_default %}<span class="badge-default">DEFAULT</span>{% endif %}
-                <p>{{ addr.street_address_1 }} {% if addr.street_address_2 %}, {{ addr.street_address_2 }}{% endif %}</p>
-                <p>{{ addr.city }}, {{ addr.state }} {{ addr.postal_code }}</p>
-                <p>{{ addr.country }}</p>
-                <a href="{% url 'accounts:delete_address' address_id=addr.id %}" class="btn-danger-sm">Remove</a>
-            </div>
-            {% empty %}
-            <p>No saved addresses yet. Add one below.</p>
-            {% endfor %}
+                <div class="form-group" style="margin: 18px 0;">
+                    <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+                        <input type="checkbox" name="email_notifications" {% if preference.email_notifications %}checked{% endif %} style="width:18px; height:18px; accent-color:var(--primary-light);">
+                        <span style="font-size: 0.9rem; color: #ffffff;">Receive dispatch and delivery email alerts</span>
+                    </label>
+                </div>
+                <button type="submit" class="btn-primary-sm">Save Profile Changes</button>
+            </form>
         </div>
 
-        <h4 style="margin-top:20px;">Add New Address</h4>
-        <form method="POST" action="{% url 'accounts:add_address' %}">
-            {% csrf_token %}
-            <div class="form-row">
+        <!-- Address Book -->
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 32px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle);">
+                <h3 style="font-size: 1.2rem;">Saved Addresses</h3>
+                <span class="count-pill">{{ addresses|length }} Address{{ addresses|length|pluralize:"es" }}</span>
+            </div>
+
+            <div style="display: grid; gap: 14px; margin-bottom: 24px;">
+                {% for addr in addresses %}
+                <div style="padding: 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-md);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 4px;">
+                        <strong>{{ addr.full_name }}</strong>
+                        {% if addr.is_default %}
+                            <span class="count-pill" style="background:rgba(99,102,241,0.2); color:#818cf8; border:1px solid rgba(99,102,241,0.4); font-size:0.7rem;">DEFAULT</span>
+                        {% endif %}
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.88rem;">{{ addr.street_address_1 }}{% if addr.street_address_2 %}, {{ addr.street_address_2 }}{% endif %}</p>
+                    <p style="color: var(--text-muted); font-size: 0.85rem;">{{ addr.city }}, {{ addr.state }} {{ addr.postal_code }} &bull; {{ addr.country }}</p>
+                    <div style="margin-top: 10px; display:flex; justify-content:flex-end;">
+                        <a href="{% url 'accounts:delete_address' address_id=addr.id %}" class="btn-danger-sm">Remove</a>
+                    </div>
+                </div>
+                {% empty %}
+                <p style="color: var(--text-muted); padding: 16px 0;">No addresses saved yet.</p>
+                {% endfor %}
+            </div>
+
+            <!-- Add Address Form -->
+            <h4 style="font-size: 1rem; margin-bottom: 14px;">Add New Address</h4>
+            <form method="POST" action="{% url 'accounts:add_address' %}">
+                {% csrf_token %}
                 <div class="form-group">
                     <label>Full Name</label>
-                    <input type="text" name="full_name" required>
+                    <input type="text" name="full_name" required placeholder="Full Name">
                 </div>
                 <div class="form-group">
-                    <label>Address Type</label>
-                    <select name="address_type">
-                        <option value="SHIPPING">Shipping Address</option>
-                        <option value="BILLING">Billing Address</option>
-                    </select>
+                    <label>Street Address</label>
+                    <input type="text" name="street_address_1" required placeholder="123 Technology Way">
                 </div>
-            </div>
-            <div class="form-group">
-                <label>Street Address</label>
-                <input type="text" name="street_address_1" required placeholder="123 Tech Way">
-            </div>
-            <div class="form-row">
-                <div class="form-group"><label>City</label><input type="text" name="city" required></div>
-                <div class="form-group"><label>State</label><input type="text" name="state" required></div>
-                <div class="form-group"><label>Postal Code</label><input type="text" name="postal_code" required></div>
-            </div>
-            <div class="form-group checkbox-group">
-                <label><input type="checkbox" name="is_default" checked> Set as Default Shipping Address</label>
-            </div>
-            <button type="submit" class="btn-primary-sm">Add Address</button>
-        </form>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" name="city" required placeholder="San Francisco">
+                    </div>
+                    <div class="form-group">
+                        <label>State / Region</label>
+                        <input type="text" name="state" required placeholder="CA">
+                    </div>
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                    <div class="form-group">
+                        <label>Postal Code</label>
+                        <input type="text" name="postal_code" required placeholder="94105">
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <input type="text" name="country" required placeholder="United States">
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary-sm">+ Add Address</button>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

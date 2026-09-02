@@ -4,48 +4,146 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}ShopSphere — Premier Global Marketplace{% endblock %}</title>
+    <!-- Modern Font Stack: Plus Jakarta Sans & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/design_system.css">
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
     <!-- Top Navigation Header -->
     <header class="header">
         <div class="header-container">
+            <!-- Brand Logo -->
             <a href="{% url 'catalog:home' %}" class="logo">
-                <span class="logo-icon">⚡</span> ShopSphere
+                <div class="logo-badge">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                </div>
+                <div class="logo-text">Shop<span>Sphere</span></div>
             </a>
 
             <!-- Universal Search Bar -->
             <form action="{% url 'catalog:product_list' %}" method="GET" class="search-bar">
-                <input type="text" name="q" placeholder="Search 350+ workstation laptops, displays, audio..." value="{{ request.GET.q|default:'' }}" autocomplete="off" id="search-input">
-                <button type="submit" class="search-btn">🔍 Search</button>
+                <div class="search-icon-wrap">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </div>
+                <input type="text" name="q" placeholder="Search 112 flagships, creator gear, audio & more..." value="{{ request.GET.q|default:'' }}" autocomplete="off" id="search-input">
+                <span class="search-shortcut">/</span>
+                <button type="submit" class="search-btn">Search</button>
             </form>
 
+            <!-- Navigation Controls -->
             <nav class="nav-links">
-                <a href="{% url 'catalog:product_list' %}">Browse Catalog</a>
-                <a href="{% url 'catalog:compare' %}">Compare</a>
+                <a href="{% url 'catalog:product_list' %}" class="nav-link">
+                    <span class="nav-link-icon">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </span>
+                    <span>Catalog</span>
+                </a>
+
+                <a href="{% url 'catalog:compare' %}" class="nav-link">
+                    <span class="nav-link-icon">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                    </span>
+                    <span>Compare</span>
+                </a>
                 
                 {% if user.is_authenticated %}
-                    <a href="{% url 'wishlist:wishlist_list' %}">❤️ Wishlist</a>
-                    <a href="{% url 'cart:cart_detail' %}" class="cart-link">🛒 Cart</a>
-                    <a href="{% url 'orders:order_history' %}">Orders</a>
-                    <a href="{% url 'support:ticket_list' %}">Support</a>
+                    <a href="{% url 'wishlist:wishlist_list' %}" class="nav-badge-link" title="Saved Wishlist">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                        <span class="badge-label">Wishlist</span>
+                    </a>
+
+                    <a href="{% url 'cart:cart_detail' %}" class="nav-badge-link cart-link" title="Shopping Cart">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <path d="M16 10a4 4 0 0 1-8 0"></path>
+                        </svg>
+                        <span class="badge-label">Cart</span>
+                    </a>
+
+                    <a href="{% url 'orders:order_history' %}" class="nav-link">
+                        <span class="nav-link-icon">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                        </span>
+                        <span>Orders</span>
+                    </a>
 
                     {% if user.role == 'SELLER' or user.role == 'ADMIN' %}
-                        <a href="{% url 'sellers:dashboard' %}" class="badge-seller">Seller Center</a>
+                        <a href="{% url 'sellers:dashboard' %}" class="badge-seller">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                            <span>Seller</span>
+                        </a>
                     {% endif %}
                     {% if user.role == 'ADMIN' %}
-                        <a href="{% url 'administration:dashboard' %}" class="badge-admin">Governance</a>
+                        <a href="{% url 'administration:dashboard' %}" class="badge-admin">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            <span>Governance</span>
+                        </a>
                     {% endif %}
 
-                    <div class="user-dropdown">
-                        <a href="{% url 'accounts:profile' %}" class="user-name">👤 {{ user.first_name|default:user.username }}</a>
-                        <a href="{% url 'accounts:logout' %}" class="logout-btn">Logout</a>
+                    <div class="user-menu-wrap">
+                        <a href="{% url 'accounts:profile' %}" class="user-pill">
+                            <div class="user-avatar">{{ user.first_name|default:user.username|slice:":1"|upper }}</div>
+                            <span>{{ user.first_name|default:user.username }}</span>
+                        </a>
+                        <a href="{% url 'accounts:logout' %}" class="btn-logout" title="Sign Out">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                <polyline points="16 17 21 12 16 7"></polyline>
+                                <line x1="21" y1="12" x2="9" y2="12"></line>
+                            </svg>
+                        </a>
                     </div>
                 {% else %}
-                    <a href="{% url 'accounts:login' %}">Sign In</a>
-                    <a href="{% url 'accounts:register' %}" class="btn-primary-sm">Register</a>
+                    <a href="{% url 'accounts:login' %}" class="nav-link">Sign In</a>
+                    <a href="{% url 'accounts:register' %}" class="btn-primary-sm">Get Started</a>
                 {% endif %}
             </nav>
+        </div>
+
+        <!-- Sub-Header Quick Categories Strip -->
+        <div class="sub-nav">
+            <div class="sub-nav-container">
+                <a href="{% url 'catalog:product_list' %}" class="sub-nav-chip {% if not category_slug %}active{% endif %}">
+                    <span>All Departments</span>
+                </a>
+                <a href="{% url 'catalog:product_list' %}?category=electronics" class="sub-nav-chip {% if category_slug == 'electronics' %}active{% endif %}">Electronics</a>
+                <a href="{% url 'catalog:product_list' %}?category=smartphones" class="sub-nav-chip {% if category_slug == 'smartphones' %}active{% endif %}">Smartphones</a>
+                <a href="{% url 'catalog:product_list' %}?category=laptops" class="sub-nav-chip {% if category_slug == 'laptops' %}active{% endif %}">Laptops & PCs</a>
+                <a href="{% url 'catalog:product_list' %}?category=audio-headphones" class="sub-nav-chip {% if category_slug == 'audio-headphones' %}active{% endif %}">Headphones & Audio</a>
+                <a href="{% url 'catalog:product_list' %}?category=smartwatches" class="sub-nav-chip {% if category_slug == 'smartwatches' %}active{% endif %}">Wearables</a>
+                <a href="{% url 'catalog:product_list' %}?category=gaming-accessories" class="sub-nav-chip {% if category_slug == 'gaming-accessories' %}active{% endif %}">Gaming</a>
+                <a href="{% url 'catalog:product_list' %}?category=cameras" class="sub-nav-chip {% if category_slug == 'cameras' %}active{% endif %}">Cameras</a>
+                <a href="{% url 'catalog:product_list' %}?category=home-kitchen" class="sub-nav-chip {% if category_slug == 'home-kitchen' %}active{% endif %}">Home & Kitchen</a>
+                <a href="{% url 'catalog:product_list' %}?category=clothing" class="sub-nav-chip {% if category_slug == 'clothing' %}active{% endif %}">Apparel</a>
+                <a href="{% url 'catalog:product_list' %}?category=shoes" class="sub-nav-chip {% if category_slug == 'shoes' %}active{% endif %}">Footwear</a>
+                <a href="{% url 'catalog:product_list' %}?sort=popular" class="sub-nav-chip" style="color: #fcd34d;">🔥 Bestsellers</a>
+                <a href="{% url 'catalog:product_list' %}?sort=newest" class="sub-nav-chip" style="color: #6ee7b7;">✨ New Arrivals</a>
+            </div>
         </div>
     </header>
 
@@ -54,7 +152,21 @@
     <div class="messages-container">
         {% for message in messages %}
             <div class="alert alert-{{ message.tags }}">
-                {{ message }}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    {% if message.tags == 'success' %}
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    {% elif message.tags == 'error' %}
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                    {% else %}
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    {% endif %}
+                </svg>
+                <span>{{ message }}</span>
             </div>
         {% endfor %}
     </div>
@@ -68,28 +180,56 @@
     <!-- Global Footer -->
     <footer class="footer">
         <div class="footer-container">
-            <div class="footer-col">
-                <h4>ShopSphere Platform</h4>
-                <p>Enterprise Python/Django multi-vendor e-commerce marketplace powered by real-time inventory ledgers and role-based governance.</p>
+            <div class="footer-brand">
+                <a href="{% url 'catalog:home' %}" class="logo">
+                    <div class="logo-badge">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                        </svg>
+                    </div>
+                    <div class="logo-text">Shop<span>Sphere</span></div>
+                </a>
+                <p>Enterprise multi-vendor e-commerce platform offering 112 rigorously curated products across 16 departments with zero compromises on quality.</p>
             </div>
             <div class="footer-col">
-                <h4>Customer Support</h4>
-                <a href="{% url 'support:ticket_list' %}">Help Desk & SLA Tickets</a>
-                <a href="{% url 'returns:return_list' %}">RMA Returns & Refunds</a>
+                <h4>Marketplace</h4>
+                <a href="{% url 'catalog:product_list' %}">Browse All Products</a>
+                <a href="{% url 'catalog:compare' %}">Hardware Comparison</a>
+                <a href="{% url 'catalog:product_list' %}?sort=popular">Popular & Bestsellers</a>
+                <a href="{% url 'catalog:product_list' %}?sort=newest">Latest Releases</a>
+            </div>
+            <div class="footer-col">
+                <h4>Customer Care</h4>
+                <a href="{% url 'support:ticket_list' %}">Help Desk & Support</a>
+                <a href="{% url 'returns:return_list' %}">Returns & RMA Refunds</a>
                 <a href="{% url 'orders:order_history' %}">Track Shipments</a>
+                <a href="{% url 'wishlist:wishlist_list' %}">Saved Wishlist</a>
             </div>
             <div class="footer-col">
-                <h4>Merchant Services</h4>
-                <a href="{% url 'accounts:register' %}">Sell on ShopSphere</a>
-                <a href="{% url 'sellers:dashboard' %}">Seller Dashboard</a>
+                <h4>Merchant Hub</h4>
+                <a href="{% url 'accounts:register' %}">Become a Verified Seller</a>
+                <a href="{% url 'sellers:dashboard' %}">Seller Command Center</a>
                 <a href="{% url 'administration:dashboard' %}">Platform Governance</a>
             </div>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2026 ShopSphere Marketplace Inc. All rights reserved. Powered by Python 3.12 & Django 5.1.</p>
+            <p style="color: var(--text-dim); font-size: 0.8rem;">100% Guaranteed Authentic Hardware & Verified Sellers</p>
         </div>
     </footer>
+
+    <!-- Global Keyboard Shortcut & Image Fallback Scripts -->
     <script>
+        // Keyboard shortcut '/' focuses search
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+                const searchInput = document.getElementById('search-input');
+                if (searchInput) searchInput.focus();
+            }
+        });
+
+        // Global fallback for image loading errors
         document.addEventListener('error', function(e) {
             if (e.target && e.target.tagName && e.target.tagName.toLowerCase() === 'img') {
                 e.target.onerror = null;
@@ -97,5 +237,6 @@
             }
         }, true);
     </script>
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

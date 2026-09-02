@@ -4,55 +4,68 @@
 
 {% block content %}
 <div class="dashboard-layout">
-    <h2>ShopSphere Platform Governance Console</h2>
+    <div class="section-heading-row">
+        <div>
+            <span class="eyebrow">SYSTEM GOVERNANCE</span>
+            <h2 class="section-title">Platform Governance & Security Console</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">Monitor multi-tenant platform metrics, approve sellers, and inspect security audit trails.</p>
+        </div>
+        <span class="status-badge paid">System Healthy &bull; Django 5.1</span>
+    </div>
 
     <div class="metrics-grid">
         <div class="metric-card">
             <span class="metric-label">Active Customers</span>
             <span class="metric-value">{{ total_customers }}</span>
+            <span class="metric-trend">Registered Accounts</span>
         </div>
         <div class="metric-card">
             <span class="metric-label">Registered Merchants</span>
             <span class="metric-value">{{ total_sellers }}</span>
+            <span class="metric-trend" style="color:#93c5fd;">Multi-Vendor Sellers</span>
         </div>
         <div class="metric-card highlight">
-            <span class="metric-label">Pending Merchant Approvals</span>
-            <span class="metric-value">{{ pending_sellers }}</span>
+            <span class="metric-label">Pending Approvals</span>
+            <span class="metric-value" style="color:#fcd34d;">{{ pending_sellers }}</span>
+            <span class="metric-trend" style="color:var(--accent-amber);">KYC Applications</span>
         </div>
         <div class="metric-card">
-            <span class="metric-label">Catalog Products</span>
+            <span class="metric-label">Live Catalog Products</span>
             <span class="metric-value">{{ total_products }}</span>
+            <span class="metric-trend" style="color:#6ee7b7;">16 Departments</span>
         </div>
     </div>
 
-    <div class="dash-nav-bar">
-        <a href="{% url 'administration:manage_sellers' %}" class="btn-primary-sm">Vet & Approve Merchants</a>
+    <div style="display:flex; gap:12px; margin-bottom: 32px; flex-wrap: wrap;">
+        <a href="{% url 'administration:manage_sellers' %}" class="btn-primary-sm">Approve Merchants</a>
         <a href="{% url 'administration:manage_products' %}" class="btn-primary-sm">Catalog Moderation</a>
         <a href="{% url 'administration:audit_logs' %}" class="btn-secondary-sm">Security Audit Trail</a>
     </div>
 
     <!-- Security Audit Trail Table -->
-    <div class="card-panel">
-        <h3>Platform Audit Logs</h3>
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 28px;">
+        <h3 style="font-size: 1.25rem; margin-bottom: 18px;">Security Audit Trail</h3>
         <table class="data-table">
             <thead>
                 <tr>
                     <th>Timestamp</th>
-                    <th>User</th>
+                    <th>User / Actor</th>
                     <th>Action</th>
-                    <th>Module</th>
+                    <th>Subsystem</th>
                     <th>IP Address</th>
                 </tr>
             </thead>
             <tbody>
                 {% for log in audit_logs %}
                 <tr>
-                    <td><code>{{ log.created_at|date:"N j, H:i:s" }}</code></td>
-                    <td>{{ log.user.email|default:"System" }}</td>
+                    <td><code style="color:#93c5fd;">{{ log.created_at|date:"N j, H:i:s" }}</code></td>
+                    <td>{{ log.user.email|default:"System Engine" }}</td>
                     <td><strong>{{ log.action }}</strong></td>
-                    <td><span class="badge-status">{{ log.module }}</span></td>
-                    <td><code>{{ log.ip_address|default:"127.0.0.1" }}</code></td>
+                    <td><span class="status-badge active">{{ log.module }}</span></td>
+                    <td><code style="color:var(--text-dim);">{{ log.ip_address|default:"127.0.0.1" }}</code></td>
                 </tr>
+                {% empty %}
+                <tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 32px;">No security audit events recorded.</td></tr>
                 {% endfor %}
             </tbody>
         </table>

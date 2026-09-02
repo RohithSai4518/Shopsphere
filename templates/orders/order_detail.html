@@ -4,32 +4,54 @@
 
 {% block content %}
 <div class="dashboard-layout">
-    <div class="order-detail-header">
-        <h2>Order #{{ order.order_number }}</h2>
-        <span class="order-status-badge status-{{ order.status|lower }}">{{ order.status }}</span>
+    <div class="section-heading-row">
+        <div>
+            <span class="eyebrow">ORDER BREAKDOWN</span>
+            <h2 class="section-title">Order #{{ order.order_number }}</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">Placed on {{ order.created_at|date:"F j, Y" }} at {{ order.created_at|time:"H:i" }}</p>
+        </div>
+        <span class="status-badge {% if order.status == 'DELIVERED' %}delivered{% elif order.status == 'CANCELLED' %}cancelled{% else %}processing{% endif %}" style="font-size:0.9rem; padding: 6px 14px;">
+            {{ order.status }}
+        </span>
     </div>
 
-    <!-- Timeline Status Step Indicator -->
-    <div class="status-timeline">
-        <div class="step {% if order.status != 'CANCELLED' %}active{% endif %}">Confirmed</div>
-        <div class="step {% if order.status == 'PACKED' or order.status == 'SHIPPED' or order.status == 'DELIVERED' %}active{% endif %}">Packed</div>
-        <div class="step {% if order.status == 'SHIPPED' or order.status == 'DELIVERED' %}active{% endif %}">Shipped</div>
-        <div class="step {% if order.status == 'DELIVERED' %}active{% endif %}">Delivered</div>
+    <!-- Visual Tracking Progress Steps -->
+    <div class="checkout-steps" style="max-width:760px; margin: 24px auto 36px;">
+        <div class="checkout-step {% if order.status != 'CANCELLED' %}is-complete{% endif %}">
+            <span>✓</span>
+            <strong>Confirmed</strong>
+        </div>
+        <div class="step-line"></div>
+        <div class="checkout-step {% if order.status == 'PACKED' or order.status == 'SHIPPED' or order.status == 'DELIVERED' %}is-complete{% endif %}">
+            <span>{% if order.status == 'PACKED' or order.status == 'SHIPPED' or order.status == 'DELIVERED' %}✓{% else %}2{% endif %}</span>
+            <strong>Packed</strong>
+        </div>
+        <div class="step-line"></div>
+        <div class="checkout-step {% if order.status == 'SHIPPED' or order.status == 'DELIVERED' %}is-complete{% endif %}">
+            <span>{% if order.status == 'SHIPPED' or order.status == 'DELIVERED' %}✓{% else %}3{% endif %}</span>
+            <strong>Shipped</strong>
+        </div>
+        <div class="step-line"></div>
+        <div class="checkout-step {% if order.status == 'DELIVERED' %}is-complete{% endif %}">
+            <span>{% if order.status == 'DELIVERED' %}✓{% else %}4{% endif %}</span>
+            <strong>Delivered</strong>
+        </div>
     </div>
 
-    <div class="order-detail-grid">
-        <div class="card-panel">
-            <h3>Items in Order</h3>
+    <div style="display: grid; grid-template-columns: 1fr 380px; gap: 32px; align-items: start;">
+        <!-- Items in Order -->
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 28px;">
+            <h3 style="font-size: 1.2rem; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle);">Purchased Items</h3>
             {% for item in order.items.all %}
-            <div class="order-item-row">
+            <div class="cart-item-row">
                 <img src="{{ item.variant.product.primary_image }}" alt="{{ item.variant.product.name }}" class="cart-item-img">
-                <div class="item-info">
-                    <h4>{{ item.variant.product.name }}</h4>
-                    <p>Edition/SKU: {{ item.variant.variant_name }} ({{ item.variant.sku }})</p>
-                    <p>Seller: {{ item.seller.business_name }}</p>
-                    <p>Qty: {{ item.quantity }} x ${{ item.unit_price }} = <strong>${{ item.total_price }}</strong></p>
+                <div class="cart-item-details">
+                    <h4 style="color:#ffffff; font-size: 1.05rem;">{{ item.variant.product.name }}</h4>
+                    <p class="sku-meta">{{ item.variant.variant_name }} <span>SKU: {{ item.variant.sku }}</span></p>
+                    <p style="color:var(--text-muted); font-size:0.85rem; margin-top:4px;">Seller: <strong>{{ item.seller.business_name }}</strong></p>
+                    <p style="color:#ffffff; font-weight:700; margin-top:6px;">{{ item.quantity }} × ${{ item.unit_price }} = <strong>${{ item.total_price }}</strong></p>
                 </div>
-                <div class="item-actions">
+                <div>
                     {% if order.status == 'DELIVERED' %}
                         <a href="{% url 'returns:create_return' order_item_id=item.id %}" class="btn-secondary-sm">Return Item</a>
                     {% endif %}
@@ -38,31 +60,33 @@
             {% endfor %}
         </div>
 
-        <div class="card-panel">
-            <h3>Order Summary & Address</h3>
-            <p><strong>Subtotal:</strong> ${{ order.subtotal }}</p>
-            <p><strong>Tax:</strong> ${{ order.tax_amount }}</p>
-            <p><strong>Discount:</strong> -${{ order.discount_amount }}</p>
-            <h4><strong>Total:</strong> ${{ order.total_amount }}</h4>
+        <!-- Order Summary & Addresses -->
+        <div class="cart-summary-card">
+            <h3 style="font-size: 1.2rem; margin-bottom: 16px;">Financial Breakdown</h3>
+            <div class="summary-line"><span>Subtotal</span> <strong>${{ order.subtotal }}</strong></div>
+            <div class="summary-line"><span>Tax (8.25%)</span> <strong>${{ order.tax_amount }}</strong></div>
+            {% if order.discount_amount > 0 %}
+                <div class="summary-line discount-text"><span>Discount</span> <strong>-${{ order.discount_amount }}</strong></div>
+            {% endif %}
+            <div class="summary-line"><span>Shipping</span> <strong style="color:#6ee7b7;">FREE</strong></div>
+            <hr>
+            <div class="summary-line total-line"><span>Total Paid</span> <strong>${{ order.total_amount }}</strong></div>
 
             {% if order.status == 'CONFIRMED' or order.status == 'PROCESSING' %}
-                <a href="{% url 'orders:cancel_order' order_id=order.id %}" class="btn-danger-sm" onclick="return confirm('Are you sure you want to cancel this order?');">Cancel Order</a>
+                <div style="margin-top: 24px;">
+                    <a href="{% url 'orders:cancel_order' order_id=order.id %}" class="btn-danger-sm" style="display:block; text-align:center; padding:10px;" onclick="return confirm('Are you sure you want to cancel this order?');">Cancel Order</a>
+                </div>
             {% endif %}
         </div>
     </div>
 
-    <!-- Tracking Shipments -->
+    <!-- Carrier Shipments -->
     {% if shipments %}
-    <div class="card-panel">
-        <h3>Carrier Tracking & Package Events</h3>
+    <div style="margin-top: 32px; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 28px;">
+        <h3 style="font-size: 1.2rem; margin-bottom: 16px;">Carrier Tracking Details</h3>
         {% for shp in shipments %}
-        <div class="shipment-block">
-            <p>Carrier: <strong>{{ shp.carrier }}</strong> • Tracking #: <code>{{ shp.tracking_number }}</code> • Status: <strong>{{ shp.status }}</strong></p>
-            <ul class="tracking-events">
-                {% for ev in shp.events.all %}
-                <li><code>{{ ev.event_timestamp|date:"N j, H:i" }}</code> — {{ ev.location }}: {{ ev.status_description }}</li>
-                {% endfor %}
-            </ul>
+        <div style="padding: 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-md);">
+            <p>Carrier: <strong>{{ shp.carrier }}</strong> &bull; Tracking Number: <code style="color:#93c5fd; background:rgba(255,255,255,0.05); padding:2px 6px; border-radius:4px;">{{ shp.tracking_number }}</code> &bull; Status: <strong>{{ shp.status }}</strong></p>
         </div>
         {% endfor %}
     </div>

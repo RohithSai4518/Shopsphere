@@ -4,9 +4,13 @@
 
 {% block content %}
 <div class="dashboard-layout">
-    <div class="dash-header">
-        <h2>Seller Merchant Dashboard: {{ seller.business_name }}</h2>
-        <span class="badge-seller">Status: {{ seller.status }}</span>
+    <div class="section-heading-row">
+        <div>
+            <span class="eyebrow">MERCHANT OPERATIONS</span>
+            <h2 class="section-title">Seller Hub: {{ seller.business_name }}</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">Monitor gross sales, commission deductions, and fulfill customer order shipments.</p>
+        </div>
+        <span class="status-badge paid">Verified Merchant: {{ seller.status }}</span>
     </div>
 
     <!-- Metrics Cards -->
@@ -14,57 +18,59 @@
         <div class="metric-card">
             <span class="metric-label">Gross Sales Revenue</span>
             <span class="metric-value">${{ metrics.total_revenue }}</span>
+            <span class="metric-trend">Lifetime Market Volume</span>
         </div>
         <div class="metric-card">
-            <span class="metric-label">Units Sold</span>
+            <span class="metric-label">Total Units Sold</span>
             <span class="metric-value">{{ metrics.total_units_sold }}</span>
+            <span class="metric-trend" style="color:#93c5fd;">Active Stock Turn</span>
         </div>
         <div class="metric-card">
-            <span class="metric-label">Platform Commission ({{ metrics.commission_rate }}%)</span>
-            <span class="metric-value">-${{ metrics.commission_paid }}</span>
+            <span class="metric-label">Platform Fee ({{ metrics.commission_rate }}%)</span>
+            <span class="metric-value" style="color:#f87171;">-${{ metrics.commission_paid }}</span>
+            <span class="metric-trend" style="color:var(--text-dim);">Automated Ledger Cut</span>
         </div>
         <div class="metric-card highlight">
             <span class="metric-label">Net Merchant Payout</span>
-            <span class="metric-value">${{ metrics.net_payout }}</span>
+            <span class="metric-value" style="color:#6ee7b7;">${{ metrics.net_payout }}</span>
+            <span class="metric-trend">Available for Settlement</span>
         </div>
     </div>
 
-    <div class="dash-nav-bar">
+    <div style="display:flex; gap:12px; margin-bottom: 32px; flex-wrap: wrap;">
         <a href="{% url 'sellers:products' %}" class="btn-primary-sm">Manage Products & SKUs</a>
-        <a href="{% url 'sellers:product_create' %}" class="btn-primary-sm">+ Add New Product Listing</a>
-        <a href="{% url 'sellers:orders' %}" class="btn-secondary-sm">Order Fulfillment Queue</a>
+        <a href="{% url 'sellers:product_create' %}" class="btn-primary-sm">+ Add Product Listing</a>
+        <a href="{% url 'sellers:orders' %}" class="btn-secondary-sm">Fulfillment Order Queue</a>
     </div>
 
     <!-- Recent Seller Orders -->
-    <div class="card-panel">
-        <h3>Recent Order Items Pending Fulfillment</h3>
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 28px;">
+        <h3 style="font-size: 1.25rem; margin-bottom: 18px;">Recent Orders Pending Fulfillment</h3>
         <table class="data-table">
             <thead>
                 <tr>
                     <th>Order #</th>
-                    <th>Product / SKU</th>
+                    <th>Product / Hardware SKU</th>
                     <th>Qty</th>
                     <th>Total Price</th>
-                    <th>Item Status</th>
+                    <th>Fulfillment Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 {% for item in recent_items %}
                 <tr>
-                    <td>{{ item.order.order_number }}</td>
-                    <td>{{ item.variant.product.name }} ({{ item.variant.sku }})</td>
+                    <td><code style="color:#93c5fd;">#{{ item.order.order_number }}</code></td>
+                    <td><strong>{{ item.variant.product.name }}</strong> <span style="color:var(--text-dim); font-size:0.8rem;">({{ item.variant.sku }})</span></td>
                     <td>{{ item.quantity }}</td>
-                    <td>${{ item.total_price }}</td>
-                    <td><span class="order-status-badge status-{{ item.item_status|lower }}">{{ item.item_status }}</span></td>
+                    <td style="color:#ffffff; font-weight:700;">${{ item.total_price }}</td>
+                    <td><span class="status-badge {% if item.item_status == 'DELIVERED' %}delivered{% elif item.item_status == 'CANCELLED' %}cancelled{% else %}pending{% endif %}">{{ item.item_status }}</span></td>
                     <td>
-                        {% if item.item_status == 'PENDING' or item.item_status == 'PACKED' %}
-                            <a href="{% url 'sellers:fulfill_item' item_id=item.id %}" class="btn-primary-sm">Ship Item</a>
-                        {% endif %}
+                        <a href="{% url 'orders:order_detail' order_id=item.order.id %}" class="btn-secondary-sm">Inspect</a>
                     </td>
                 </tr>
                 {% empty %}
-                <tr><td colspan="6">No recent order items.</td></tr>
+                <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">No pending orders in fulfillment queue.</td></tr>
                 {% endfor %}
             </tbody>
         </table>

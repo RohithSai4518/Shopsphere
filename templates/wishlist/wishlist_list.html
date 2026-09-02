@@ -4,53 +4,82 @@
 
 {% block content %}
 <div class="dashboard-layout">
-    <h2>Your Wishlists & Saved Price Drop Alerts</h2>
+    <div class="section-heading-row">
+        <div>
+            <span class="eyebrow">YOUR COLLECTION</span>
+            <h2 class="section-title">Saved Wishlists & Price Alerts</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">Monitor price drops and manage your bookmarked hardware items.</p>
+        </div>
+        <a href="{% url 'catalog:product_list' %}" class="btn-secondary-sm">Browse More Items</a>
+    </div>
 
-    <!-- Wishlists Grid -->
-    <div class="card-panel">
-        <h3>Saved Products</h3>
+    <!-- Wishlists Section -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 28px; margin-bottom: 36px;">
         {% for wl in wishlists %}
-            <h4 style="margin-top:15px;">📋 {{ wl.name }}</h4>
-            <div class="product-grid">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                <h3 style="font-size: 1.25rem; display:flex; align-items:center; gap:8px;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    <span>{{ wl.name }}</span>
+                </h3>
+                <span class="count-pill">{{ wl.items.count }} item{{ wl.items.count|pluralize }}</span>
+            </div>
+
+            <div class="product-grid product-grid-compact">
                 {% for item in wl.items.all %}
                 <div class="product-card">
                     <div class="card-image-wrap">
                         <img src="{{ item.product.primary_image }}" alt="{{ item.product.name }}" class="product-img">
                     </div>
                     <div class="card-body">
+                        <span class="brand-tag">{{ item.product.brand_name }}</span>
                         <h4 class="product-name"><a href="{% url 'catalog:product_detail' slug=item.product.slug %}">{{ item.product.name }}</a></h4>
-                        <p class="current-price">${{ item.product.effective_price }}</p>
+                        <div class="price-row">
+                            <span class="current-price">${{ item.product.effective_price }}</span>
+                        </div>
+                        <div class="card-actions">
+                            <a href="{% url 'catalog:product_detail' slug=item.product.slug %}" class="btn-card-view">View Details</a>
+                            <a href="{% url 'wishlist:remove_from_wishlist' item_id=item.id %}" class="btn-danger-sm" title="Remove from wishlist">Remove</a>
+                        </div>
                     </div>
                 </div>
                 {% empty %}
-                <p>No products added to this wishlist yet.</p>
+                <p style="color: var(--text-muted); grid-column: 1 / -1; padding: 24px; text-align: center;">No items added to this wishlist yet.</p>
                 {% endfor %}
             </div>
         {% endfor %}
     </div>
 
     <!-- Price Drop Alerts Table -->
-    <div class="card-panel">
-        <h3>Price Drop Alerts</h3>
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 28px;">
+        <h3 style="font-size: 1.25rem; margin-bottom: 18px; display:flex; align-items:center; gap:8px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            <span>Real-time Price Drop Alerts</span>
+        </h3>
         <table class="data-table">
             <thead>
                 <tr>
-                    <th>Product</th>
-                    <th>Current Price</th>
-                    <th>Target Alert Price</th>
-                    <th>Status</th>
+                    <th>Tracked Product</th>
+                    <th>Current Marketplace Price</th>
+                    <th>Target Price</th>
+                    <th>Telemetry Status</th>
                 </tr>
             </thead>
             <tbody>
                 {% for palr in price_alerts %}
                 <tr>
-                    <td>{{ palr.product.name }}</td>
-                    <td>${{ palr.product.effective_price }}</td>
+                    <td><strong><a href="{% url 'catalog:product_detail' slug=palr.product.slug %}" style="color:#ffffff;">{{ palr.product.name }}</a></strong></td>
+                    <td style="color:#ffffff; font-weight:700;">${{ palr.product.effective_price }}</td>
                     <td>${{ palr.target_price }}</td>
-                    <td>{% if palr.is_triggered %}<span class="badge-status">TRIGGERED 🔔</span>{% else %}<span class="badge-status">Active Monitoring</span>{% endif %}</td>
+                    <td>
+                        {% if palr.is_triggered %}
+                            <span class="status-badge paid">Triggered &bull; Deal Available</span>
+                        {% else %}
+                            <span class="status-badge pending">Active Monitoring</span>
+                        {% endif %}
+                    </td>
                 </tr>
                 {% empty %}
-                <tr><td colspan="4">No price drop alerts set.</td></tr>
+                <tr><td colspan="4" style="text-align: center; color: var(--text-muted);">No active price drop alerts registered.</td></tr>
                 {% endfor %}
             </tbody>
         </table>

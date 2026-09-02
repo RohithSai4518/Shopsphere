@@ -4,48 +4,74 @@
 
 {% block content %}
 <div class="dashboard-layout">
-    <h2>Product Comparison Matrix</h2>
+    <div class="section-heading-row">
+        <div>
+            <span class="eyebrow">HARDWARE BENCHMARK</span>
+            <h2 class="section-title">Hardware Comparison Matrix</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">Compare technical specifications, prices, sellers, and hardware tiers side-by-side.</p>
+        </div>
+        <a href="{% url 'catalog:product_list' %}" class="btn-secondary-sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>Add Products to Compare</span>
+        </a>
+    </div>
 
     {% if products %}
-    <table class="data-table specs-table">
-        <thead>
-            <tr>
-                <th>Specification</th>
-                {% for prod in products %}
-                    <th>
-                        <img src="{{ prod.primary_image }}" alt="{{ prod.name }}" style="width:80px; height:80px; object-fit:cover; display:block; margin:0 auto 10px;">
-                        <a href="{% url 'catalog:product_detail' slug=prod.slug %}">{{ prod.name }}</a>
-                    </th>
-                {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>Brand</strong></td>
-                {% for prod in products %}<td>{{ prod.brand_name }}</td>{% endfor %}
-            </tr>
-            <tr>
-                <td><strong>Category</strong></td>
-                {% for prod in products %}<td>{{ prod.category.name }}</td>{% endfor %}
-            </tr>
-            <tr>
-                <td><strong>Price</strong></td>
-                {% for prod in products %}<td><strong>${{ prod.effective_price }}</strong></td>{% endfor %}
-            </tr>
-            <tr>
-                <td><strong>Merchant Seller</strong></td>
-                {% for prod in products %}<td>{{ prod.seller.business_name }}</td>{% endfor %}
-            </tr>
-            <tr>
-                <td><strong>Discount</strong></td>
-                {% for prod in products %}<td>{{ prod.discount_percent }}%</td>{% endfor %}
-            </tr>
-        </tbody>
-    </table>
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); overflow-x: auto;">
+        <table class="data-table" style="min-width: 680px;">
+            <thead>
+                <tr>
+                    <th style="width: 220px;">Specification</th>
+                    {% for prod in products %}
+                        <th style="text-align: center; vertical-align: top; padding: 24px 20px;">
+                            <img src="{{ prod.primary_image }}" alt="{{ prod.name }}" style="width: 120px; height: 120px; object-fit: cover; border-radius: var(--border-radius-md); margin: 0 auto 12px; border: 1px solid var(--border-subtle);">
+                            <a href="{% url 'catalog:product_detail' slug=prod.slug %}" style="display: block; color: #ffffff; font-size: 1rem; font-weight: 700; margin-bottom: 8px;">{{ prod.name }}</a>
+                            <div style="font-size: 1.25rem; font-weight: 800; color: #60a5fa; margin-bottom: 12px;">${{ prod.effective_price }}</div>
+                            <a href="{% url 'catalog:product_detail' slug=prod.slug %}" class="btn-primary-sm" style="display: inline-block;">View Product</a>
+                        </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Manufacturer Brand</strong></td>
+                    {% for prod in products %}<td style="text-align: center;"><strong>{{ prod.brand_name }}</strong></td>{% endfor %}
+                </tr>
+                <tr>
+                    <td><strong>Department Category</strong></td>
+                    {% for prod in products %}<td style="text-align: center;">{{ prod.category.name }}</td>{% endfor %}
+                </tr>
+                <tr>
+                    <td><strong>Base Price</strong></td>
+                    {% for prod in products %}<td style="text-align: center;">${{ prod.base_price }}</td>{% endfor %}
+                </tr>
+                <tr>
+                    <td><strong>Discount Savings</strong></td>
+                    {% for prod in products %}
+                        <td style="text-align: center;">
+                            {% if prod.discount_percent > 0 %}
+                                <span class="badge-discount">-{{ prod.discount_percent }}%</span>
+                            {% else %}
+                                <span style="color: var(--text-dim);">Standard Price</span>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td><strong>Verified Merchant</strong></td>
+                    {% for prod in products %}<td style="text-align: center;">{{ prod.seller.business_name }}</td>{% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
     {% else %}
-    <div class="empty-state">
-        <p>No products selected for comparison. Select products from the catalog to compare specifications.</p>
-        <a href="{% url 'catalog:product_list' %}" class="btn-primary-sm">Browse Catalog</a>
+    <div class="empty-catalog-state">
+        <div class="empty-icon">
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        </div>
+        <h3>No products currently in comparison matrix</h3>
+        <p>Browse our catalog and select flagships to evaluate side-by-side specs and features.</p>
+        <a href="{% url 'catalog:product_list' %}" class="btn-primary">Browse Catalog</a>
     </div>
     {% endif %}
 </div>

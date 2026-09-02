@@ -4,16 +4,21 @@
 
 {% block content %}
 <div class="catalog-layout">
-    <!-- Filter Sidebar -->
+    <!-- Modern Filter Sidebar -->
     <aside class="filter-sidebar">
-        <h3 class="filter-heading">Filters & Refinements</h3>
+        <div class="filter-heading">
+            <span>Refine Search</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+            </svg>
+        </div>
         <form method="GET" action="{% url 'catalog:product_list' %}" class="filter-form">
             <input type="hidden" name="q" value="{{ query }}">
 
             <div class="filter-group">
-                <label>Category</label>
+                <label>Department Category</label>
                 <select name="category" onchange="this.form.submit()">
-                    <option value="">All Categories</option>
+                    <option value="">All 16 Departments</option>
                     {% for cat in categories %}
                         <option value="{{ cat.slug }}" {% if category_slug == cat.slug %}selected{% endif %}>{{ cat.name }}</option>
                     {% endfor %}
@@ -23,7 +28,7 @@
             <div class="filter-group">
                 <label>Manufacturer Brand</label>
                 <select name="brand" onchange="this.form.submit()">
-                    <option value="">All Brands</option>
+                    <option value="">All Certified Brands</option>
                     {% for brd in brands %}
                         <option value="{{ brd.id }}" {% if brand_id == brd.id %}selected{% endif %}>{{ brd.name }}</option>
                     {% endfor %}
@@ -31,17 +36,17 @@
             </div>
 
             <div class="filter-group">
-                <label>Price Range ($)</label>
+                <label>Price Range ($ USD)</label>
                 <div class="price-inputs">
-                    <input type="number" name="min_price" placeholder="Min" value="{{ request.GET.min_price }}">
-                    <input type="number" name="max_price" placeholder="Max" value="{{ request.GET.max_price }}">
+                    <input type="number" name="min_price" placeholder="Min $" value="{{ request.GET.min_price }}">
+                    <input type="number" name="max_price" placeholder="Max $" value="{{ request.GET.max_price }}">
                 </div>
             </div>
 
             <div class="filter-group">
-                <label>Sort By</label>
+                <label>Sort Ordering</label>
                 <select name="sort" onchange="this.form.submit()">
-                    <option value="newest" {% if sort_by == 'newest' %}selected{% endif %}>Newest Arrivals</option>
+                    <option value="newest" {% if sort_by == 'newest' %}selected{% endif %}>Newest Releases</option>
                     <option value="price_asc" {% if sort_by == 'price_asc' %}selected{% endif %}>Price: Low to High</option>
                     <option value="price_desc" {% if sort_by == 'price_desc' %}selected{% endif %}>Price: High to Low</option>
                     <option value="popular" {% if sort_by == 'popular' %}selected{% endif %}>Most Popular / Bestsellers</option>
@@ -49,20 +54,25 @@
             </div>
 
             <button type="submit" class="btn-filter-apply">Apply Filters</button>
-            <a href="{% url 'catalog:product_list' %}" class="btn-filter-reset">Reset All</a>
+            <a href="{% url 'catalog:product_list' %}" class="btn-filter-reset">Reset All Filters</a>
         </form>
     </aside>
 
     <!-- Product Grid Content -->
     <section class="catalog-results">
         <div class="results-header">
-            <h2>
-                {% if query %}
-                    Search results for "{{ query }}" ({{ products.count }} items)
-                {% else %}
-                    All Products ({{ products.count }} items)
-                {% endif %}
-            </h2>
+            <div>
+                <h2>
+                    {% if query %}
+                        Search Results for <span style="color: #93c5fd;">"{{ query }}"</span>
+                    {% elif category_slug %}
+                        Browsing Department
+                    {% else %}
+                        Complete Product Catalog
+                    {% endif %}
+                </h2>
+            </div>
+            <span class="results-count-pill">{{ products.count }} Products Available</span>
         </div>
 
         {% if products %}
@@ -70,14 +80,33 @@
             {% for product in products %}
             <div class="product-card">
                 <div class="card-image-wrap">
-                    <img src="{{ product.primary_image }}" alt="{{ product.name }}" class="product-img">
-                    {% if product.discount_percent > 0 %}
-                        <span class="discount-badge">-{{ product.discount_percent }}%</span>
-                    {% endif %}
+                    <img src="{{ product.primary_image }}" alt="{{ product.name }}" class="product-img" loading="lazy">
+                    <div class="card-badges-top">
+                        {% if product.is_bestseller %}
+                            <span class="badge-bestseller">Bestseller</span>
+                        {% elif product.is_featured %}
+                            <span class="badge-featured">Featured</span>
+                        {% endif %}
+                        {% if product.discount_percent > 0 %}
+                            <span class="badge-discount">-{{ product.discount_percent }}%</span>
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="card-body">
                     <span class="brand-tag">{{ product.brand_name }}</span>
                     <h3 class="product-name"><a href="{% url 'catalog:product_detail' slug=product.slug %}">{{ product.name }}</a></h3>
+                    
+                    <div class="rating-row">
+                        <span class="stars-svg">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        </span>
+                        <span class="rating-count">4.8</span>
+                    </div>
+
                     <div class="price-row">
                         <span class="current-price">${{ product.effective_price }}</span>
                         {% if product.discount_percent > 0 %}
@@ -87,23 +116,39 @@
                     <div class="card-actions">
                         <a href="{% url 'catalog:product_detail' slug=product.slug %}" class="btn-card-view">View Specs</a>
                         {% if product.variants.first %}
-                        <form action="{% url 'cart:add_to_cart' variant_id=product.variants.first.id %}" method="POST" class="quick-cart-form">
+                        <form action="{% url 'cart:add_to_cart' variant_id=product.variants.first.id %}" method="POST" style="display:contents;">
                             {% csrf_token %}
                             <input type="hidden" name="quantity" value="1">
-                            <button type="submit" class="btn-card-cart" title="Add to cart">＋</button>
+                            <button type="submit" class="btn-card-cart" title="Quick Add to Cart">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                            </button>
                         </form>
                         {% endif %}
-                        <a href="{% url 'wishlist:add_to_wishlist' product_id=product.id %}" class="btn-card-wish">❤️</a>
+                        <a href="{% url 'wishlist:add_to_wishlist' product_id=product.id %}" class="btn-card-wish" title="Save to Wishlist">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                        </a>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
         {% else %}
-        <div class="empty-state">
-            <h3>No products found matching your search criteria.</h3>
-            <p>Try searching for workstation laptops, displays, or resetting your filter criteria.</p>
-            <a href="{% url 'catalog:product_list' %}" class="btn-primary-sm">View Full Catalog</a>
+        <div class="empty-catalog-state">
+            <div class="empty-icon">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                </svg>
+            </div>
+            <h3>No products found matching your filters</h3>
+            <p>Try clearing your price filters, selecting a different department, or resetting your search keywords.</p>
+            <a href="{% url 'catalog:product_list' %}" class="btn-primary">Browse All 112 Products</a>
         </div>
         {% endif %}
     </section>
