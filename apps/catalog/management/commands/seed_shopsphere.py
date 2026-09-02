@@ -19,7 +19,7 @@ from apps.payments.models import Payment
 from data.catalog_expanded_dataset import EXPANDED_CATEGORIES, EXPANDED_BRANDS, RAW_PRODUCT_CATALOG
 
 class Command(BaseCommand):
-    help = 'Seeds ShopSphere Python Marketplace with complete realistic synthetic data across 50 products and 13 categories.'
+    help = 'Seeds ShopSphere Python Marketplace with complete realistic synthetic data across 112 products and 16 categories.'
 
     def handle(self, *args, **options):
         self.stdout.write(self.style.SUCCESS('Seeding ShopSphere Marketplace Database...'))
@@ -123,6 +123,7 @@ class Command(BaseCommand):
             cat_obj.name = cdata['name']
             cat_obj.description = cdata['description']
             cat_obj.icon_url = cdata['icon_url']
+            cat_obj.display_order = cdata['display_order']
             cat_obj.is_active = True
             cat_obj.save()
             category_map[cdata['slug']] = cat_obj
@@ -138,6 +139,12 @@ class Command(BaseCommand):
                 }
             )
             brand_map[bname] = brand_obj
+
+        # Clean up obsolete products that are not part of the defined 112 catalog products
+        valid_slugs = {p['slug'] for p in RAW_PRODUCT_CATALOG}
+        for obsolete_prod in Product.objects.exclude(slug__in=valid_slugs):
+            if not obsolete_prod.variants.filter(order_items__isnull=False).exists():
+                obsolete_prod.delete()
 
         # 6. Seed Expanded Catalog Products
         products_seeded = 0
@@ -198,15 +205,22 @@ class Command(BaseCommand):
 
             # Variants
             for vdata in pdata.get('variants', []):
-                variant, _ = ProductVariant.objects.get_or_create(
-                    product=product,
-                    sku=vdata['sku'],
+                v_sku = vdata['sku']
+                variant, v_created = ProductVariant.objects.get_or_create(
+                    sku=v_sku,
                     defaults={
+                        'product': product,
                         'variant_name': vdata['variant_name'],
                         'price_override': Decimal(str(vdata['price'])),
                         'attributes_json': json.dumps(vdata.get('attrs', {}))
                     }
                 )
+                if not v_created:
+                    variant.product = product
+                    variant.variant_name = vdata['variant_name']
+                    variant.price_override = Decimal(str(vdata['price']))
+                    variant.attributes_json = json.dumps(vdata.get('attrs', {}))
+                    variant.save()
                 variants_seeded += 1
 
                 # Inventory

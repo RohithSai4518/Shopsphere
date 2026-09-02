@@ -1,0 +1,332 @@
+{
+  "users": [
+    {
+      "id": "usr_admin_001",
+      "email": "admin@shopsphere.local",
+      "password_hash": "$2a$10$ri0hR5IuR7khayFUVhX5E.JY4zGJ5cCnydCyTuDTQ6NUvwSeF12AW",
+      "first_name": "Platform",
+      "last_name": "Administrator",
+      "phone": "+15550001111",
+      "role": "ADMIN",
+      "created_at": "2026-08-25T04:57:34.679Z",
+      "updated_at": "2026-08-25T04:57:34.679Z"
+    },
+    {
+      "id": "usr_seller_001",
+      "email": "seller@apextech.local",
+      "password_hash": "$2a$10$ri0hR5IuR7khayFUVhX5E.JY4zGJ5cCnydCyTuDTQ6NUvwSeF12AW",
+      "first_name": "Alex",
+      "last_name": "Merchant",
+      "phone": "+15550002222",
+      "role": "SELLER",
+      "created_at": "2026-08-25T04:57:34.680Z",
+      "updated_at": "2026-08-25T04:57:34.680Z"
+    },
+    {
+      "id": "usr_customer_001",
+      "email": "customer@example.local",
+      "password_hash": "$2a$10$ri0hR5IuR7khayFUVhX5E.JY4zGJ5cCnydCyTuDTQ6NUvwSeF12AW",
+      "first_name": "Jane",
+      "last_name": "Shopper",
+      "phone": "+15550003333",
+      "role": "CUSTOMER",
+      "created_at": "2026-08-25T04:57:34.681Z",
+      "updated_at": "2026-08-25T04:57:34.681Z"
+    }
+  ],
+  "roles": [],
+  "permissions": [],
+  "role_permissions": [],
+  "user_roles": [],
+  "user_sessions": [],
+  "login_history": [],
+  "user_preferences": [],
+  "sellers": [
+    {
+      "id": "sel_apex_001",
+      "user_id": "usr_seller_001",
+      "business_name": "Apex Electronics Store",
+      "business_email": "contact@apextech.local",
+      "business_phone": "+15550002222",
+      "tax_id": "TAX-998877",
+      "status": "APPROVED",
+      "commission_rate": 8.5,
+      "rating_avg": 4.85,
+      "created_at": "2026-08-25T04:57:34.682Z"
+    }
+  ],
+  "addresses": [
+    {
+      "id": "addr_cust_01",
+      "user_id": "usr_customer_001",
+      "address_type": "SHIPPING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T04:57:34.683Z"
+    },
+    {
+      "id": "addr_cust_02",
+      "user_id": "usr_customer_001",
+      "address_type": "BILLING",
+      "full_name": "Jane Shopper",
+      "street_address_1": "100 Synthetic Way",
+      "street_address_2": "Apt 4B",
+      "city": "Innovation City",
+      "state": "CA",
+      "postal_code": "90210",
+      "country": "United States",
+      "is_default": 0,
+      "created_at": "2026-08-25T04:57:34.685Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat_elec_01",
+      "parent_id": null,
+      "name": "Electronics & Gadgets",
+      "slug": "electronics",
+      "description": "High performance consumer electronics and devices",
+      "display_order": 1,
+      "is_active": 1,
+      "created_at": "2026-08-25T04:57:34.685Z"
+    },
+    {
+      "id": "cat_laptops_02",
+      "parent_id": "cat_elec_01",
+      "name": "Laptops & Computers",
+      "slug": "laptops",
+      "description": "Ultra-portable laptops, workstation laptops, and desktops",
+      "display_order": 2,
+      "is_active": 1,
+      "created_at": "2026-08-25T04:57:34.686Z"
+    },
+    {
+      "id": "cat_audio_03",
+      "parent_id": "cat_elec_01",
+      "name": "Headphones & Audio",
+      "slug": "audio",
+      "description": "Noise-canceling headphones, wireless earbuds, and speakers",
+      "display_order": 3,
+      "is_active": 1,
+      "created_at": "2026-08-25T04:57:34.687Z"
+    },
+    {
+      "id": "cat_home_04",
+      "parent_id": null,
+      "name": "Home & Kitchen",
+      "slug": "home-kitchen",
+      "description": "Smart home appliances, kitchenware, and furniture",
+      "display_order": 4,
+      "is_active": 1,
+      "created_at": "2026-08-25T04:57:34.687Z"
+    }
+  ],
+  "brands": [],
+  "products": [
+    {
+      "id": "prd_laptop_01",
+      "seller_id": "sel_apex_001",
+      "category_id": "cat_laptops_02",
+      "name": "ApexPro X15 Ultra Laptop",
+      "slug": "apexpro-x15-ultra-laptop",
+      "brand": "ApexTech",
+      "description": "The ApexPro X15 features a 15.6-inch QHD OLED display, 16-core processor, 32GB DDR5 RAM, and 1TB NVMe SSD for high performance computational power.",
+      "base_price": 1499.99,
+      "discount_percent": 10,
+      "tax_rate": 8.25,
+      "status": "PUBLISHED",
+      "created_at": "2026-08-25T04:57:34.688Z",
+      "updated_at": "2026-08-25T04:57:34.688Z"
+    },
+    {
+      "id": "prd_earbuds_02",
+      "seller_id": "sel_apex_001",
+      "category_id": "cat_audio_03",
+      "name": "SonicWave Pro Wireless Noise-Canceling Earbuds",
+      "slug": "sonicwave-pro-wireless-earbuds",
+      "brand": "SonicWave",
+      "description": "Active Noise Cancellation (ANC) with 36-hour total playback battery life, IPX7 water resistance, and crystal-clear microphone audio.",
+      "base_price": 199.99,
+      "discount_percent": 15,
+      "tax_rate": 8.25,
+      "status": "PUBLISHED",
+      "created_at": "2026-08-25T04:57:34.689Z",
+      "updated_at": "2026-08-25T04:57:34.689Z"
+    }
+  ],
+  "product_variants": [
+    {
+      "id": "var_laptop_01_32gb",
+      "product_id": "prd_laptop_01",
+      "sku": "APEX-X15-32GB-1TB",
+      "variant_name": "32GB RAM / 1TB SSD - Space Gray",
+      "price_override": 1499.99,
+      "attributes_json": "{\"RAM\":\"32GB\",\"Storage\":\"1TB\",\"Color\":\"Space Gray\"}",
+      "weight_kg": 0.5,
+      "is_default": 1,
+      "created_at": "2026-08-25T04:57:34.690Z"
+    },
+    {
+      "id": "var_earbuds_blk",
+      "product_id": "prd_earbuds_02",
+      "sku": "SONIC-EARBUD-BLK",
+      "variant_name": "Midnight Black",
+      "price_override": 199.99,
+      "attributes_json": "{\"Color\":\"Midnight Black\"}",
+      "weight_kg": 0.5,
+      "is_default": 1,
+      "created_at": "2026-08-25T04:57:34.690Z"
+    },
+    {
+      "id": "var_earbuds_wht",
+      "product_id": "prd_earbuds_02",
+      "sku": "SONIC-EARBUD-WHT",
+      "variant_name": "Arctic White",
+      "price_override": 199.99,
+      "attributes_json": "{\"Color\":\"Arctic White\"}",
+      "weight_kg": 0.5,
+      "is_default": 0,
+      "created_at": "2026-08-25T04:57:34.691Z"
+    }
+  ],
+  "product_specifications": [],
+  "product_images": [],
+  "product_bundles": [],
+  "bundle_items": [],
+  "warehouse_locations": [],
+  "inventory": [
+    {
+      "id": "inv_01",
+      "variant_id": "var_laptop_01_32gb",
+      "quantity_on_hand": 45,
+      "quantity_reserved": 0,
+      "reorder_threshold": 5,
+      "updated_at": "2026-08-25T04:57:34.692Z"
+    },
+    {
+      "id": "inv_02",
+      "variant_id": "var_earbuds_blk",
+      "quantity_on_hand": 120,
+      "quantity_reserved": 0,
+      "reorder_threshold": 5,
+      "updated_at": "2026-08-25T04:57:34.692Z"
+    },
+    {
+      "id": "inv_03",
+      "variant_id": "var_earbuds_wht",
+      "quantity_on_hand": 80,
+      "quantity_reserved": 0,
+      "reorder_threshold": 5,
+      "updated_at": "2026-08-25T04:57:34.693Z"
+    }
+  ],
+  "inventory_transactions": [],
+  "cart_items": [],
+  "wishlists": [],
+  "wishlist_items": [],
+  "price_alerts": [],
+  "coupons": [
+    {
+      "id": "cpn_welcome10",
+      "code": "WELCOME10",
+      "discount_type": "PERCENTAGE",
+      "discount_value": 10,
+      "min_order_subtotal": 50,
+      "usage_limit": 1000,
+      "per_user_limit": 1,
+      "starts_at": "2026-01-01T00:00:00Z",
+      "expires_at": "2027-01-01T00:00:00Z",
+      "is_active": 1,
+      "created_at": "2026-08-25T04:57:34.694Z"
+    },
+    {
+      "id": "cpn_flat25",
+      "code": "SAVE25",
+      "discount_type": "FIXED",
+      "discount_value": 25,
+      "min_order_subtotal": 150,
+      "usage_limit": 500,
+      "per_user_limit": 1,
+      "starts_at": "2026-01-01T00:00:00Z",
+      "expires_at": "2027-01-01T00:00:00Z",
+      "is_active": 1,
+      "created_at": "2026-08-25T04:57:34.694Z"
+    }
+  ],
+  "promotional_campaigns": [],
+  "orders": [],
+  "order_items": [],
+  "payments": [],
+  "shipments": [],
+  "return_requests": [],
+  "reviews": [
+    {
+      "id": "rev_01",
+      "product_id": "prd_laptop_01",
+      "user_id": "usr_customer_001",
+      "rating": 5,
+      "title": "Exceptional Workstation Laptop",
+      "comment": "Superb build quality, blazing fast render times, and accurate color screen.",
+      "is_verified_purchase": 1,
+      "status": "APPROVED",
+      "created_at": "2026-08-25T04:57:34.695Z"
+    },
+    {
+      "id": "rev_02",
+      "product_id": "prd_earbuds_02",
+      "user_id": "usr_customer_001",
+      "rating": 5,
+      "title": "Great ANC and Battery Life",
+      "comment": "Noise cancellation works amazingly during flights and battery lasts all week.",
+      "is_verified_purchase": 1,
+      "status": "APPROVED",
+      "created_at": "2026-08-25T04:57:34.696Z"
+    }
+  ],
+  "review_votes": [],
+  "support_tickets": [],
+  "support_messages": [],
+  "recently_viewed": [],
+  "search_history": [],
+  "security_audit_logs": [],
+  "returns": [],
+  "coupon_usages": [],
+  "notifications": [],
+  "audit_logs": [],
+  "a": [
+    {
+      "id": "addr_cust_01",
+      "created_at": "2026-08-25T05:15:34.926Z",
+      "param_0": "addr_cust_01",
+      "param_1": "usr_customer_001",
+      "param_2": "SHIPPING",
+      "param_3": "Jane Shopper",
+      "param_4": "100 Synthetic Way",
+      "param_5": "Apt 4B",
+      "param_6": "Innovation City",
+      "param_7": "CA",
+      "param_8": "90210",
+      "param_9": "United States"
+    },
+    {
+      "id": "addr_cust_02",
+      "created_at": "2026-08-25T05:15:34.928Z",
+      "param_0": "addr_cust_02",
+      "param_1": "usr_customer_001",
+      "param_2": "BILLING",
+      "param_3": "Jane Shopper",
+      "param_4": "100 Synthetic Way",
+      "param_5": "Apt 4B",
+      "param_6": "Innovation City",
+      "param_7": "CA",
+      "param_8": "90210",
+      "param_9": "United States"
+    }
+  ]
+}

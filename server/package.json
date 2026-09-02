@@ -1,0 +1,23 @@
+{
+  "name": "shopsphere-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ShopSphere Backend REST API Application",
+  "main": "src/app.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node src/app.js",
+    "db:migrate": "node src/database/migrate.js",
+    "db:seed": "node src/database/seed.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "zod": "^3.22.4"
+  }
+}

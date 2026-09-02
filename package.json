@@ -1,0 +1,22 @@
+{
+  "name": "shopsphere-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ShopSphere - Production-grade Amazon-inspired Marketplace E-Commerce Platform",
+  "license": "MIT",
+  "author": "ShopSphere Core Engineering Team",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:server": "node server/src/app.js",
+    "dev:client": "npm --prefix client start",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "test": "node --test",
+    "license:audit": "node scripts/license-audit.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

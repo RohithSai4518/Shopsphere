@@ -46,7 +46,7 @@
     <div>
         <span class="eyebrow">JUST LANDED</span>
         <h2>Fresh picks for your next upgrade.</h2>
-        <p>New finds across all 13 categories people are browsing today.</p>
+        <p>New finds across all {{ categories|length }} categories people are browsing today.</p>
     </div>
     <a href="{% url 'catalog:product_list' %}?sort=newest" class="btn-primary-sm">See all new arrivals</a>
 </section>
