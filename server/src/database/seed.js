@@ -119,7 +119,7 @@ function seedDatabase() {
     // 12. Product Images
     const insertImg = db.prepare('INSERT OR REPLACE INTO product_images (id, product_id, image_url, alt_text, display_order, is_primary) VALUES (?, ?, ?, ?, ?, ?)');
     insertImg.run('img_laptop_01', prodLaptop, 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80', 'ApexPro X15 Ultra Laptop', 1, 1);
-    insertImg.run('img_earbuds_01', prodEarbuds, 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80', 'SonicWave Pro Earbuds', 1, 1);
+    insertImg.run('img_earbuds_01', prodEarbuds, 'https://images.unsplash.com/photo-1590658006821-04f4008d5717?auto=format&fit=crop&w=600&q=80', 'SonicWave Pro Earbuds', 1, 1);
 
     // 13. Product Bundles
     db.prepare(`

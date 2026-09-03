@@ -73,13 +73,37 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 ASGI_APPLICATION = 'config.asgi.application'
 
-# Database Configuration (Defaults to SQLite for portable dev, PostgreSQL supported)
-DATABASES = {
-    'default': {
-        'ENGINE': os.getenv('DATABASE_ENGINE', 'django.db.backends.sqlite3'),
-        'NAME': os.path.join(BASE_DIR, os.getenv('DATABASE_NAME', 'data/shopsphere_django.sqlite3')),
+# Database Configuration (Supports DATABASE_URL for PostgreSQL / Neon, falls back to SQLite)
+DATABASE_URL = os.getenv('DATABASE_URL')
+if DATABASE_URL and (DATABASE_URL.startswith('postgres://') or DATABASE_URL.startswith('postgresql://')):
+    import urllib.parse
+    parsed_db = urllib.parse.urlparse(DATABASE_URL)
+    query_params = urllib.parse.parse_qs(parsed_db.query)
+    
+    db_options = {}
+    if 'sslmode' in query_params:
+        db_options['sslmode'] = query_params['sslmode'][0]
+    if 'channel_binding' in query_params:
+        db_options['channel_binding'] = query_params['channel_binding'][0]
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': parsed_db.path.lstrip('/'),
+            'USER': parsed_db.username,
+            'PASSWORD': parsed_db.password,
+            'HOST': parsed_db.hostname,
+            'PORT': parsed_db.port or 5432,
+            'OPTIONS': db_options,
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': os.getenv('DATABASE_ENGINE', 'django.db.backends.sqlite3'),
+            'NAME': os.path.join(BASE_DIR, os.getenv('DATABASE_NAME', 'data/shopsphere_django.sqlite3')),
+        }
+    }
 
 # Custom User Model
 AUTH_USER_MODEL = 'accounts.User'

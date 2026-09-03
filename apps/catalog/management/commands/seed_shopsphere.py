@@ -8,18 +8,26 @@ import json
 from apps.accounts.models import User, Address, UserPreference
 from apps.rbac.models import Role, Permission, RolePermission
 from apps.sellers.models import Seller
-from apps.catalog.models import Category, Brand, Product, ProductVariant, ProductSpecification, ProductImage, ProductBundle, BundleItem
+from apps.catalog.models import (
+    Category, Brand, Product, ProductVariant, ProductSpecification,
+    ProductImage, ProductBundle, BundleItem, ProductRelationship,
+    ProductQuestion, ProductAnswer, ProductModerationLog
+)
 from apps.inventory.models import WarehouseLocation, Inventory, InventoryTransaction
 from apps.promotions.models import Coupon, PromotionalCampaign
 from apps.reviews.models import Review, ReviewVote
 from apps.support.models import SupportTicket, SupportMessage
 from apps.orders.models import Order, OrderItem
 from apps.payments.models import Payment
+from apps.returns.models import ReturnRequest
+from apps.cart.models import CartItem
+from apps.wishlist.models import WishlistItem, PriceAlert
+from apps.analytics.models import RecentlyViewed, ProductAnalytics
 
 from data.catalog_expanded_dataset import EXPANDED_CATEGORIES, EXPANDED_BRANDS, RAW_PRODUCT_CATALOG
 
 class Command(BaseCommand):
-    help = 'Seeds ShopSphere Python Marketplace with complete realistic synthetic data across 112 products and 16 categories.'
+    help = 'Seeds ShopSphere Python Marketplace with complete realistic synthetic data across 80 products and 16 categories (5 products per category).'
 
     def handle(self, *args, **options):
         self.stdout.write(self.style.SUCCESS('Seeding ShopSphere Marketplace Database...'))
@@ -106,26 +114,45 @@ class Command(BaseCommand):
             }
         )
 
-        # 5. Categories & Brands
+        # 5. Purge and Freshly Seed Categories & Brands
+        self.stdout.write(self.style.WARNING('Purging all existing categories, products, and dependent records...'))
+        ReturnRequest.objects.all().delete()
+        OrderItem.objects.all().delete()
+        Order.objects.all().delete()
+        Payment.objects.all().delete()
+        SupportMessage.objects.all().delete()
+        SupportTicket.objects.all().delete()
+        CartItem.objects.all().delete()
+        WishlistItem.objects.all().delete()
+        PriceAlert.objects.all().delete()
+        RecentlyViewed.objects.all().delete()
+        ProductAnalytics.objects.all().delete()
+        BundleItem.objects.all().delete()
+        ProductBundle.objects.all().delete()
+        ReviewVote.objects.all().delete()
+        Review.objects.all().delete()
+        ProductQuestion.objects.all().delete()
+        ProductAnswer.objects.all().delete()
+        ProductModerationLog.objects.all().delete()
+        ProductRelationship.objects.all().delete()
+        InventoryTransaction.objects.all().delete()
+        Inventory.objects.all().delete()
+        ProductSpecification.objects.all().delete()
+        ProductImage.objects.all().delete()
+        ProductVariant.objects.all().delete()
+        Product.objects.all().delete()
+        Category.objects.all().delete()
+
         category_map = {}
         for cdata in EXPANDED_CATEGORIES:
-            cat_obj, _ = Category.objects.get_or_create(
+            cat_obj = Category.objects.create(
                 slug=cdata['slug'],
-                defaults={
-                    'name': cdata['name'],
-                    'description': cdata['description'],
-                    'icon_url': cdata['icon_url'],
-                    'display_order': cdata['display_order'],
-                    'is_active': True
-                }
+                name=cdata['name'],
+                description=cdata['description'],
+                icon_url=cdata['icon_url'],
+                display_order=cdata['display_order'],
+                is_active=True
             )
-            # Update fields if existed
-            cat_obj.name = cdata['name']
-            cat_obj.description = cdata['description']
-            cat_obj.icon_url = cdata['icon_url']
-            cat_obj.display_order = cdata['display_order']
-            cat_obj.is_active = True
-            cat_obj.save()
             category_map[cdata['slug']] = cat_obj
 
         brand_map = {}
@@ -139,12 +166,6 @@ class Command(BaseCommand):
                 }
             )
             brand_map[bname] = brand_obj
-
-        # Clean up obsolete products that are not part of the defined 112 catalog products
-        valid_slugs = {p['slug'] for p in RAW_PRODUCT_CATALOG}
-        for obsolete_prod in Product.objects.exclude(slug__in=valid_slugs):
-            if not obsolete_prod.variants.filter(order_items__isnull=False).exists():
-                obsolete_prod.delete()
 
         # 6. Seed Expanded Catalog Products
         products_seeded = 0
