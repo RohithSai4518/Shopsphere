@@ -40,7 +40,7 @@ export default function Footer() {
         </div>
       </div>
       <div style={{ textAlign: 'center', borderTop: '1px solid var(--border-light)', paddingTop: '1.5rem', fontSize: '0.85rem', color: 'var(--text-subtle)' }}>
-        © {new Date().getFullYear()} ShopSphere Marketplace Platform. All rights reserved. Built with 100% Original MIT-Compliant Architecture.
+        © {new Date().getFullYear()} ShopSphere Marketplace Platform. All rights reserved. Powered by Harsha and Rohith.
       </div>
     </footer>
   );
