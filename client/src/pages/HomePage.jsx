@@ -34,7 +34,7 @@ export default function HomePage({ onAddToCart }) {
     <div className="container" style={{ paddingTop: '2rem' }}>
       
       {/* Hero Banner */}
-      <div className="glass-panel" style={{ padding: '3rem 2.5rem', marginBottom: '3rem', background: 'linear-gradient(135deg, rgba(30,41,59,0.9) 0%, rgba(15,23,42,0.95) 100%)', borderRadius: 'var(--radius-lg)', position: 'relative', overflow: 'hidden' }}>
+      <div className="glass-panel" style={{ padding: '3rem 2.5rem', marginBottom: '3rem', background: 'radial-gradient(circle at 100% 0%, rgba(16, 185, 129, 0.2) 0%, transparent 60%), radial-gradient(circle at 0% 100%, rgba(99, 102, 241, 0.15) 0%, transparent 50%), linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(9,13,22,0.98) 100%)', border: '1px solid rgba(16, 185, 129, 0.25)', borderRadius: 'var(--radius-lg)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ maxWidth: '650px', position: 'relative', zIndex: 2 }}>
           <span className="badge badge-primary" style={{ marginBottom: '1rem' }}>SHOP SPHERE MARKETPLACE</span>
           <h1 className="heading-xl" style={{ marginBottom: '1rem' }}>

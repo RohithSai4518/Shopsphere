@@ -22,7 +22,7 @@ export default function Navbar({ cartCount = 0, onSearch }) {
           <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'var(--accent-gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', fontSize: '1.2rem', color: '#FFF' }}>
             S
           </div>
-          <span style={{ fontSize: '1.4rem', fontWeight: '800', background: 'linear-gradient(135deg, #FFF 0%, #94A3B8 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          <span style={{ fontSize: '1.4rem', fontWeight: '800', background: 'linear-gradient(135deg, #FFFFFF 0%, #34D399 50%, #818CF8 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
             ShopSphere
           </span>
         </Link>
