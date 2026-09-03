@@ -7,18 +7,19 @@ from .services import CatalogService
 from apps.analytics.services import AnalyticsService
 
 def home_view(request):
-    categories = Category.objects.filter(is_active=True, parent__isnull=True).order_by('display_order', 'name')
-    featured_products = Product.objects.filter(status='PUBLISHED', is_featured=True)[:8]
-    if not featured_products.exists():
-        featured_products = Product.objects.filter(status='PUBLISHED')[:8]
-    bestseller_products = Product.objects.filter(status='PUBLISHED', is_bestseller=True)[:4]
-    if not bestseller_products.exists():
-        bestseller_products = Product.objects.filter(status='PUBLISHED').order_by('-discount_percent', '-created_at')[:4]
-    trending_products = Product.objects.filter(status='PUBLISHED', is_trending=True)[:4]
-    if not trending_products.exists():
-        trending_products = Product.objects.filter(status='PUBLISHED').order_by('-created_at')[:4]
-    new_arrivals = Product.objects.filter(status='PUBLISHED').order_by('-created_at')[:4]
-    bundles = ProductBundle.objects.filter(is_active=True)[:3]
+    base_qs = Product.objects.filter(status='PUBLISHED').select_related('category', 'brand').prefetch_related('images', 'variants')
+    featured_products = list(base_qs.filter(is_featured=True)[:8])
+    if not featured_products:
+        featured_products = list(base_qs[:8])
+    bestseller_products = list(base_qs.filter(is_bestseller=True)[:4])
+    if not bestseller_products:
+        bestseller_products = list(base_qs.order_by('-discount_percent', '-created_at')[:4])
+    trending_products = list(base_qs.filter(is_trending=True)[:4])
+    if not trending_products:
+        trending_products = list(base_qs.order_by('-created_at')[:4])
+    new_arrivals = list(base_qs.order_by('-created_at')[:4])
+    categories = list(Category.objects.filter(is_active=True, parent__isnull=True).order_by('display_order', 'name'))
+    bundles = list(ProductBundle.objects.filter(is_active=True)[:3])
 
     return render(request, 'catalog/home.html', {
         'categories': categories,

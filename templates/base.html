@@ -18,8 +18,10 @@
             <!-- Brand Logo -->
             <a href="{% url 'catalog:home' %}" class="logo">
                 <div class="logo-badge">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17.5 7A4.5 4.5 0 0 0 8 8.5c0 3.5 8 2.5 8 6.5A4.5 4.5 0 0 1 7.5 17" />
+                        <circle cx="17.5" cy="7" r="1.5" fill="currentColor" stroke="none" />
+                        <circle cx="7.5" cy="17" r="1.5" fill="currentColor" stroke="none" />
                     </svg>
                 </div>
                 <div class="logo-text">Shop<span>Sphere</span></div>
@@ -33,7 +35,7 @@
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
                 </div>
-                <input type="text" name="q" placeholder="Search 112 flagships, creator gear, audio & more..." value="{{ request.GET.q|default:'' }}" autocomplete="off" id="search-input">
+                <input type="text" name="q" placeholder="Search 80 curated products, creator gear, tech & more..." value="{{ request.GET.q|default:'' }}" autocomplete="off" id="search-input">
                 <span class="search-shortcut">/</span>
                 <button type="submit" class="search-btn">Search</button>
             </form>

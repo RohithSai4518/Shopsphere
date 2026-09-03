@@ -106,10 +106,22 @@ class Product(models.Model):
 
     @property
     def primary_image(self):
+        if hasattr(self, '_prefetched_objects_cache') and 'images' in self._prefetched_objects_cache:
+            for img in self._prefetched_objects_cache['images']:
+                if img.is_primary:
+                    return img.image_url
+            if self._prefetched_objects_cache['images']:
+                return self._prefetched_objects_cache['images'][0].image_url
         img = self.images.filter(is_primary=True).first()
         if not img:
             img = self.images.first()
         return img.image_url if img else 'https://images.unsplash.com/photo-1526738549149-8e07eca6c147?auto=format&fit=crop&w=800&q=80'
+
+    @property
+    def first_variant(self):
+        if hasattr(self, '_prefetched_objects_cache') and 'variants' in self._prefetched_objects_cache:
+            return self._prefetched_objects_cache['variants'][0] if self._prefetched_objects_cache['variants'] else None
+        return self.variants.first()
 
     def __str__(self):
         return self.name

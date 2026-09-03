@@ -115,8 +115,8 @@
                     </div>
                     <div class="card-actions">
                         <a href="{% url 'catalog:product_detail' slug=product.slug %}" class="btn-card-view">View Specs</a>
-                        {% if product.variants.first %}
-                        <form action="{% url 'cart:add_to_cart' variant_id=product.variants.first.id %}" method="POST" style="display:contents;">
+                        {% if product.first_variant %}
+                        <form action="{% url 'cart:add_to_cart' variant_id=product.first_variant.id %}" method="POST" style="display:contents;">
                             {% csrf_token %}
                             <input type="hidden" name="quantity" value="1">
                             <button type="submit" class="btn-card-cart" title="Quick Add to Cart">
