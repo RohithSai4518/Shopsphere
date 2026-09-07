@@ -3,6 +3,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 import uuid
 from apps.accounts.models import User
 from apps.orders.models import Order
+from .knowledgebase import FAQCategory, FAQArticle
 
 def generate_tkt_id(): return f"tkt_{uuid.uuid4().hex[:12]}"
 def generate_msg_id(): return f"msg_{uuid.uuid4().hex[:12]}"

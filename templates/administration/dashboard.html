@@ -37,8 +37,10 @@
     </div>
 
     <div style="display:flex; gap:12px; margin-bottom: 32px; flex-wrap: wrap;">
-        <a href="{% url 'administration:manage_sellers' %}" class="btn-primary-sm">Approve Merchants</a>
+        <a href="{% url 'administration:manage_sellers' %}" class="btn-primary-sm">Approve Merchants ({{ pending_sellers }})</a>
         <a href="{% url 'administration:manage_products' %}" class="btn-primary-sm">Catalog Moderation</a>
+        <a href="{% url 'administration:manage_reviews' %}" class="btn-primary-sm">Review Moderation ({{ pending_reviews }})</a>
+        <a href="{% url 'administration:manage_users' %}" class="btn-secondary-sm">User Directory & Status</a>
         <a href="{% url 'administration:audit_logs' %}" class="btn-secondary-sm">Security Audit Trail</a>
     </div>
 

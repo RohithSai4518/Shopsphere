@@ -40,6 +40,12 @@ class Order(models.Model):
     shipping_address_json = models.TextField(default='{}')
     billing_address_json = models.TextField(default='{}')
     estimated_delivery_date = models.DateField(null=True, blank=True)
+    delivery_speed = models.CharField(max_length=30, default='STANDARD')
+    is_gift = models.BooleanField(default=False)
+    gift_message = models.TextField(blank=True)
+    gift_wrap_type = models.CharField(max_length=30, default='NONE')
+    gift_wrap_fee = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    idempotency_key = models.CharField(max_length=100, blank=True, null=True, db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -129,3 +135,21 @@ class ExchangeRequest(models.Model):
     reason = models.CharField(max_length=100)
     status = models.CharField(max_length=30, choices=EXCHANGE_STATUS_CHOICES, default='SUBMITTED')
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+def generate_inv_id(): return f"inv_{uuid.uuid4().hex[:12]}"
+
+class OrderInvoice(models.Model):
+    id = models.CharField(max_length=64, primary_key=True, default=generate_inv_id)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name='invoice')
+    invoice_number = models.CharField(max_length=50, unique=True)
+    tax_identifier = models.CharField(max_length=50, default='US-EIN-94-3829101')
+    subtotal_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    tax_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    shipping_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    discount_amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    issued_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Invoice {self.invoice_number} for {self.order.order_number}"

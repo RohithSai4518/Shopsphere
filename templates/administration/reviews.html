@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Review Moderation Queue — ShopSphere Governance{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout" style="max-width: 1200px; margin: 0 auto; padding: 24px 20px;">
+    <div class="section-heading-row" style="margin-bottom: 24px;">
+        <div>
+            <span class="eyebrow" style="color: var(--accent-amber); font-weight: 800;">COMMUNITY QUALITY & GOVERNANCE</span>
+            <h1 class="section-title" style="font-size: 2rem; margin: 4px 0 6px;">Customer Review Moderation Queue</h1>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Review, approve, or reject verified buyer product reviews before public catalog indexation.</p>
+        </div>
+        <a href="{% url 'administration:dashboard' %}" class="btn-secondary-sm">← Platform Console</a>
+    </div>
+
+    <!-- Filter Filter Chips -->
+    <div style="display: flex; gap: 10px; margin-bottom: 24px;">
+        <a href="?status=ALL" class="sub-nav-chip {% if status_filter == 'ALL' %}active{% endif %}">All Reviews</a>
+        <a href="?status=PENDING" class="sub-nav-chip {% if status_filter == 'PENDING' %}active{% endif %}" style="color: #fbbf24;">Pending Review</a>
+        <a href="?status=APPROVED" class="sub-nav-chip {% if status_filter == 'APPROVED' %}active{% endif %}" style="color: #6ee7b7;">Approved</a>
+        <a href="?status=REJECTED" class="sub-nav-chip {% if status_filter == 'REJECTED' %}active{% endif %}" style="color: #f87171;">Rejected</a>
+    </div>
+
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <table class="data-table" style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="width: 220px;">Product & Rating</th>
+                    <th>Customer</th>
+                    <th>Review Content</th>
+                    <th>Status</th>
+                    <th style="text-align: right;">Moderation Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rev in reviews %}
+                <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td>
+                        <strong style="color: #ffffff; display: block; font-size: 0.95rem;">{{ rev.product.name|truncatechars:35 }}</strong>
+                        <div style="color: var(--accent-amber); font-size: 0.85rem; margin-top: 4px;">
+                            ★ {{ rev.rating }}/5 &bull; <span style="color: var(--text-dim);">{{ rev.created_at|date:"M d, Y" }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <strong style="color: #ffffff; font-size: 0.9rem;">{{ rev.user.first_name|default:rev.user.username }}</strong>
+                        <div style="font-size: 0.78rem; color: var(--text-dim);">{{ rev.user.email }}</div>
+                        {% if rev.is_verified_purchase %}
+                            <span style="font-size: 0.7rem; background: rgba(16,185,129,0.2); color: #6ee7b7; padding: 2px 6px; border-radius: 4px;">Verified Buyer</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div style="font-weight: 700; color: #ffffff; margin-bottom: 4px; font-size: 0.95rem;">{{ rev.title }}</div>
+                        <p style="color: var(--text-secondary); margin: 0; font-size: 0.88rem; line-height: 1.4;">{{ rev.comment }}</p>
+                    </td>
+                    <td>
+                        <span class="status-badge {% if rev.status == 'APPROVED' %}delivered{% elif rev.status == 'REJECTED' %}cancelled{% else %}processing{% endif %}" style="font-size: 0.75rem;">
+                            {{ rev.status }}
+                        </span>
+                    </td>
+                    <td style="text-align: right;">
+                        <div style="display: inline-flex; gap: 8px;">
+                            {% if rev.status != 'APPROVED' %}
+                            <form action="{% url 'administration:moderate_review' review_id=rev.id %}" method="POST" style="margin: 0;">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="approve">
+                                <button type="submit" class="btn-primary-sm" style="font-size: 0.75rem; padding: 4px 8px; background: #16a34a;">Approve</button>
+                            </form>
+                            {% endif %}
+                            {% if rev.status != 'REJECTED' %}
+                            <form action="{% url 'administration:moderate_review' review_id=rev.id %}" method="POST" style="margin: 0;">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="reject">
+                                <button type="submit" class="btn-danger-sm" style="font-size: 0.75rem; padding: 4px 8px;">Reject</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 40px;">
+                        No customer reviews in this moderation filter.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

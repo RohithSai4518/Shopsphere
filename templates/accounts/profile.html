@@ -7,9 +7,48 @@
     <div class="section-heading-row">
         <div>
             <span class="eyebrow">YOUR ACCOUNT</span>
-            <h2 class="section-title">Account Profile & Saved Addresses</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">Manage contact details, default delivery addresses, and notification preferences.</p>
+            <h2 class="section-title">Account Profile & Security Hub</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">Manage contact details, default delivery addresses, payment vault, and security settings.</p>
         </div>
+    </div>
+
+    <!-- Quick Navigation Hub -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px;">
+        <a href="{% url 'accounts:two_factor_setup' %}" style="background: var(--bg-card); border: 1px solid {% if two_factor.is_enabled %}rgba(16, 185, 129, 0.4){% else %}rgba(245, 158, 11, 0.4){% endif %}; border-radius: 12px; padding: 18px; text-decoration: none; display: block; transition: transform 0.2s;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font-weight: 700; color: #ffffff; font-size: 0.95rem;">Two-Factor Auth</span>
+                {% if two_factor.is_enabled %}
+                    <span style="background: rgba(16,185,129,0.2); color: #6ee7b7; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 4px;">ACTIVE</span>
+                {% else %}
+                    <span style="background: rgba(245,158,11,0.2); color: #fbbf24; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 4px;">DISABLED</span>
+                {% endif %}
+            </div>
+            <p style="color: var(--text-dim); font-size: 0.8rem; margin: 0;">Configure TOTP authenticator app</p>
+        </a>
+
+        <a href="{% url 'accounts:payment_methods' %}" style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 18px; text-decoration: none; display: block;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font-weight: 700; color: #ffffff; font-size: 0.95rem;">Payment Vault</span>
+                <span style="background: rgba(99,102,241,0.2); color: #a5b4fc; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 4px;">{{ saved_payments|length }} CARDS</span>
+            </div>
+            <p style="color: var(--text-dim); font-size: 0.8rem; margin: 0;">Manage 1-click checkout cards</p>
+        </a>
+
+        <a href="{% url 'accounts:privacy' %}" style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 18px; text-decoration: none; display: block;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font-weight: 700; color: #ffffff; font-size: 0.95rem;">Privacy & GDPR</span>
+                <span style="background: rgba(14,165,233,0.2); color: #38bdf8; font-size: 0.7rem; font-weight: 800; padding: 2px 6px; border-radius: 4px;">RIGHTS</span>
+            </div>
+            <p style="color: var(--text-dim); font-size: 0.8rem; margin: 0;">Export data or delete account</p>
+        </a>
+
+        <a href="{% url 'accounts:password_reset_request' %}" style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 18px; text-decoration: none; display: block;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font-weight: 700; color: #ffffff; font-size: 0.95rem;">Password Reset</span>
+                <span style="color: var(--primary-light); font-size: 0.8rem;">→</span>
+            </div>
+            <p style="color: var(--text-dim); font-size: 0.8rem; margin: 0;">Update login credentials</p>
+        </a>
     </div>
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">

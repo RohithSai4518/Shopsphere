@@ -116,3 +116,32 @@ class SavedPaymentMethod(models.Model):
 
     def __str__(self):
         return f"{self.card_brand} ending in {self.last4}"
+
+
+class UserTwoFactor(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='two_factor')
+    is_enabled = models.BooleanField(default=False)
+    secret_key = models.CharField(max_length=64, blank=True)
+    backup_codes = models.TextField(blank=True, default='[]', help_text="JSON list of SHA-256 hashed recovery codes")
+    confirmed_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"2FA for {self.user.email} (Enabled: {self.is_enabled})"
+
+
+class AccountDeletionRequest(models.Model):
+    STATUS_CHOICES = [
+        ('PENDING', 'Pending Review'),
+        ('COMPLETED', 'Completed / Anonymized'),
+        ('CANCELLED', 'Cancelled by User'),
+    ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='deletion_requests')
+    reason = models.TextField(blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
+    requested_at = models.DateTimeField(auto_now_add=True)
+    completed_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Deletion Request: {self.user.email} [{self.status}]"

@@ -467,6 +467,58 @@
       "status": "ACTIVE",
       "created_at": "2026-08-25T05:34:40.185Z",
       "updated_at": "2026-08-25T05:34:40.185Z"
+    },
+    {
+      "id": "usr_1788535934762_tscgy",
+      "email": "test_customer_1788535934761@example.local",
+      "password_hash": "$2a$12$2sCs5Z2Nxe3N0iRTu.b2TedvMLU44WHESvckmFsgp9qpyFLtvwx8.",
+      "first_name": "Alice",
+      "last_name": "Tester",
+      "phone": null,
+      "role": "CUSTOMER",
+      "is_verified": 1,
+      "status": "ACTIVE",
+      "created_at": "2026-09-04T15:32:15.062Z",
+      "updated_at": "2026-09-04T15:32:15.062Z"
+    },
+    {
+      "id": "usr_1788535935068_jcfkk",
+      "email": "dup_1788535935068@example.local",
+      "password_hash": "$2a$12$UkLPixjOV1puCDeg293bTOPr9p56d6wbgcWS6qOZmPx620SKSrvtK",
+      "first_name": "Bob",
+      "last_name": "Dup",
+      "phone": null,
+      "role": "CUSTOMER",
+      "is_verified": 1,
+      "status": "ACTIVE",
+      "created_at": "2026-09-04T15:32:15.398Z",
+      "updated_at": "2026-09-04T15:32:15.398Z"
+    },
+    {
+      "id": "usr_1788535935403_txuy8",
+      "email": "login_1788535935403@example.local",
+      "password_hash": "$2a$12$xVcQHVQryHraHnoedtf8wujEBAi0I4/hdlHrw11.PMfDvi4amTWIW",
+      "first_name": "Charlie",
+      "last_name": "Login",
+      "phone": null,
+      "role": "CUSTOMER",
+      "is_verified": 1,
+      "status": "ACTIVE",
+      "created_at": "2026-09-04T15:32:15.934Z",
+      "updated_at": "2026-09-04T15:32:15.934Z"
+    },
+    {
+      "id": "usr_1788535936523_0on3a",
+      "email": "wrongpass_1788535936523@example.local",
+      "password_hash": "$2a$12$gVi0MxIeOdPv1ZtAjjbMouuRowLvUPGh38WIxM0VWcC9q5sWU1p32",
+      "first_name": "David",
+      "last_name": "WrongPass",
+      "phone": null,
+      "role": "CUSTOMER",
+      "is_verified": 1,
+      "status": "ACTIVE",
+      "created_at": "2026-09-04T15:32:17.082Z",
+      "updated_at": "2026-09-04T15:32:17.082Z"
     }
   ],
   "roles": [],

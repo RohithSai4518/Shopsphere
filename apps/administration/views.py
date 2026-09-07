@@ -18,6 +18,7 @@ def governance_dashboard_view(request):
     total_customers = User.objects.filter(role='CUSTOMER').count()
     total_sellers = Seller.objects.count()
     pending_sellers = Seller.objects.filter(status='PENDING').count()
+    pending_reviews = Review.objects.filter(status='PENDING').count()
     total_products = Product.objects.count()
     total_orders = Order.objects.count()
 
@@ -28,6 +29,7 @@ def governance_dashboard_view(request):
         'total_customers': total_customers,
         'total_sellers': total_sellers,
         'pending_sellers': pending_sellers,
+        'pending_reviews': pending_reviews,
         'total_products': total_products,
         'total_orders': total_orders,
         'audit_logs': audit_logs,
@@ -64,6 +66,79 @@ def moderate_product_view(request, product_id):
     CatalogService.moderate_product(product, new_status, moderator=request.user, reason=reason)
     messages.info(request, f"Product '{product.name}' status updated to '{new_status}'.")
     return redirect('administration:manage_products')
+
+@login_required
+@role_required('ADMIN')
+def manage_reviews_view(request):
+    """Review moderation console for verifying customer feedback."""
+    status_filter = request.GET.get('status', 'ALL')
+    if status_filter == 'PENDING':
+        reviews = Review.objects.filter(status='PENDING').select_related('product', 'user').order_by('-created_at')
+    elif status_filter in ['APPROVED', 'REJECTED']:
+        reviews = Review.objects.filter(status=status_filter).select_related('product', 'user').order_by('-created_at')
+    else:
+        reviews = Review.objects.select_related('product', 'user').order_by('-created_at')[:50]
+
+    return render(request, 'administration/reviews.html', {
+        'reviews': reviews,
+        'status_filter': status_filter
+    })
+
+@login_required
+@role_required('ADMIN')
+def moderate_review_view(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    action = request.POST.get('action')
+
+    if action == 'approve':
+        review.status = 'APPROVED'
+        review.save(update_fields=['status'])
+        messages.success(request, f"Review #{review.id[:8]} approved and visible to customers.")
+    elif action == 'reject':
+        review.status = 'REJECTED'
+        review.save(update_fields=['status'])
+        messages.warning(request, f"Review #{review.id[:8]} rejected and hidden from storefront.")
+
+    SecurityAuditLog.objects.create(
+        user=request.user,
+        action=f"REVIEW_MODERATION_{action.upper()}",
+        module='reviews',
+        entity_type='Review',
+        entity_id=review.id
+    )
+
+    return redirect('administration:manage_reviews')
+
+@login_required
+@role_required('ADMIN')
+def manage_users_view(request):
+    """Platform user governance and account status management."""
+    users = User.objects.order_by('-created_at')[:60]
+    return render(request, 'administration/users.html', {'users': users})
+
+@login_required
+@role_required('ADMIN')
+def toggle_user_status_view(request, user_id):
+    target_user = get_object_or_404(User, id=user_id)
+    if target_user == request.user:
+        messages.error(request, "Cannot modify your own administrator account status.")
+        return redirect('administration:manage_users')
+
+    target_user.is_active = not target_user.is_active
+    target_user.status = 'ACTIVE' if target_user.is_active else 'SUSPENDED'
+    target_user.save(update_fields=['is_active', 'status'])
+
+    SecurityAuditLog.objects.create(
+        user=request.user,
+        action='USER_STATUS_TOGGLED',
+        module='accounts',
+        entity_type='User',
+        entity_id=target_user.id,
+        metadata_json=f'{{"is_active": {target_user.is_active}}}'
+    )
+
+    messages.info(request, f"User '{target_user.email}' status is now {'ACTIVE' if target_user.is_active else 'SUSPENDED'}.")
+    return redirect('administration:manage_users')
 
 @login_required
 @role_required('ADMIN')

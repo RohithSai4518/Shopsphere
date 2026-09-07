@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block title %}Today's Lightning Deals & Flash Sales — ShopSphere{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: 24px; padding-bottom: 60px;">
+    <!-- Deals Hero Banner -->
+    <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(245, 158, 11, 0.1) 100%); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 16px; padding: 32px; margin-bottom: 32px; position: relative; overflow: hidden;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+            <div>
+                <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; padding: 4px 12px; border-radius: 9999px; font-size: 0.85rem; font-weight: 700; margin-bottom: 12px;">
+                    <span>⚡ LIMITED TIME EVENT</span>
+                </div>
+                <h1 style="font-size: 2.2rem; font-weight: 800; color: #fff; margin-bottom: 8px;">Lightning Deals & Flash Sales</h1>
+                <p style="color: var(--text-muted); font-size: 1.05rem; max-width: 600px;">
+                    Exclusive high-velocity discounts with strictly allocated quantities. Claim your reservation before timers expire or stock runs out!
+                </p>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: center; background: rgba(0,0,0,0.4); padding: 16px 24px; border-radius: 12px; border: 1px solid var(--border-light);">
+                <div style="text-align: center;">
+                    <div style="font-size: 1.8rem; font-weight: 800; color: #fbbf24;">{{ deals|length }}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Active Deals</div>
+                </div>
+                <div style="width: 1px; height: 40px; background: var(--border-light);"></div>
+                <div style="text-align: center;">
+                    <div style="font-size: 1.8rem; font-weight: 800; color: #34d399;">Up to 50%</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Max Discount</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Filter Bar -->
+    <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 16px; margin-bottom: 24px;">
+        <a href="{% url 'catalog:deals' %}" class="sub-nav-chip {% if not selected_category %}active{% endif %}">
+            All Deals ({{ deals|length }})
+        </a>
+        {% for cat in categories %}
+            <a href="{% url 'catalog:deals' %}?category={{ cat.slug }}" class="sub-nav-chip {% if selected_category == cat.slug %}active{% endif %}">
+                {{ cat.name }}
+            </a>
+        {% endfor %}
+    </div>
+
+    <!-- Deals Grid -->
+    {% if deals %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px;">
+        {% for deal in deals %}
+        <div class="glass-card" style="display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(239, 68, 68, 0.25); position: relative;">
+            <!-- Deal Badge -->
+            <div style="position: absolute; top: 12px; left: 12px; z-index: 10; background: #ef4444; color: #fff; font-weight: 800; font-size: 0.8rem; padding: 4px 10px; border-radius: 6px; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);">
+                -{{ deal.discount_percent|floatformat:0 }}% OFF
+            </div>
+
+            <!-- Product Thumbnail -->
+            <a href="{% url 'catalog:product_detail' slug=deal.product.slug %}" style="display: block; width: 100%; height: 220px; overflow: hidden; background: #0b0f19;">
+                <img src="{{ deal.product.primary_image }}" alt="{{ deal.product.name }}" style="width: 100%; height: 100%; object-fit: contain; padding: 16px; transition: transform 0.3s ease;">
+            </a>
+
+            <!-- Deal Details -->
+            <div style="padding: 20px; display: flex; flex-direction: column; flex: 1;">
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">{{ deal.product.category.name }}</div>
+                <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 12px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                    <a href="{% url 'catalog:product_detail' slug=deal.product.slug %}" style="color: #fff; text-decoration: none;">
+                        {{ deal.deal_title }}
+                    </a>
+                </h3>
+
+                <!-- Pricing -->
+                <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px;">
+                    <span style="font-size: 1.4rem; font-weight: 800; color: #fbbf24;">${{ deal.deal_price }}</span>
+                    <span style="font-size: 0.95rem; color: var(--text-muted); text-decoration: line-through;">${{ deal.product.base_price }}</span>
+                </div>
+
+                <!-- Claimed Progress Bar -->
+                <div style="margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 6px;">
+                        <span style="color: var(--text-muted);">{{ deal.percent_claimed }}% claimed</span>
+                        <span style="color: #f87171; font-weight: 600;">{{ deal.remaining_units }} left</span>
+                    </div>
+                    <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 9999px; overflow: hidden;">
+                        <div style="width: {{ deal.percent_claimed }}%; height: 100%; background: linear-gradient(90deg, #f59e0b, #ef4444); border-radius: 9999px; transition: width 0.4s ease;"></div>
+                    </div>
+                </div>
+
+                <!-- Timer & Action Button -->
+                <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.85rem; color: #fbbf24; background: rgba(245, 158, 11, 0.1); padding: 6px 10px; border-radius: 6px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        <span>Ends in: <strong>{{ deal.formatted_time_remaining }}</strong></span>
+                    </div>
+
+                    {% if deal.is_sold_out %}
+                        <button class="btn btn-secondary" disabled style="width: 100%; opacity: 0.5;">Sold Out</button>
+                    {% else %}
+                        <button onclick="claimDeal('{{ deal.id }}')" class="btn btn-gold" style="width: 100%; justify-content: center;">
+                            Claim Lightning Deal →
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="glass-panel" style="text-align: center; padding: 60px 20px;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" style="margin-bottom: 16px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        <h2 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 8px;">No Active Deals in this Category</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Check back soon! New lightning deals launch every hour across tech, fashion, and home.</p>
+        <a href="{% url 'catalog:deals' %}" class="btn btn-secondary">View All Active Deals</a>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function claimDeal(dealId) {
+    fetch(`/deals/claim/${dealId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            window.location.href = "{% url 'cart:cart_detail' %}";
+        } else {
+            alert(data.message || data.error);
+        }
+    })
+    .catch(err => {
+        alert('Please log in to claim this lightning deal.');
+        window.location.href = "{% url 'accounts:login' %}";
+    });
+}
+</script>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Two-Factor Authentication — ShopSphere Security{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout" style="max-width: 800px; margin: 0 auto; padding: 24px 20px;">
+    <div class="section-heading-row" style="margin-bottom: 24px;">
+        <div>
+            <span class="eyebrow" style="color: var(--accent-amber); font-weight: 800;">ACCOUNT PROTECTION</span>
+            <h1 class="section-title" style="font-size: 2rem; margin: 4px 0 8px;">Two-Factor Authentication (2FA)</h1>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">
+                Protect your account, orders, and payment vault with an extra layer of hardware or app-based security.
+            </p>
+        </div>
+        <a href="{% url 'accounts:profile' %}" class="btn-secondary-sm">← Back to Profile</a>
+    </div>
+
+    {% if step == 'status' %}
+    <!-- 2FA Is Currently Enabled -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 32px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle);">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center; color: #10b981;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div>
+                <h3 style="color: #ffffff; font-size: 1.25rem; margin: 0;">2FA is Active & Protecting Your Account</h3>
+                <span style="color: #10b981; font-weight: 600; font-size: 0.88rem;">Enabled on {{ two_factor.confirmed_at|date:"F d, Y" }}</span>
+            </div>
+        </div>
+
+        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 24px;">
+            Every time you sign in, ShopSphere will prompt for a 6-digit TOTP verification code from your authenticator app (Google Authenticator, Microsoft Authenticator, 1Password, or Bitwarden).
+        </p>
+
+        <!-- Disable 2FA Form -->
+        <details style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 8px; padding: 16px;">
+            <summary style="color: #f87171; font-weight: 700; cursor: pointer;">
+                Turn off Two-Factor Authentication
+            </summary>
+            <form method="POST" action="{% url 'accounts:two_factor_setup' %}" style="margin-top: 16px;">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="disable">
+                <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 12px;">
+                    Enter your account password to confirm disabling 2FA. This will reduce your account security.
+                </p>
+                <div style="display: flex; gap: 10px; max-width: 450px;">
+                    <input type="password" name="password" required placeholder="Account Password" style="flex: 1; padding: 10px 14px; background: rgba(15,23,42,0.9); border: 1px solid var(--border-medium); border-radius: var(--border-radius-sm); color: #fff;">
+                    <button type="submit" class="btn-danger-sm" style="padding: 10px 16px;">Disable 2FA</button>
+                </div>
+            </form>
+        </details>
+    </div>
+
+    {% elif step == 'confirm' %}
+    <!-- Step 2: Confirmation & Verification -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 32px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <h3 style="color: #ffffff; font-size: 1.25rem; margin-bottom: 12px;">Step 2: Link Your Authenticator App</h3>
+        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px;">
+            Open your authenticator app and either scan the setup URI or manually enter the 32-character security key below:
+        </p>
+
+        <!-- Secret Key Box -->
+        <div style="background: rgba(15,23,42,0.8); border: 1px dashed var(--border-medium); border-radius: 8px; padding: 16px; margin-bottom: 24px; text-align: center;">
+            <span style="font-size: 0.78rem; text-transform: uppercase; color: var(--text-dim); display: block; margin-bottom: 6px;">Your Secret Key (Base32)</span>
+            <code style="font-family: monospace; font-size: 1.25rem; font-weight: 800; color: #60a5fa; letter-spacing: 2px;">{{ secret }}</code>
+        </div>
+
+        <!-- Emergency Recovery Codes -->
+        <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 18px; margin-bottom: 24px;">
+            <strong style="color: #fbbf24; font-size: 0.95rem; display: block; margin-bottom: 6px;">
+                ⚠️ Save Your Emergency Recovery Codes
+            </strong>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">
+                If you ever lose access to your device, each of these backup codes can be used once to regain access:
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-family: monospace; font-size: 0.9rem; font-weight: 700; color: #ffffff;">
+                {% for code in backup_codes %}
+                    <span style="background: rgba(0,0,0,0.3); padding: 4px 8px; border-radius: 4px; text-align: center;">{{ code }}</span>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Verification Form -->
+        <form method="POST" action="{% url 'accounts:two_factor_setup' %}">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="confirm">
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label style="display: block; font-size: 0.88rem; font-weight: 600; color: #ffffff; margin-bottom: 6px;">Enter 6-Digit Code From App</label>
+                <input type="text" name="code" required maxlength="6" pattern="[0-9]{6}" placeholder="000000" autocomplete="one-time-code" style="max-width: 240px; padding: 12px 16px; font-size: 1.4rem; letter-spacing: 4px; text-align: center; font-family: monospace; background: rgba(15,23,42,0.9); border: 1px solid var(--border-medium); border-radius: var(--border-radius-sm); color: #fff;">
+            </div>
+            <button type="submit" class="btn-primary" style="padding: 12px 28px; font-weight: 700;">
+                Verify & Activate 2FA
+            </button>
+        </form>
+    </div>
+
+    {% else %}
+    <!-- Intro / Start 2FA Setup -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 36px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <div style="display: flex; gap: 24px; align-items: flex-start; margin-bottom: 24px;">
+            <div style="width: 56px; height: 56px; border-radius: 12px; background: rgba(99, 102, 241, 0.15); display: flex; align-items: center; justify-content: center; color: var(--primary-light); flex-shrink: 0;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div>
+                <h3 style="color: #ffffff; font-size: 1.3rem; margin-bottom: 8px;">Stronger Security for Your Account</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5;">
+                    Two-Factor Authentication adds an uncompromising security checkpoint. In addition to your password, you'll enter a temporary verification code generated on your mobile phone or security key.
+                </p>
+            </div>
+        </div>
+
+        <form method="POST" action="{% url 'accounts:two_factor_setup' %}">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="initiate">
+            <button type="submit" class="btn-primary" style="padding: 12px 24px; font-weight: 700;">
+                Begin Two-Factor Setup
+            </button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
