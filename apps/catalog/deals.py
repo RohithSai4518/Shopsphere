@@ -96,27 +96,33 @@ class LightningDealClaim(models.Model):
 class DealService:
     @staticmethod
     def get_live_deals(category_slug=None, limit=20):
-        now = timezone.now()
-        qs = LightningDeal.objects.filter(
-            is_active=True,
-            starts_at__lte=now,
-            ends_at__gte=now
-        ).select_related('product', 'product__category', 'product__seller')
+        try:
+            now = timezone.now()
+            qs = LightningDeal.objects.filter(
+                is_active=True,
+                starts_at__lte=now,
+                ends_at__gte=now
+            ).select_related('product', 'product__category', 'product__seller')
 
-        if category_slug:
-            qs = qs.filter(product__category__slug=category_slug)
+            if category_slug:
+                qs = qs.filter(product__category__slug=category_slug)
 
-        return qs.order_by('ends_at')[:limit]
+            return list(qs.order_by('ends_at')[:limit])
+        except Exception:
+            return []
 
     @staticmethod
     def get_deal_for_product(product):
-        now = timezone.now()
-        return LightningDeal.objects.filter(
-            product=product,
-            is_active=True,
-            starts_at__lte=now,
-            ends_at__gte=now
-        ).first()
+        try:
+            now = timezone.now()
+            return LightningDeal.objects.filter(
+                product=product,
+                is_active=True,
+                starts_at__lte=now,
+                ends_at__gte=now
+            ).first()
+        except Exception:
+            return None
 
     @staticmethod
     def claim_deal(user, deal_id, reservation_minutes=15):
