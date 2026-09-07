@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Privacy & Data Subject Rights — ShopSphere Compliance{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout" style="max-width: 900px; margin: 0 auto; padding: 24px 20px;">
+    <div class="section-heading-row" style="margin-bottom: 24px;">
+        <div>
+            <span class="eyebrow" style="color: var(--accent-amber); font-weight: 800;">DATA PRIVACY & GDPR / CCPA</span>
+            <h1 class="section-title" style="font-size: 2rem; margin: 4px 0 8px;">Privacy & Data Rights Center</h1>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">
+                Control your digital footprint, download your complete portable data archive, or request permanent account erasure.
+            </p>
+        </div>
+        <a href="{% url 'accounts:profile' %}" class="btn-secondary-sm">← Back to Profile</a>
+    </div>
+
+    <!-- Section 1: Data Portability (GDPR Art. 20) -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 32px; margin-bottom: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <div style="display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px;">
+            <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(99, 102, 241, 0.15); display: flex; align-items: center; justify-content: center; color: var(--primary-light); flex-shrink: 0;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </div>
+            <div>
+                <h3 style="color: #ffffff; font-size: 1.25rem; margin-bottom: 6px;">Right to Data Portability (Article 20)</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5;">
+                    Download an authentic, machine-readable JSON archive containing all personal data, saved shipping addresses, order transaction receipts, reviews, questions, support interactions, and security logs linked to your identity.
+                </p>
+            </div>
+        </div>
+
+        <div style="background: rgba(15,23,42,0.6); border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+            <span style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700; display: block; margin-bottom: 8px;">Included in Your Archive:</span>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.88rem; color: #cbd5e1;">
+                <span>✓ Profile Identifiers & Timestamps</span>
+                <span>✓ Verified Customer Reviews</span>
+                <span>✓ Complete Order Receipts & Line Items</span>
+                <span>✓ Community Questions & Answers</span>
+                <span>✓ Delivery Addresses & Preferences</span>
+                <span>✓ Support Tickets & Return Inquiries</span>
+            </div>
+        </div>
+
+        <a href="{% url 'accounts:export_user_data' %}" class="btn-primary" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; font-weight: 700;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>Download My JSON Data Archive</span>
+        </a>
+    </div>
+
+    <!-- Section 2: Right to Erasure / Account Erasure (GDPR Art. 17) -->
+    <div style="background: var(--bg-card); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: var(--border-radius-lg); padding: 32px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <div style="display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px;">
+            <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(239, 68, 68, 0.15); display: flex; align-items: center; justify-content: center; color: #f87171; flex-shrink: 0;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+            </div>
+            <div>
+                <h3 style="color: #ffffff; font-size: 1.25rem; margin-bottom: 6px;">Right to Erasure ("Right to be Forgotten", Article 17)</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5;">
+                    Permanently scrub your personal identifiable information (PII) from ShopSphere. Your personal email, full name, phone number, saved addresses, and active sessions will be irrevocably deleted or anonymized in compliance with legal retention minimums.
+                </p>
+            </div>
+        </div>
+
+        <details style="background: rgba(239, 68, 68, 0.04); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 20px;">
+            <summary style="color: #f87171; font-weight: 700; cursor: pointer; font-size: 0.95rem;">
+                Request Permanent Account Deletion & Erasure
+            </summary>
+            
+            <form method="POST" action="{% url 'accounts:delete_account' %}" style="margin-top: 20px;" onsubmit="return confirm('WARNING: This action is permanent and cannot be reversed. Proceed with account erasure?')">
+                {% csrf_token %}
+                <p style="color: #fca5a5; font-size: 0.88rem; margin-bottom: 16px;">
+                    ⚠️ This action is permanent. You will lose access to order tracking, saved wishlists, seller status, and account history.
+                </p>
+
+                <div class="form-group" style="margin-bottom: 14px;">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #ffffff; margin-bottom: 6px;">Reason for Departure (Optional)</label>
+                    <input type="text" name="reason" placeholder="e.g. Closing account, privacy concerns" style="width: 100%; padding: 10px 14px; background: rgba(15,23,42,0.9); border: 1px solid var(--border-medium); border-radius: var(--border-radius-sm); color: #fff;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #ffffff; margin-bottom: 6px;">Confirm Your Account Password</label>
+                    <input type="password" name="password" required placeholder="Account Password" style="width: 100%; max-width: 400px; padding: 10px 14px; background: rgba(15,23,42,0.9); border: 1px solid var(--border-medium); border-radius: var(--border-radius-sm); color: #fff;">
+                </div>
+
+                <button type="submit" class="btn-danger-sm" style="padding: 12px 24px; font-weight: 700; font-size: 0.95rem;">
+                    Permanently Erase My Account
+                </button>
+            </form>
+        </details>
+    </div>
+</div>
+{% endblock %}

@@ -1,78 +1,181 @@
 {% extends 'base.html' %}
 
-{% block title %}Compare Products — ShopSphere Hardware Matrix{% endblock %}
+{% block title %}Compare Hardware & Specifications — ShopSphere Matrix{% endblock %}
 
 {% block content %}
-<div class="dashboard-layout">
-    <div class="section-heading-row">
+<div class="dashboard-layout" style="max-width: 1400px; margin: 0 auto; padding: 24px 20px;">
+    <div class="section-heading-row" style="margin-bottom: 24px; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end;">
         <div>
-            <span class="eyebrow">HARDWARE BENCHMARK</span>
-            <h2 class="section-title">Hardware Comparison Matrix</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">Compare technical specifications, prices, sellers, and hardware tiers side-by-side.</p>
+            <span class="eyebrow" style="color: var(--accent-amber); font-weight: 800;">HARDWARE BENCHMARK</span>
+            <h1 class="section-title" style="font-size: 2rem; margin: 4px 0 8px;">Side-by-Side Comparison Matrix</h1>
+            <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 650px;">
+                Directly compare technical specifications, benchmark attributes, pricing tiers, and merchant guarantees for up to 4 devices.
+            </p>
         </div>
-        <a href="{% url 'catalog:product_list' %}" class="btn-secondary-sm">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            <span>Add Products to Compare</span>
-        </a>
+        
+        <!-- Add Product Selector Bar -->
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            {% if comparison and comparison.products|length < 4 or not comparison %}
+            <form method="GET" action="{% url 'catalog:compare' %}" style="display: flex; gap: 8px;">
+                {% for sid in selected_ids %}
+                    <input type="hidden" name="id" value="{{ sid }}">
+                {% endfor %}
+                <select name="id" style="padding: 10px 14px; background: rgba(15,23,42,0.9); border: 1px solid var(--border-medium); border-radius: var(--border-radius-sm); color: #fff; font-size: 0.88rem; max-width: 280px;" onchange="this.form.submit()">
+                    <option value="">+ Add product to matrix...</option>
+                    {% for p in all_products %}
+                        <option value="{{ p.id }}">{{ p.brand_name }} — {{ p.name|truncatechars:35 }} (${{ p.effective_price }})</option>
+                    {% endfor %}
+                </select>
+            </form>
+            {% endif %}
+
+            {% if comparison %}
+                <a href="{% url 'catalog:compare' %}" class="btn-secondary-sm" style="color: #ef4444;">Clear All</a>
+            {% endif %}
+        </div>
     </div>
 
-    {% if products %}
-    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); overflow-x: auto;">
-        <table class="data-table" style="min-width: 680px;">
+    {% if comparison and comparison.products %}
+    <!-- Filter Toolbar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; background: var(--bg-card); padding: 12px 18px; border-radius: 8px; border: 1px solid var(--border-subtle); margin-bottom: 16px;">
+        <div style="font-size: 0.9rem; color: var(--text-secondary);">
+            Comparing <strong style="color: #ffffff;">{{ comparison.products|length }}</strong> products
+        </div>
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.88rem; color: #fbbf24; font-weight: 600;">
+            <input type="checkbox" id="diff-only-toggle" style="accent-color: #f59e0b; width: 16px; height: 16px;">
+            <span>Highlight Differences Only</span>
+        </label>
+    </div>
+
+    <!-- Matrix Table Container -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); overflow-x: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <table class="data-table" style="min-width: 780px; width: 100%; border-collapse: collapse;">
             <thead>
-                <tr>
-                    <th style="width: 220px;">Specification</th>
-                    {% for prod in products %}
-                        <th style="text-align: center; vertical-align: top; padding: 24px 20px;">
-                            <img src="{{ prod.primary_image }}" alt="{{ prod.name }}" style="width: 120px; height: 120px; object-fit: cover; border-radius: var(--border-radius-md); margin: 0 auto 12px; border: 1px solid var(--border-subtle);">
-                            <a href="{% url 'catalog:product_detail' slug=prod.slug %}" style="display: block; color: #ffffff; font-size: 1rem; font-weight: 700; margin-bottom: 8px;">{{ prod.name }}</a>
-                            <div style="font-size: 1.25rem; font-weight: 800; color: #60a5fa; margin-bottom: 12px;">${{ prod.effective_price }}</div>
-                            <a href="{% url 'catalog:product_detail' slug=prod.slug %}" class="btn-primary-sm" style="display: inline-block;">View Product</a>
-                        </th>
+                <tr style="border-bottom: 2px solid var(--border-medium); background: rgba(15,23,42,0.6);">
+                    <th style="width: 240px; text-align: left; padding: 24px 20px; vertical-align: bottom;">
+                        <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim);">Product Overview</span>
+                    </th>
+                    {% for prod in comparison.products %}
+                    <th style="text-align: center; vertical-align: top; padding: 24px 16px; width: calc((100% - 240px) / {{ comparison.products|length }}); position: relative;">
+                        <!-- Remove Column Button -->
+                        <a href="?{% for sid in selected_ids %}{% if sid != prod.id|stringformat:'s' %}id={{ sid }}&{% endif %}{% endfor %}" 
+                           title="Remove from comparison" 
+                           style="position: absolute; top: 12px; right: 12px; color: var(--text-dim); background: rgba(255,255,255,0.05); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; text-decoration: none;">
+                            ✕
+                        </a>
+                        <img src="{{ prod.primary_image }}" alt="{{ prod.name }}" style="width: 130px; height: 130px; object-fit: cover; border-radius: var(--border-radius-md); margin: 0 auto 12px; border: 1px solid var(--border-subtle); display: block;">
+                        <span style="display: inline-block; font-size: 0.78rem; text-transform: uppercase; color: var(--primary-light); font-weight: 700; margin-bottom: 4px;">{{ prod.brand_name }}</span>
+                        <a href="{% url 'catalog:product_detail' slug=prod.slug %}" style="display: block; color: #ffffff; font-size: 0.98rem; font-weight: 700; margin-bottom: 8px; line-height: 1.3;">
+                            {{ prod.name }}
+                        </a>
+                        <div style="font-size: 1.35rem; font-weight: 800; color: #60a5fa; margin-bottom: 12px;">${{ prod.effective_price }}</div>
+                        <a href="{% url 'catalog:product_detail' slug=prod.slug %}" class="btn-primary-sm" style="display: inline-block; font-size: 0.82rem; padding: 6px 14px;">View Details</a>
+                    </th>
                     {% endfor %}
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><strong>Manufacturer Brand</strong></td>
-                    {% for prod in products %}<td style="text-align: center;"><strong>{{ prod.brand_name }}</strong></td>{% endfor %}
-                </tr>
-                <tr>
-                    <td><strong>Department Category</strong></td>
-                    {% for prod in products %}<td style="text-align: center;">{{ prod.category.name }}</td>{% endfor %}
-                </tr>
-                <tr>
-                    <td><strong>Base Price</strong></td>
-                    {% for prod in products %}<td style="text-align: center;">${{ prod.base_price }}</td>{% endfor %}
-                </tr>
-                <tr>
-                    <td><strong>Discount Savings</strong></td>
-                    {% for prod in products %}
-                        <td style="text-align: center;">
-                            {% if prod.discount_percent > 0 %}
-                                <span class="badge-discount">-{{ prod.discount_percent }}%</span>
-                            {% else %}
-                                <span style="color: var(--text-dim);">Standard Price</span>
-                            {% endif %}
-                        </td>
+                <!-- Core Baseline Rows -->
+                <tr style="background: rgba(255,255,255,0.02);">
+                    <td style="padding: 14px 20px; font-weight: 700; color: #ffffff;">Brand</td>
+                    {% for prod in comparison.products %}
+                    <td style="text-align: center; padding: 14px 16px; color: var(--text-secondary);">{{ prod.brand_name }}</td>
                     {% endfor %}
                 </tr>
                 <tr>
-                    <td><strong>Verified Merchant</strong></td>
-                    {% for prod in products %}<td style="text-align: center;">{{ prod.seller.business_name }}</td>{% endfor %}
+                    <td style="padding: 14px 20px; font-weight: 700; color: #ffffff;">Category</td>
+                    {% for prod in comparison.products %}
+                    <td style="text-align: center; padding: 14px 16px; color: var(--text-secondary);">{{ prod.category.name }}</td>
+                    {% endfor %}
                 </tr>
+                <tr style="background: rgba(255,255,255,0.02);">
+                    <td style="padding: 14px 20px; font-weight: 700; color: #ffffff;">Base Retail Price</td>
+                    {% for prod in comparison.products %}
+                    <td style="text-align: center; padding: 14px 16px; color: var(--text-secondary);">${{ prod.base_price }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="padding: 14px 20px; font-weight: 700; color: #ffffff;">Discount Savings</td>
+                    {% for prod in comparison.products %}
+                    <td style="text-align: center; padding: 14px 16px;">
+                        {% if prod.discount_percent > 0 %}
+                            <span class="badge-discount" style="padding: 3px 8px; border-radius: 4px;">-{{ prod.discount_percent }}% OFF</span>
+                        {% else %}
+                            <span style="color: var(--text-dim); font-size: 0.88rem;">Standard Price</span>
+                        {% endif %}
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr style="background: rgba(255,255,255,0.02);">
+                    <td style="padding: 14px 20px; font-weight: 700; color: #ffffff;">Verified Merchant</td>
+                    {% for prod in comparison.products %}
+                    <td style="text-align: center; padding: 14px 16px; color: var(--text-secondary); font-size: 0.9rem;">
+                        <strong>{{ prod.seller.business_name }}</strong>
+                    </td>
+                    {% endfor %}
+                </tr>
+
+                <!-- Dynamic Technical Specifications Rows -->
+                {% if comparison.matrix_rows %}
+                    <tr>
+                        <td colspan="{{ comparison.products|length|add:1 }}" style="background: rgba(30, 41, 59, 0.8); padding: 12px 20px; font-weight: 800; font-size: 0.85rem; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.05em; border-top: 2px solid var(--border-medium); border-bottom: 1px solid var(--border-subtle);">
+                            Technical Specifications & Benchmarks
+                        </td>
+                    </tr>
+                    {% for row in comparison.matrix_rows %}
+                    <tr class="spec-matrix-row {% if row.has_difference %}diff-row{% else %}same-row{% endif %}" style="{% if row.has_difference %}background: rgba(245, 158, 11, 0.04);{% endif %} border-bottom: 1px solid var(--border-subtle);">
+                        <td style="padding: 14px 20px; font-weight: 600; color: #ffffff; display: flex; align-items: center; justify-content: space-between;">
+                            <span>{{ row.spec_key }}</span>
+                            {% if row.has_difference %}
+                                <span style="font-size: 0.7rem; background: rgba(245, 158, 11, 0.15); color: #fbbf24; padding: 2px 6px; border-radius: 4px; font-weight: 700;">Differs</span>
+                            {% endif %}
+                        </td>
+                        {% for val in row.values %}
+                        <td style="text-align: center; padding: 14px 16px; font-size: 0.92rem; color: {% if val != '—' %}#e2e8f0{% else %}var(--text-dim){% endif %};">
+                            {{ val }}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                {% endif %}
             </tbody>
         </table>
     </div>
+
     {% else %}
-    <div class="empty-catalog-state">
-        <div class="empty-icon">
-            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+    <!-- Empty State / Sample Selector -->
+    <div class="empty-catalog-state" style="text-align: center; padding: 60px 20px; background: var(--bg-card); border-radius: var(--border-radius-lg); border: 1px dashed var(--border-subtle);">
+        <div class="empty-icon" style="margin-bottom: 16px; color: var(--primary-light);">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
         </div>
-        <h3>No products currently in comparison matrix</h3>
-        <p>Browse our catalog and select flagships to evaluate side-by-side specs and features.</p>
-        <a href="{% url 'catalog:product_list' %}" class="btn-primary">Browse Catalog</a>
+        <h3 style="font-size: 1.4rem; color: #ffffff; margin-bottom: 8px;">Select At Least 2 Products to Compare</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 520px; margin: 0 auto 24px;">
+            Choose from our curated catalog below to immediately evaluate specs, benchmark performance, pricing, and warranty options side-by-side.
+        </p>
+        
+        <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+            <a href="{% url 'catalog:product_list' %}" class="btn-primary">Browse Entire Catalog</a>
+            {% if all_products|length >= 2 %}
+            <a href="?id={{ all_products.0.id }}&id={{ all_products.1.id }}" class="btn-secondary">
+                Compare Top 2 Flagships
+            </a>
+            {% endif %}
+        </div>
     </div>
     {% endif %}
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggle = document.getElementById('diff-only-toggle');
+        if (toggle) {
+            toggle.addEventListener('change', function() {
+                const sameRows = document.querySelectorAll('.same-row');
+                sameRows.forEach(row => {
+                    row.style.display = this.checked ? 'none' : '';
+                });
+            });
+        }
+    });
+</script>
 {% endblock %}

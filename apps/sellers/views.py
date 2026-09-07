@@ -15,12 +15,56 @@ def seller_dashboard_view(request):
     seller = get_object_or_404(Seller, user=request.user)
     metrics = SellerAnalyticsService.calculate_seller_metrics(seller)
     recent_items = OrderItem.objects.filter(seller=seller).select_related('order', 'variant__product').order_by('-created_at')[:10]
+    
+    # Low stock alerts for this seller
+    low_stock_variants = ProductVariant.objects.filter(
+        product__seller=seller,
+        inventory__quantity_available__lte=5
+    ).select_related('product', 'inventory')[:10]
+
+    seller_products = Product.objects.filter(seller=seller).order_by('name')
 
     return render(request, 'sellers/dashboard.html', {
         'seller': seller,
         'metrics': metrics,
-        'recent_items': recent_items
+        'recent_items': recent_items,
+        'low_stock_variants': low_stock_variants,
+        'seller_products': seller_products
     })
+
+@login_required
+@role_required('SELLER', 'ADMIN')
+def seller_campaign_view(request):
+    """Allows sellers to create discount campaigns for their catalog products."""
+    seller = get_object_or_404(Seller, user=request.user)
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')
+        discount_percent = int(request.POST.get('discount_percent', 0))
+
+        if product_id == 'ALL':
+            Product.objects.filter(seller=seller).update(discount_percent=discount_percent)
+            messages.success(request, f"Storewide {discount_percent}% discount campaign applied to all active products!")
+        else:
+            product = get_object_or_404(Product, id=product_id, seller=seller)
+            product.discount_percent = discount_percent
+            product.save(update_fields=['discount_percent'])
+            messages.success(request, f"Applied {discount_percent}% discount to '{product.name}'.")
+
+    return redirect('sellers:dashboard')
+
+@login_required
+@role_required('SELLER', 'ADMIN')
+def seller_restock_view(request, variant_id):
+    """Allows sellers to quickly replenish variant inventory."""
+    seller = get_object_or_404(Seller, user=request.user)
+    variant = get_object_or_404(ProductVariant, id=variant_id, product__seller=seller)
+
+    if request.method == 'POST':
+        units = int(request.POST.get('units', 25))
+        InventoryService.restock_variant(variant, units, notes=f'Merchant Restock via Dashboard (+{units})')
+        messages.success(request, f"Successfully restocked {units} units for SKU {variant.sku}!")
+
+    return redirect('sellers:dashboard')
 
 @login_required
 @role_required('SELLER', 'ADMIN')

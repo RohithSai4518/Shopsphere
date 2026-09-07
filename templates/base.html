@@ -54,6 +54,15 @@
                     <span>Catalog</span>
                 </a>
 
+                <a href="{% url 'catalog:deals' %}" class="nav-link">
+                    <span class="nav-link-icon" style="color: #f59e0b;">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                        </svg>
+                    </span>
+                    <span>Deals</span>
+                </a>
+
                 <a href="{% url 'catalog:compare' %}" class="nav-link">
                     <span class="nav-link-icon">
                         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -143,6 +152,7 @@
                 <a href="{% url 'catalog:product_list' %}?category=home-kitchen" class="sub-nav-chip {% if category_slug == 'home-kitchen' %}active{% endif %}">Home & Kitchen</a>
                 <a href="{% url 'catalog:product_list' %}?category=clothing" class="sub-nav-chip {% if category_slug == 'clothing' %}active{% endif %}">Apparel</a>
                 <a href="{% url 'catalog:product_list' %}?category=shoes" class="sub-nav-chip {% if category_slug == 'shoes' %}active{% endif %}">Footwear</a>
+                <a href="{% url 'catalog:deals' %}" class="sub-nav-chip" style="color: #f59e0b; font-weight: 700;">⚡ Lightning Deals</a>
                 <a href="{% url 'catalog:product_list' %}?sort=popular" class="sub-nav-chip" style="color: #fcd34d;">🔥 Bestsellers</a>
                 <a href="{% url 'catalog:product_list' %}?sort=newest" class="sub-nav-chip" style="color: #6ee7b7;">✨ New Arrivals</a>
             </div>
@@ -204,7 +214,8 @@
             </div>
             <div class="footer-col">
                 <h4>Customer Care</h4>
-                <a href="{% url 'support:ticket_list' %}">Help Desk & Support</a>
+                <a href="{% url 'support:help_center' %}">Help Center & FAQs</a>
+                <a href="{% url 'support:ticket_list' %}">Customer Support Desk</a>
                 <a href="{% url 'returns:return_list' %}">Returns & RMA Refunds</a>
                 <a href="{% url 'orders:order_history' %}">Track Shipments</a>
                 <a href="{% url 'wishlist:wishlist_list' %}">Saved Wishlist</a>

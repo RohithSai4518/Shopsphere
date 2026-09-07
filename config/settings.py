@@ -74,8 +74,19 @@ WSGI_APPLICATION = 'config.wsgi.application'
 ASGI_APPLICATION = 'config.asgi.application'
 
 # Database Configuration (Supports DATABASE_URL for PostgreSQL / Neon, falls back to SQLite)
+HAS_POSTGRES_DRIVER = False
+try:
+    import psycopg  # noqa: F401
+    HAS_POSTGRES_DRIVER = True
+except ImportError:
+    try:
+        import psycopg2  # noqa: F401
+        HAS_POSTGRES_DRIVER = True
+    except ImportError:
+        HAS_POSTGRES_DRIVER = False
+
 DATABASE_URL = os.getenv('DATABASE_URL')
-if DATABASE_URL and (DATABASE_URL.startswith('postgres://') or DATABASE_URL.startswith('postgresql://')):
+if HAS_POSTGRES_DRIVER and DATABASE_URL and (DATABASE_URL.startswith('postgres://') or DATABASE_URL.startswith('postgresql://')):
     import urllib.parse
     parsed_db = urllib.parse.urlparse(DATABASE_URL)
     query_params = urllib.parse.parse_qs(parsed_db.query)
@@ -98,9 +109,13 @@ if DATABASE_URL and (DATABASE_URL.startswith('postgres://') or DATABASE_URL.star
         }
     }
 else:
+    default_engine = 'django.db.backends.sqlite3'
+    if os.getenv('DATABASE_ENGINE') and 'sqlite' in os.getenv('DATABASE_ENGINE', ''):
+        default_engine = os.getenv('DATABASE_ENGINE')
+
     DATABASES = {
         'default': {
-            'ENGINE': os.getenv('DATABASE_ENGINE', 'django.db.backends.sqlite3'),
+            'ENGINE': default_engine,
             'NAME': os.path.join(BASE_DIR, os.getenv('DATABASE_NAME', 'data/shopsphere_django.sqlite3')),
         }
     }

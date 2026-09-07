@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}User Directory & Governance — ShopSphere Admin{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout" style="max-width: 1200px; margin: 0 auto; padding: 24px 20px;">
+    <div class="section-heading-row" style="margin-bottom: 24px;">
+        <div>
+            <span class="eyebrow" style="color: var(--accent-amber); font-weight: 800;">PLATFORM IDENTITY & COMPLIANCE</span>
+            <h1 class="section-title" style="font-size: 2rem; margin: 4px 0 6px;">User Directory & Governance</h1>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Manage customer and merchant account statuses, inspect verification, and suspend fraudulent actors.</p>
+        </div>
+        <a href="{% url 'administration:dashboard' %}" class="btn-secondary-sm">← Platform Console</a>
+    </div>
+
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <table class="data-table" style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>User / Account</th>
+                    <th>Platform Role</th>
+                    <th>Account Status</th>
+                    <th>2FA Protection</th>
+                    <th>Registered Date</th>
+                    <th style="text-align: right;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td>
+                        <strong style="color: #ffffff; font-size: 0.95rem;">{{ u.get_full_name|default:u.username }}</strong>
+                        <div style="color: var(--text-dim); font-size: 0.82rem;">{{ u.email }}</div>
+                    </td>
+                    <td>
+                        <span style="font-size: 0.78rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: {% if u.role == 'ADMIN' %}rgba(239,68,68,0.2); color:#fca5a5;{% elif u.role == 'SELLER' %}rgba(96,165,250,0.2); color:#93c5fd;{% else %}rgba(255,255,255,0.08); color:#e2e8f0;{% endif %}">
+                            {{ u.role }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="status-badge {% if u.is_active %}paid{% else %}cancelled{% endif %}" style="font-size: 0.75rem;">
+                            {% if u.is_active %}ACTIVE{% else %}SUSPENDED{% endif %}
+                        </span>
+                    </td>
+                    <td>
+                        {% if u.two_factor.is_enabled %}
+                            <span style="color: #10b981; font-weight: 700; font-size: 0.8rem;">● Protected</span>
+                        {% else %}
+                            <span style="color: var(--text-dim); font-size: 0.8rem;">Standard</span>
+                        {% endif %}
+                    </td>
+                    <td style="color: var(--text-muted); font-size: 0.85rem;">
+                        {{ u.created_at|date:"M d, Y" }}
+                    </td>
+                    <td style="text-align: right;">
+                        {% if u != request.user %}
+                        <form action="{% url 'administration:toggle_user_status' user_id=u.id %}" method="POST" style="margin: 0; display: inline;">
+                            {% csrf_token %}
+                            {% if u.is_active %}
+                                <button type="submit" class="btn-danger-sm" style="font-size: 0.75rem; padding: 4px 8px;" onclick="return confirm('Suspend user account {{ u.email }}?');">Suspend</button>
+                            {% else %}
+                                <button type="submit" class="btn-primary-sm" style="font-size: 0.75rem; padding: 4px 8px; background: #16a34a;" onclick="return confirm('Reactivate account {{ u.email }}?');">Reactivate</button>
+                            {% endif %}
+                        </form>
+                        {% else %}
+                            <span style="color: var(--text-dim); font-size: 0.75rem;">Current Session</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
