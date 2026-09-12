@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Recommended For You — ShopSphere Personalization{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1200px; margin: 30px auto; padding: 0 16px;">
+    <div style="margin-bottom: 28px;">
+        <span style="background: #e0e7ff; color: #4338ca; padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 700; text-transform: uppercase;">AI Personalization Engine</span>
+        <h1 style="font-size: 32px; font-weight: 800; color: #0f172a; margin: 8px 0 6px;">Recommended For You</h1>
+        <p style="color: #64748b; font-size: 16px; margin: 0;">Tailored picks based on your recent searches, viewed categories, and marketplace purchase patterns.</p>
+    </div>
+
+    <!-- Product Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px;">
+        {% for product in products %}
+        <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.04); transition: transform 0.2s; display: flex; flex-direction: column;">
+            <div style="background: #f8fafc; height: 200px; display: flex; align-items: center; justify-content: center; position: relative;">
+                <img src="{{ product.primary_image }}" alt="{{ product.name }}" style="max-height: 180px; max-width: 90%; object-fit: contain;">
+                <span style="position: absolute; top: 12px; right: 12px; background: rgba(15, 23, 42, 0.85); color: white; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 600;">{{ product.category.name|default:"General" }}</span>
+            </div>
+            <div style="padding: 16px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="font-size: 12px; color: #64748b; margin-bottom: 4px;">{{ product.brand.name|default:"ShopSphere" }}</div>
+                    <h3 style="font-size: 15px; font-weight: 700; color: #0f172a; margin: 0 0 8px; line-height: 1.4;">
+                        <a href="{% url 'catalog:product_detail' product.slug %}" style="color: inherit; text-decoration: none;">{{ product.name|truncatechars:60 }}</a>
+                    </h3>
+                </div>
+                <div>
+                    <div style="font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 12px;">
+                        ${{ product.effective_price }}
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <a href="{% url 'catalog:product_detail' product.slug %}" style="flex: 1; text-align: center; background: #f1f5f9; color: #0f172a; padding: 8px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;">View Item</a>
+                        <a href="{% url 'recommendations:bundle_explorer' product.id %}" title="View Frequently Bought Together Combo" style="background: #eff6ff; color: #2563eb; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;">Combo ↗</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div style="grid-column: 1 / -1; padding: 48px; text-align: center; color: #64748b;">
+            No personalized recommendations found yet. Start browsing to teach the recommendation engine!
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

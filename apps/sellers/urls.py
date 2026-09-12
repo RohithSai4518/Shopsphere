@@ -5,6 +5,8 @@ app_name = 'sellers'
 
 urlpatterns = [
     path('dashboard/', views.seller_dashboard_view, name='dashboard'),
+    path('campaigns/apply/', views.seller_campaign_view, name='apply_campaign'),
+    path('restock/<str:variant_id>/', views.seller_restock_view, name='restock_variant'),
     path('products/', views.seller_products_view, name='products'),
     path('products/new/', views.seller_product_create_view, name='product_create'),
     path('orders/', views.seller_orders_view, name='orders'),

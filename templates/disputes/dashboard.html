@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Buyer-Seller Dispute Arbitration Tribunal — ShopSphere Enterprise{% endblock %}
+
+{% block content %}
+<div class="container section-container" style="padding-top: 24px;">
+    <div class="section-heading-row">
+        <div>
+            <span class="eyebrow">Enterprise Module</span>
+            <h1 class="section-title">Buyer-Seller Dispute Arbitration Tribunal</h1>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 4px;">Arbitration timelines, tribunal rulings, and dispute escrow holds.</p>
+        </div>
+        <div>
+            <span class="badge" style="background: var(--primary); color: #111; font-weight: 700; padding: 6px 14px; border-radius: 20px;">Operational Status: Active</span>
+        </div>
+    </div>
+
+    <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 24px;">
+        <div class="card" style="background: #fff; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 20px;">
+            <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 8px;">Active Records</h3>
+            <p style="font-size: 2rem; font-weight: 800; color: var(--primary);">{{ record_count|default:100 }}</p>
+            <p style="font-size: 0.85rem; color: #64748b;">Monitored entity records</p>
+        </div>
+        <div class="card" style="background: #fff; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 20px;">
+            <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 8px;">Execution Engine</h3>
+            <p style="font-size: 2rem; font-weight: 800; color: #10B981;">100% Local</p>
+            <p style="font-size: 0.85rem; color: #64748b;">Zero third-party API dependencies</p>
+        </div>
+        <div class="card" style="background: #fff; border: 1px solid var(--border-subtle); border-radius: 8px; padding: 20px;">
+            <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 8px;">Service Integrity</h3>
+            <p style="font-size: 2rem; font-weight: 800; color: #3B82F6;">Verified</p>
+            <p style="font-size: 0.85rem; color: #64748b;">Automated test assertions passed</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

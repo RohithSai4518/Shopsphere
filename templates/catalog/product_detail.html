@@ -33,6 +33,34 @@
             <span style="color: #6ee7b7; font-weight: 600;">● In Stock & Ready to Ship</span>
         </p>
 
+        {% if active_deal %}
+        <div class="lightning-deal-banner" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(217, 119, 6, 0.08) 100%); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 14px 18px; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="display: flex; align-items: center; gap: 6px; color: #fbbf24; font-weight: 700; font-size: 0.95rem;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    LIGHTNING DEAL: {{ active_deal.title }}
+                </span>
+                <span class="deal-countdown" data-end-time="{{ active_deal.end_time|date:'c' }}" style="font-family: monospace; font-size: 0.9rem; font-weight: 700; color: #f59e0b; background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 6px;">
+                    Ends in {{ active_deal.time_remaining_str }}
+                </span>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px;">
+                <span style="font-size: 1.6rem; font-weight: 800; color: #f59e0b;">${{ active_deal.deal_price }}</span>
+                <span style="text-decoration: line-through; color: var(--text-dim); font-size: 1rem;">${{ active_deal.original_price }}</span>
+                <span style="background: rgba(239, 68, 68, 0.2); color: #f87171; font-weight: 700; font-size: 0.8rem; padding: 2px 8px; border-radius: 4px;">Save {{ active_deal.discount_percentage }}%</span>
+            </div>
+            <div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 4px;">
+                    <span>Claimed: {{ active_deal.claimed_percentage }}%</span>
+                    <span>{{ active_deal.available_units }} units left</span>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); height: 6px; border-radius: 999px; overflow: hidden;">
+                    <div style="background: linear-gradient(90deg, #f59e0b, #ef4444); height: 100%; width: {{ active_deal.claimed_percentage }}%;"></div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
         <div class="detail-price-box">
             <span class="detail-price" id="display-price">${{ product.effective_price }}</span>
             {% if product.discount_percent > 0 %}
@@ -171,37 +199,120 @@
 </section>
 
 <!-- Customer Questions & Answers -->
-<section class="section-container">
-    <div class="section-heading-row">
+<section class="section-container" id="qa-section">
+    <div class="section-heading-row" style="flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: flex-end;">
         <div>
-            <span class="eyebrow">COMMUNITY ADVICE</span>
+            <span class="eyebrow">COMMUNITY WISDOM</span>
             <h2 class="section-title">Questions & Answers</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 4px;">Get verified answers from past buyers, verified hardware owners, and the official merchant.</p>
         </div>
+        <!-- Live QA Search Filter -->
+        <form method="GET" action="#qa-section" style="display: flex; gap: 8px; min-width: 320px;">
+            <input type="text" name="qa_q" value="{{ qa_query }}" placeholder="Search questions & answers..." style="flex: 1; padding: 8px 14px; background: rgba(15,23,42,0.8); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-sm); color: #fff; font-size: 0.88rem;">
+            <button type="submit" class="btn-secondary-sm">Filter</button>
+            {% if qa_query %}
+                <a href="{% url 'catalog:product_detail' slug=product.slug %}#qa-section" class="btn-secondary-sm" style="color: #ef4444;" title="Clear Search">✕</a>
+            {% endif %}
+        </form>
     </div>
-    <div style="display:grid; gap:16px; margin-bottom:24px;">
+
+    <div style="display:grid; gap:20px; margin-bottom:28px;">
         {% for q in questions %}
         <div style="background: var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--border-radius-md); padding:20px;">
-            <p style="font-size:1.05rem; font-weight:700; color:#ffffff; margin-bottom:8px;">Q: {{ q.question_text }}</p>
-            {% for a in q.answers.all %}
-                <p style="color: var(--text-secondary); margin-left:16px; border-left:2px solid var(--primary-light); padding-left:12px;">
-                    <strong>Answer:</strong> {{ a.answer_text }}
-                    {% if a.is_seller_answer %}<span style="color:#93c5fd; font-weight:700; font-size:0.75rem; margin-left:6px;">(Official Merchant Response)</span>{% endif %}
-                </p>
-            {% empty %}
-                <p style="color: var(--text-dim); margin-left:16px; font-size:0.88rem;">No verified answers yet.</p>
-            {% endfor %}
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+                <div>
+                    <span style="display: inline-block; background: rgba(96, 165, 250, 0.15); color: #60a5fa; font-weight: 800; font-size: 0.8rem; padding: 2px 8px; border-radius: 4px; margin-right: 6px;">QUESTION</span>
+                    <strong style="font-size:1.05rem; color:#ffffff;">{{ q.question_text }}</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-dim); margin-top: 4px;">
+                        Asked by {{ q.user.first_name|default:q.user.username }} • {{ q.created_at|date:"M d, Y" }}
+                    </div>
+                </div>
+                <!-- Question Upvote Action -->
+                {% if user.is_authenticated %}
+                <form action="{% url 'catalog:vote_qa' vote_type='question' target_id=q.id %}" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-secondary-sm" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; font-size: 0.82rem;" title="Mark this question as helpful">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                        <span>Helpful ({{ q.upvotes }})</span>
+                    </button>
+                </form>
+                {% else %}
+                <span class="btn-secondary-sm" style="opacity: 0.7; font-size: 0.82rem;">▲ {{ q.upvotes }}</span>
+                {% endif %}
+            </div>
+
+            <!-- Answers Sub-list -->
+            <div style="display: grid; gap: 12px; margin-left: 12px; border-left: 2px solid rgba(255,255,255,0.08); padding-left: 16px;">
+                {% for a in q.answers.all %}
+                <div style="background: rgba(15,23,42,0.4); border-radius: 8px; padding: 12px 14px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+                        <p style="color: var(--text-secondary); margin: 0; font-size: 0.95rem; line-height: 1.5;">
+                            {{ a.answer_text }}
+                        </p>
+                        {% if user.is_authenticated %}
+                        <form action="{% url 'catalog:vote_qa' vote_type='answer' target_id=a.id %}" method="POST" style="flex-shrink: 0;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-secondary-sm" style="display: flex; align-items: center; gap: 4px; padding: 4px 8px; font-size: 0.75rem;">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                <span>{{ a.upvotes }}</span>
+                            </button>
+                        </form>
+                        {% else %}
+                        <span style="color: var(--text-dim); font-size: 0.75rem;">▲ {{ a.upvotes }}</span>
+                        {% endif %}
+                    </div>
+                    <div style="margin-top: 6px; font-size: 0.78rem; color: var(--text-dim); display: flex; align-items: center; gap: 8px;">
+                        <span>Answered by {{ a.user.first_name|default:a.user.username }}</span>
+                        {% if a.is_seller_answer %}
+                            <span style="background: rgba(59, 130, 246, 0.2); color: #93c5fd; font-weight: 700; padding: 2px 6px; border-radius: 4px;">Verified Merchant</span>
+                        {% elif a.user.orders.count > 0 %}
+                            <span style="background: rgba(16, 185, 129, 0.2); color: #6ee7b7; font-weight: 700; padding: 2px 6px; border-radius: 4px;">Verified Buyer</span>
+                        {% endif %}
+                        <span>• {{ a.created_at|date:"M d, Y" }}</span>
+                    </div>
+                </div>
+                {% empty %}
+                <p style="color: var(--text-dim); font-size:0.88rem; font-style: italic;">No community answers yet. Be the first to answer this question!</p>
+                {% endfor %}
+
+                <!-- Inline Answer Form for this question -->
+                {% if user.is_authenticated %}
+                <details style="margin-top: 8px;">
+                    <summary style="cursor: pointer; color: var(--primary-light); font-size: 0.85rem; font-weight: 600; outline: none;">
+                        + Provide an Answer to this Question
+                    </summary>
+                    <form action="{% url 'catalog:answer_question' question_id=q.id %}" method="POST" style="display: flex; gap: 8px; margin-top: 10px;">
+                        {% csrf_token %}
+                        <input type="text" name="answer_text" placeholder="Share your experience or hardware knowledge..." required style="flex: 1; padding: 8px 12px; background: rgba(15,23,42,0.9); border: 1px solid var(--border-medium); border-radius: var(--border-radius-sm); color: #fff; font-size: 0.88rem;">
+                        <button type="submit" class="btn-primary-sm">Submit Answer</button>
+                    </form>
+                </details>
+                {% endif %}
+            </div>
         </div>
         {% empty %}
-        <p style="color: var(--text-muted);">Have a specific hardware or compatibility question? Ask our merchant below.</p>
+        <div style="text-align: center; padding: 36px; background: var(--bg-card); border-radius: var(--border-radius-md); border: 1px dashed var(--border-subtle);">
+            <p style="color: var(--text-muted); margin-bottom: 8px;">{% if qa_query %}No questions match "{{ qa_query }}". Try a different search or post your question below.{% else %}Have a specific hardware, compatibility, or packaging question? Ask below.{% endif %}</p>
+        </div>
         {% endfor %}
     </div>
 
+    <!-- Ask New Question Form -->
     {% if user.is_authenticated %}
-    <form action="{% url 'catalog:ask_question' product_id=product.id %}" method="POST" style="display:flex; gap:12px; max-width:700px;">
-        {% csrf_token %}
-        <input type="text" name="question_text" placeholder="Type your question about specs, compatibility, or packaging..." required style="flex:1; padding:12px 16px; background:rgba(15,23,42,0.9); border:1px solid var(--border-medium); border-radius:var(--border-radius-md); color:#fff;">
-        <button type="submit" class="btn-primary">Ask Question</button>
-    </form>
+    <div style="background: rgba(30, 41, 59, 0.5); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-md); padding: 20px;">
+        <h4 style="color: #ffffff; margin-bottom: 8px; font-size: 1rem;">Ask the Community or Merchant</h4>
+        <form action="{% url 'catalog:ask_question' product_id=product.id %}" method="POST" style="display:flex; gap:12px; flex-wrap: wrap;">
+            {% csrf_token %}
+            <input type="text" name="question_text" placeholder="Type your question about specs, ports, OS compatibility, or package contents..." required style="flex:1; min-width: 280px; padding:12px 16px; background:rgba(15,23,42,0.9); border:1px solid var(--border-medium); border-radius:var(--border-radius-md); color:#fff; font-size: 0.95rem;">
+            <button type="submit" class="btn-primary">Post Question</button>
+        </form>
+    </div>
+    {% else %}
+    <div style="background: var(--bg-card); border-radius: var(--border-radius-md); padding: 16px; text-align: center;">
+        <span style="color: var(--text-secondary); font-size: 0.95rem;">Have questions about this hardware? </span>
+        <a href="{% url 'accounts:login' %}" style="color: var(--primary-light); font-weight: 700; text-decoration: underline;">Sign In</a>
+        <span style="color: var(--text-secondary); font-size: 0.95rem;"> to ask questions or answer fellow buyers.</span>
+    </div>
     {% endif %}
 </section>
 
@@ -285,6 +396,27 @@
                 let val = parseInt(qtyInput.value) || 1;
                 if (val < 10) qtyInput.value = val + 1;
             });
+        // Lightning Deal Countdown Timer
+        const countdownEl = document.querySelector('.deal-countdown');
+        if (countdownEl) {
+            const endTimeStr = countdownEl.getAttribute('data-end-time');
+            if (endTimeStr) {
+                const targetTime = new Date(endTimeStr).getTime();
+                const updateCountdown = () => {
+                    const now = new Date().getTime();
+                    const diff = targetTime - now;
+                    if (diff <= 0) {
+                        countdownEl.textContent = 'Deal Expired';
+                        return;
+                    }
+                    const hours = Math.floor(diff / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                    countdownEl.textContent = `Ends in ${hours}h ${minutes}m ${seconds}s`;
+                };
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+            }
         }
     });
 </script>

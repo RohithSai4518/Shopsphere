@@ -1,4 +1,5 @@
-from django.test import TestCase
+import unittest
+from unittest import TestCase
 from decimal import Decimal
 from apps.accounts.models import User
 from apps.sellers.models import Seller

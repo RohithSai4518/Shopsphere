@@ -4,7 +4,7 @@
   "private": true,
   "description": "ShopSphere Backend REST API Application",
   "main": "src/app.js",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "scripts": {
     "start": "node src/app.js",
     "dev": "node src/app.js",

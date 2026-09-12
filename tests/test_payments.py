@@ -1,4 +1,5 @@
-from django.test import TestCase
+import unittest
+from unittest import TestCase
 from decimal import Decimal
 from django.contrib.auth import get_user_model
 from apps.orders.models import Order

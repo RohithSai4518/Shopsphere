@@ -1,4 +1,5 @@
-from django.test import TestCase
+import unittest
+from unittest import TestCase
 from django.utils import timezone
 from datetime import timedelta
 from apps.accounts.models import User, Address, UserSession, UserPreference

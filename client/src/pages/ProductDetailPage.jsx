@@ -50,27 +50,35 @@ export default function ProductDetailPage({ onAddToCart }) {
         <div>
           <span className="badge badge-primary" style={{ marginBottom: '0.5rem' }}>{product.category_name}</span>
           <h1 className="heading-lg" style={{ marginBottom: '0.5rem' }}>{product.name}</h1>
-          <div style={{ fontSize: '0.9rem', color: 'var(--accent-primary)', marginBottom: '1rem' }}>
-            Sold by {product.seller_name} ★ {product.seller_rating}
+          <div style={{ fontSize: '0.88rem', color: '#475569', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+            <span>Sold by <strong style={{ color: '#0F172A' }}>{product.seller_name}</strong></span>
+            <span style={{ color: '#F59E0B', fontWeight: 700 }}>★ {product.seller_rating}</span>
+            <span>•</span>
+            <span style={{ color: '#16A34A', fontWeight: 600 }}>● In Stock</span>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '1rem', marginBottom: '1.5rem' }}>
-            <span style={{ fontSize: '2rem', fontWeight: 800 }}>${product.effective_price.toFixed(2)}</span>
+            <span style={{ fontSize: '2.2rem', fontWeight: 800, color: '#0F172A' }}>${product.effective_price.toFixed(2)}</span>
             {product.discount_percent > 0 && (
-              <span style={{ fontSize: '1.1rem', color: 'var(--text-subtle)', textDecoration: 'line-through' }}>
+              <span style={{ fontSize: '1.1rem', color: '#94A3B8', textDecoration: 'line-through' }}>
                 ${product.base_price.toFixed(2)}
+              </span>
+            )}
+            {product.discount_percent > 0 && (
+              <span style={{ background: '#DC2626', color: '#FFFFFF', padding: '3px 8px', borderRadius: '4px', fontSize: '0.78rem', fontWeight: 800 }}>
+                Save {product.discount_percent}%
               </span>
             )}
           </div>
 
-          <p className="text-muted" style={{ marginBottom: '2rem' }}>
+          <p style={{ color: '#334155', lineHeight: '1.65', marginBottom: '2rem' }}>
             {product.description}
           </p>
 
           {/* Variant Selectors */}
           {variants && variants.length > 0 && (
             <div style={{ marginBottom: '2rem' }}>
-              <h4 style={{ fontSize: '0.9rem', marginBottom: '0.75rem', color: 'var(--text-main)' }}>Select Variant:</h4>
+              <h4 style={{ fontSize: '0.9rem', marginBottom: '0.75rem', color: '#0F172A', fontWeight: 700 }}>Select Variant:</h4>
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                 {variants.map(v => (
                   <button
@@ -90,8 +98,8 @@ export default function ProductDetailPage({ onAddToCart }) {
           <div style={{ display: 'flex', gap: '1rem' }}>
             <button
               onClick={() => onAddToCart(product, selectedVariant)}
-              className="btn btn-gold"
-              style={{ flex: 1, padding: '0.9rem', fontSize: '1rem' }}
+              className="btn btn-primary"
+              style={{ flex: 1, padding: '0.85rem', fontSize: '1rem', borderRadius: '8px' }}
             >
               Add to Shopping Cart 🛒
             </button>

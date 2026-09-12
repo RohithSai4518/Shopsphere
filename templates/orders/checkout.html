@@ -3,145 +3,332 @@
 {% block title %}Checkout — ShopSphere Secure Payment & Shipping{% endblock %}
 
 {% block content %}
-<div class="checkout-layout">
-    <div class="checkout-heading">
+<div class="checkout-layout" style="max-width: 1200px; margin: 0 auto; padding: 24px 20px;">
+    <div class="checkout-heading" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px;">
         <div>
-            <span class="eyebrow">ENCRYPTED CHECKOUT</span>
-            <h2>Complete Your Order</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">Review delivery destination and payment authorization before order placement.</p>
+            <span class="eyebrow" style="color: var(--accent-amber); font-weight: 800;">ENCRYPTED CHECKOUT</span>
+            <h1 style="font-size: 2rem; margin: 4px 0 6px; color: #ffffff;">Complete Your Order</h1>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Review delivery destination, transit speeds, gift options, and payment authorization.</p>
         </div>
-        <div class="checkout-security">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            <span>256-Bit SSL Encrypted Checkout</span>
+        <div class="checkout-security" style="display: flex; align-items: center; gap: 8px; color: #10b981; font-size: 0.88rem; font-weight: 600;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <span>256-Bit SSL Encrypted & Idempotent</span>
         </div>
     </div>
 
-    <div class="checkout-steps" aria-label="Checkout progress">
-        <div class="checkout-step is-complete">
-            <span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </span>
-            <strong>Cart</strong>
+    <!-- 4-Step Checkout Stepper -->
+    <div class="checkout-steps" aria-label="Checkout progress" style="display: flex; align-items: center; justify-content: space-between; max-width: 800px; margin: 0 auto 32px; background: var(--bg-card); padding: 14px 24px; border-radius: 999px; border: 1px solid var(--border-subtle);">
+        <div style="display: flex; align-items: center; gap: 8px; color: #10b981;">
+            <span style="width: 24px; height: 24px; border-radius: 50%; background: rgba(16,185,129,0.2); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800;">✓</span>
+            <strong style="font-size: 0.88rem;">1. Cart</strong>
         </div>
-        <div class="step-line"></div>
-        <div class="checkout-step is-current"><span>2</span><strong>Shipping & Payment</strong></div>
-        <div class="step-line"></div>
-        <div class="checkout-step"><span>3</span><strong>Confirmation</strong></div>
+        <div style="flex: 1; height: 2px; background: rgba(255,255,255,0.1); margin: 0 12px;"></div>
+        <div style="display: flex; align-items: center; gap: 8px; color: #60a5fa;">
+            <span style="width: 24px; height: 24px; border-radius: 50%; background: rgba(96,165,250,0.2); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800;">2</span>
+            <strong style="font-size: 0.88rem;">2. Shipping</strong>
+        </div>
+        <div style="flex: 1; height: 2px; background: rgba(255,255,255,0.1); margin: 0 12px;"></div>
+        <div style="display: flex; align-items: center; gap: 8px; color: #fbbf24;">
+            <span style="width: 24px; height: 24px; border-radius: 50%; background: rgba(245,158,11,0.2); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800;">3</span>
+            <strong style="font-size: 0.88rem;">3. Delivery & Gifts</strong>
+        </div>
+        <div style="flex: 1; height: 2px; background: rgba(255,255,255,0.1); margin: 0 12px;"></div>
+        <div style="display: flex; align-items: center; gap: 8px; color: var(--text-dim);">
+            <span style="width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800;">4</span>
+            <strong style="font-size: 0.88rem;">4. Payment</strong>
+        </div>
     </div>
 
-    <form method="POST" action="{% url 'orders:checkout' %}">
+    <form method="POST" action="{% url 'orders:checkout' %}" id="checkout-form">
         {% csrf_token %}
-        <div class="checkout-grid">
-            <div class="checkout-form-panel">
-                <!-- Section 1: Address -->
-                <section class="checkout-section" style="margin-top:0; padding-top:0;">
-                    <div class="section-heading">
-                        <div class="section-number">1</div>
+        <input type="hidden" name="idempotency_key" value="{{ idempotency_key }}">
+
+        <div class="checkout-grid" style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: start;">
+            <div class="checkout-form-panel" style="display: grid; gap: 24px;">
+                <!-- Section 1: Shipping Address -->
+                <section style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 24px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem;">1</div>
                         <div>
-                            <h3>Shipping & Delivery Address</h3>
-                            <p>Select your preferred verified delivery destination.</p>
+                            <h3 style="color: #ffffff; font-size: 1.15rem; margin: 0;">Delivery Address</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 2px 0 0 0;">Select your verified courier destination.</p>
                         </div>
                     </div>
-                    <div class="address-select-list">
+
+                    <div class="address-select-list" style="display: grid; gap: 12px;">
                         {% for addr in addresses %}
-                        <label class="address-option">
-                            <input type="radio" name="address_id" value="{{ addr.id }}" {% if addr.is_default or forloop.first %}checked{% endif %}>
-                            <div class="option-details">
+                        <label style="display: flex; gap: 12px; align-items: flex-start; padding: 14px; background: rgba(15,23,42,0.6); border: 1px solid {% if addr.is_default or forloop.first %}var(--primary-light){% else %}var(--border-subtle){% endif %}; border-radius: 8px; cursor: pointer;">
+                            <input type="radio" name="address_id" value="{{ addr.id }}" {% if addr.is_default or forloop.first %}checked{% endif %} style="margin-top: 4px; accent-color: var(--primary);">
+                            <div style="flex: 1;">
                                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                    <strong>{{ addr.full_name }}</strong>
+                                    <strong style="color: #ffffff;">{{ addr.full_name }}</strong>
                                     {% if addr.is_default %}
-                                        <span class="count-pill" style="background:rgba(99,102,241,0.2); color:#818cf8; border:1px solid rgba(99,102,241,0.4); font-size:0.7rem;">DEFAULT</span>
+                                        <span style="background:rgba(99,102,241,0.2); color:#818cf8; font-size:0.7rem; font-weight: 700; padding: 2px 6px; border-radius: 4px;">DEFAULT</span>
                                     {% endif %}
                                 </div>
-                                <p>{{ addr.street_address_1 }}{% if addr.street_address_2 %}, {{ addr.street_address_2 }}{% endif %}</p>
-                                <p>{{ addr.city }}, {{ addr.state }} {{ addr.postal_code }} &bull; {{ addr.country }}</p>
+                                <p style="margin: 0; color: var(--text-secondary); font-size: 0.88rem;">{{ addr.street_address_1 }}{% if addr.street_address_2 %}, {{ addr.street_address_2 }}{% endif %}</p>
+                                <p style="margin: 0; color: var(--text-muted); font-size: 0.82rem;">{{ addr.city }}, {{ addr.state }} {{ addr.postal_code }} &bull; {{ addr.country }}</p>
                             </div>
                         </label>
                         {% empty %}
-                        <div class="empty-catalog-state" style="padding: 28px; text-align: left;">
-                            <h4 style="margin-bottom: 6px;">No saved address on file</h4>
-                            <p style="margin-bottom: 16px; font-size: 0.9rem;">Please add a shipping address in your profile to complete checkout.</p>
-                            <a href="{% url 'accounts:profile' %}" class="btn-primary-sm">Add Shipping Address</a>
+                        <div style="padding: 20px; border: 1px dashed var(--border-subtle); border-radius: 8px; text-align: center;">
+                            <p style="color: var(--text-muted); margin-bottom: 12px;">No delivery address found on your profile.</p>
+                            <a href="{% url 'accounts:profile' %}" class="btn-primary-sm">Add Address in Profile</a>
                         </div>
                         {% endfor %}
                     </div>
                 </section>
 
-                <!-- Section 2: Payment -->
-                <section class="checkout-section">
-                    <div class="section-heading">
-                        <div class="section-number">2</div>
+                <!-- Section 2: Delivery Speeds -->
+                <section style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 24px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem;">2</div>
                         <div>
-                            <h3>Payment Authorization</h3>
-                            <p>Protected payment sandbox with instant ledger settlement.</p>
+                            <h3 style="color: #ffffff; font-size: 1.15rem; margin: 0;">Choose Delivery Speed</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 2px 0 0 0;">All options include real-time courier tracking & insurance.</p>
                         </div>
                     </div>
-                    <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-md); padding: 20px;">
-                        <div style="display:flex; gap:12px; align-items:flex-start;">
-                            <div style="color: var(--accent-amber); margin-top:2px;">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                                    <line x1="1" y1="10" x2="23" y2="10"></line>
-                                </svg>
+
+                    <div style="display: grid; gap: 12px;">
+                        <label style="display: flex; justify-content: space-between; align-items: center; padding: 14px; background: rgba(15,23,42,0.6); border: 1px solid var(--border-subtle); border-radius: 8px; cursor: pointer;">
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <input type="radio" name="delivery_speed" value="STANDARD" checked data-fee="0.00" class="speed-radio" style="accent-color: var(--primary);">
+                                <div>
+                                    <strong style="color: #ffffff; font-size: 0.95rem;">Standard Insured Shipping</strong>
+                                    <span style="display: block; color: var(--text-muted); font-size: 0.8rem;">Delivered in 3–5 business days</span>
+                                </div>
                             </div>
-                            <div>
-                                <strong style="color: #ffffff; font-size: 0.95rem;">ShopSphere Sandbox Payment Gateway</strong>
-                                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 2px;">Transactions are authorized in sandbox mode. No live debit/credit cards are billed.</p>
+                            <span style="color: #10b981; font-weight: 800; font-size: 0.95rem;">FREE</span>
+                        </label>
+
+                        <label style="display: flex; justify-content: space-between; align-items: center; padding: 14px; background: rgba(15,23,42,0.6); border: 1px solid var(--border-subtle); border-radius: 8px; cursor: pointer;">
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <input type="radio" name="delivery_speed" value="EXPEDITED" data-fee="9.99" class="speed-radio" style="accent-color: var(--primary);">
+                                <div>
+                                    <strong style="color: #ffffff; font-size: 0.95rem;">Expedited Air Transit</strong>
+                                    <span style="display: block; color: var(--text-muted); font-size: 0.8rem;">Guaranteed 2 business days</span>
+                                </div>
                             </div>
+                            <span style="color: #60a5fa; font-weight: 800; font-size: 0.95rem;">$9.99</span>
+                        </label>
+
+                        <label style="display: flex; justify-content: space-between; align-items: center; padding: 14px; background: rgba(15,23,42,0.6); border: 1px solid var(--border-subtle); border-radius: 8px; cursor: pointer;">
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <input type="radio" name="delivery_speed" value="PRIORITY_SAME_DAY" data-fee="19.99" class="speed-radio" style="accent-color: var(--primary);">
+                                <div>
+                                    <strong style="color: #ffffff; font-size: 0.95rem;">Priority Courier / Next-Day Delivery</strong>
+                                    <span style="display: block; color: var(--text-muted); font-size: 0.8rem;">Next morning direct courier dispatch</span>
+                                </div>
+                            </div>
+                            <span style="color: #fbbf24; font-weight: 800; font-size: 0.95rem;">$19.99</span>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Section 3: Gift Options -->
+                <section style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 24px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem;">3</div>
+                        <div>
+                            <h3 style="color: #ffffff; font-size: 1.15rem; margin: 0;">Gift Options & Packaging</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 2px 0 0 0;">Add personalized gift notes or luxury packaging.</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" name="is_gift" id="is_gift_checkbox" style="width: 18px; height: 18px; accent-color: var(--primary);">
+                            <span style="color: #ffffff; font-weight: 600; font-size: 0.95rem;">🎁 This order is a gift (hide prices on packing slip)</span>
+                        </label>
+                    </div>
+
+                    <div id="gift-details-box" style="display: none; background: rgba(15,23,42,0.6); padding: 18px; border-radius: 8px; border: 1px dashed var(--border-medium);">
+                        <div style="margin-bottom: 14px;">
+                            <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #ffffff; margin-bottom: 6px;">Personalized Gift Message</label>
+                            <textarea name="gift_message" rows="2" maxlength="240" placeholder="Enjoy this gift! Best wishes..." style="width: 100%; padding: 10px; background: rgba(15,23,42,0.9); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-sm); color: #fff; font-size: 0.9rem;"></textarea>
                         </div>
 
-                        <div class="synthetic-card-preview">
-                            <div>
-                                <span style="font-size: 1.1rem; font-weight:800; color: #60a5fa;">VISA</span>
-                                <small style="display:block; color:var(--text-muted); font-size:0.75rem; font-family:var(--font-body);">Authorizing Test Reference</small>
+                        <div>
+                            <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #ffffff; margin-bottom: 6px;">Gift Wrap Presentation</label>
+                            <select name="gift_wrap_type" id="gift-wrap-select" style="width: 100%; padding: 10px; background: rgba(15,23,42,0.9); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-sm); color: #fff;">
+                                <option value="NONE" data-fee="0.00" selected>Standard Packing Slip (Free)</option>
+                                <option value="STANDARD" data-fee="3.99">Classic Navy Ribbon & Gift Tag (+$3.99)</option>
+                                <option value="DELUXE" data-fee="7.99">Luxury Gold-Embossed Presentation Box (+$7.99)</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 4: Payment Authorization -->
+                <section style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 24px;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                        <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem;">4</div>
+                        <div>
+                            <h3 style="color: #ffffff; font-size: 1.15rem; margin: 0;">Payment Method</h3>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 2px 0 0 0;">Select a saved card or use instantaneous test gateway.</p>
+                        </div>
+                    </div>
+
+                    {% if saved_cards %}
+                    <div style="display: grid; gap: 10px; margin-bottom: 16px;">
+                        {% for card in saved_cards %}
+                        <label style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: rgba(15,23,42,0.6); border: 1px solid {% if card.is_default %}var(--accent-amber){% else %}var(--border-subtle){% endif %}; border-radius: 8px; cursor: pointer;">
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <input type="radio" name="payment_method_id" value="{{ card.id }}" {% if card.is_default or forloop.first %}checked{% endif %} style="accent-color: var(--primary);">
+                                <strong style="color: #ffffff;">{{ card.card_brand }} ending in {{ card.last4 }}</strong>
                             </div>
-                            <div style="font-size: 1.15rem; font-weight:700;">•••• •••• •••• 4242</div>
+                            <span style="color: var(--text-dim); font-size: 0.82rem;">Exp: {{ card.expiry_month|stringformat:"02d" }}/{{ card.expiry_year }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Fallback Sandbox Card Notice -->
+                    <div style="background: rgba(30, 41, 59, 0.4); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 14px; display: flex; gap: 12px; align-items: center;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                        <div>
+                            <strong style="color: #ffffff; font-size: 0.9rem;">Verified Sandbox Payment Gateway</strong>
+                            <p style="color: var(--text-muted); font-size: 0.8rem; margin: 2px 0 0 0;">Charges are securely validated in real-time. No live card is debited.</p>
                         </div>
                     </div>
                 </section>
             </div>
 
             <!-- Sticky Order Summary Panel -->
-            <div class="cart-summary-card">
-                <div class="cart-summary-heading">
-                    <h3>Order Summary</h3>
+            <div class="cart-summary-card" style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius-lg); padding: 24px; position: sticky; top: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle);">
+                    <h3 style="color: #ffffff; font-size: 1.2rem; margin: 0;">Order Summary</h3>
                     <span class="count-pill">{{ cart_items|length }} item{{ cart_items|length|pluralize }}</span>
                 </div>
-                <div style="display: grid; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle); max-height: 240px; overflow-y: auto;">
+
+                <div style="display: grid; gap: 10px; max-height: 200px; overflow-y: auto; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle);">
                     {% for item in cart_items %}
-                    <div style="display:flex; justify-content:space-between; gap:12px; font-size:0.88rem;">
-                        <div style="min-width:0;">
-                            <strong style="color:#ffffff; display:block; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">{{ item.variant.product.name }}</strong>
-                            <span style="color:var(--text-muted); font-size:0.78rem;">Qty {{ item.quantity }} • {{ item.variant.variant_name }}</span>
-                        </div>
-                        <strong style="color:#ffffff;">${{ item.subtotal }}</strong>
+                    <div style="display: flex; justify-content: space-between; gap: 10px; font-size: 0.85rem;">
+                        <span style="color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px;">
+                            {{ item.quantity }}x {{ item.variant.product.name }}
+                        </span>
+                        <strong style="color: #ffffff;">${{ item.subtotal }}</strong>
                     </div>
                     {% endfor %}
                 </div>
 
-                <div style="margin-top: 16px;">
-                    <div class="summary-line"><span>Subtotal</span> <strong>${{ subtotal }}</strong></div>
+                <div style="display: grid; gap: 8px; font-size: 0.9rem;">
+                    <div style="display: flex; justify-content: space-between; color: var(--text-secondary);">
+                        <span>Items Subtotal:</span>
+                        <strong style="color: #ffffff;">${{ subtotal }}</strong>
+                    </div>
                     {% if discount > 0 %}
-                        <div class="summary-line discount-text"><span>Discount Applied</span> <strong>-${{ discount }}</strong></div>
+                    <div style="display: flex; justify-content: space-between; color: #f87171;">
+                        <span>Coupon Savings:</span>
+                        <strong>-${{ discount }}</strong>
+                    </div>
                     {% endif %}
-                    <div class="summary-line"><span>Tax (8.25%)</span> <strong>${{ tax }}</strong></div>
-                    <div class="summary-line"><span>Insured Shipping</span> <strong style="color:#6ee7b7;">FREE</strong></div>
-                    <hr>
-                    <div class="summary-line total-line"><span>Total Due</span> <strong>${{ total }}</strong></div>
-
-                    <button type="submit" class="btn-place-order" {% if not addresses %}disabled{% endif %}>
-                        <span>Authorize & Place Order</span>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-left:6px;">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </button>
-                    <p style="color: var(--text-dim); font-size: 0.75rem; text-align: center; margin-top: 12px;">
-                        By authorizing this order, you confirm acceptance of ShopSphere's Buyer Guarantee and Privacy Terms.
-                    </p>
+                    <div style="display: flex; justify-content: space-between; color: var(--text-secondary);">
+                        <span>Shipping & Transit:</span>
+                        <strong id="display-shipping" style="color: #10b981;">FREE</strong>
+                    </div>
+                    <div id="gift-fee-row" style="display: none; justify-content: space-between; color: var(--text-secondary);">
+                        <span>Gift Packaging:</span>
+                        <strong id="display-gift-fee" style="color: #fbbf24;">$0.00</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; color: var(--text-secondary);">
+                        <span>Sales Tax (8.25%):</span>
+                        <strong style="color: #ffffff;">${{ tax }}</strong>
+                    </div>
+                    <hr style="border: none; border-top: 1px solid var(--border-medium); margin: 8px 0;">
+                    <div style="display: flex; justify-content: space-between; font-size: 1.25rem; font-weight: 800; color: #ffffff;">
+                        <span>Total Due:</span>
+                        <span id="display-total" style="color: #60a5fa;">${{ total }}</span>
+                    </div>
                 </div>
+
+                <button type="submit" class="btn-primary" id="btn-submit-order" {% if not addresses %}disabled{% endif %} style="width: 100%; padding: 14px; margin-top: 20px; font-size: 1.05rem; font-weight: 800; display: flex; justify-content: center; align-items: center; gap: 8px;">
+                    <span>Place Order & Generate Invoice</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+
+                <p style="color: var(--text-dim); font-size: 0.78rem; text-align: center; margin-top: 12px; line-height: 1.4;">
+                    Your payment will be authorized instantly and an official printable tax invoice will be generated.
+                </p>
             </div>
         </div>
     </form>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const baseSubtotal = parseFloat("{{ subtotal|default:'0.00' }}");
+        const discount = parseFloat("{{ discount|default:'0.00' }}");
+        const tax = parseFloat("{{ tax|default:'0.00' }}");
+        
+        const speedRadios = document.querySelectorAll('.speed-radio');
+        const displayShipping = document.getElementById('display-shipping');
+        const displayTotal = document.getElementById('display-total');
+        const isGiftCheckbox = document.getElementById('is_gift_checkbox');
+        const giftDetailsBox = document.getElementById('gift-details-box');
+        const giftWrapSelect = document.getElementById('gift-wrap-select');
+        const giftFeeRow = document.getElementById('gift-fee-row');
+        const displayGiftFee = document.getElementById('display-gift-fee');
+
+        function recalculate() {
+            let shippingFee = 0.00;
+            speedRadios.forEach(r => {
+                if (r.checked) {
+                    shippingFee = parseFloat(r.getAttribute('data-fee')) || 0.00;
+                }
+            });
+
+            if (shippingFee === 0) {
+                displayShipping.textContent = 'FREE';
+                displayShipping.style.color = '#10b981';
+            } else {
+                displayShipping.textContent = '$' + shippingFee.toFixed(2);
+                displayShipping.style.color = '#ffffff';
+            }
+
+            let giftFee = 0.00;
+            if (isGiftCheckbox && isGiftCheckbox.checked && giftWrapSelect) {
+                const opt = giftWrapSelect.options[giftWrapSelect.selectedIndex];
+                giftFee = parseFloat(opt.getAttribute('data-fee')) || 0.00;
+                if (giftFee > 0) {
+                    giftFeeRow.style.display = 'flex';
+                    displayGiftFee.textContent = '$' + giftFee.toFixed(2);
+                } else {
+                    giftFeeRow.style.display = 'none';
+                }
+            } else {
+                if (giftFeeRow) giftFeeRow.style.display = 'none';
+            }
+
+            const taxable = Math.max(0, baseSubtotal - discount);
+            const grandTotal = taxable + tax + shippingFee + giftFee;
+            if (displayTotal) {
+                displayTotal.textContent = '$' + grandTotal.toFixed(2);
+            }
+        }
+
+        speedRadios.forEach(r => r.addEventListener('change', recalculate));
+
+        if (isGiftCheckbox) {
+            isGiftCheckbox.addEventListener('change', function() {
+                giftDetailsBox.style.display = this.checked ? 'block' : 'none';
+                recalculate();
+            });
+        }
+
+        if (giftWrapSelect) {
+            giftWrapSelect.addEventListener('change', recalculate);
+        }
+
+        // Prevent double submit
+        const checkoutForm = document.getElementById('checkout-form');
+        const submitBtn = document.getElementById('btn-submit-order');
+        if (checkoutForm && submitBtn) {
+            checkoutForm.addEventListener('submit', function() {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span>Processing Order...</span>';
+            });
+        }
+    });
+</script>
 {% endblock %}

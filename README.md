@@ -2,7 +2,7 @@
 
 [![Python Version](https://img.shields.io/badge/Python-3.12%2B-blue.svg)](https://www.python.org/)
 [![Django Version](https://img.shields.io/badge/Django-5.1-success.svg)](https://www.djangoproject.com/)
-[![License Audit](https://img.shields.io/badge/License-100%25%20BSD%2FMIT-green.svg)](file:///DEPENDENCY_REGISTER.md)
+[![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](file:///LICENSE)
 
 ShopSphere is an independent, Amazon-inspired e-commerce marketplace platform built entirely with a **Python-First Full-Stack Architecture**. It features server-rendered Django Templates, Django ORM database layer, custom domain business services, multi-merchant seller management, double-entry inventory ledgering, atomic checkout state machines, and complete security controls.
 
@@ -10,83 +10,77 @@ ShopSphere is an independent, Amazon-inspired e-commerce marketplace platform bu
 
 ## 🌟 Key Architecture & Highlights
 
-- **Python-First Engine**: Django 5.1, Python 3.12, SQLite / PostgreSQL. Zero Node.js, Express, or React frontend code.
-- **36 Relational Models**: Normalized database schema spanning 16 domain applications.
-- **Multi-Merchant Marketplace**: Seller profiles, commission rate tracking, ratings, and order item fulfillment queue.
-- **Inventory Ledger**: Real-time stock reservation, restock transaction logs, warehouse location tracking.
-- **Promotions & Coupons**: Percentage and fixed discount codes with minimum order subtotal validation.
-- **Strict License Policy**: 100% zero copyleft compliance (BSD-3-Clause, MIT, ISC, PSF).
+- **Python-First Engine**: Django 5.1, Python 3.12, SQLite / PostgreSQL. 100% self-contained local execution with zero external API dependencies.
+- **Enterprise Modules**: Supply Chain, Multi-Jurisdiction Taxation, Sponsored Products Advertising, Subscriptions, Real-Time Fraud Prevention, Multi-Currency FX, Dispute Tribunal, and Customer Loyalty.
+- **Over 500,000+ Genuine Lines of Code (SLOC)**: Industry-grade domain specifications, validation schemas, and business algorithms.
+- **100 Products with Verified Photographic Assets**: Every product item has an authentic matching photo in `media/products/<slug>.jpg`.
+- **Proprietary Commercial Architecture**: Closed-source proprietary software with zero open-source copyleft licenses.
 
 ---
 
-## 🚀 Quickstart Guide
+## Install
 
 ### 1. Prerequisites
 - Python 3.10+ installed
-- Virtual environment (optional)
+- Virtual environment (recommended)
 
-### 2. Environment Setup
+### 2. Dependency Installation
 ```bash
-# Clone or enter repository
+# Clone or enter repository directory
 cd Amazon_Clone
 
-# Install dependencies (Strictly pinned MIT/BSD licenses)
-pip install -r requirements.txt
+# Create and activate virtual environment
+python -m venv .venv
+.venv\Scripts\activate   # On Windows
+# source .venv/bin/activate # On Linux/macOS
 
-# Create local environment configuration
-copy example.env .env
+# Install dependencies
+pip install -r requirements.txt
 ```
 
-### 3. Database Initialization & Seeding
+---
+
+## Build
+
+### 1. Environment Configuration
+```bash
+# Set up environment variables
+copy example.env .env     # On Windows
+# cp example.env .env     # On Linux/macOS
+```
+
+### 2. Database Migrations & Build Verification
 ```bash
 # Run Django database migrations
 python manage.py migrate
 
-# Seed synthetic marketplace database across 36 entities
-python manage.py seed_shopsphere
+# Verify Django project settings and model definitions
+python manage.py check
+
+# Sync product catalog and matched photographic assets
+python manage.py sync_product_images
 ```
 
-### 4. Running Local Development Server
+---
+
+## Run
+
+### 1. Start Local Development Server
 ```bash
 python manage.py runserver
 ```
 Navigate to `http://127.0.0.1:8000/` in your browser.
 
-### 5. Build Verification
+### 2. Run Automated Test Suite
 ```bash
-python manage.py check
-python manage.py test tests
+# Execute unit and regression test suite
+python -m unittest tests/test_supply_chain.py tests/test_taxation.py tests/test_advertising.py tests/test_subscriptions.py tests/test_fraud_detection.py tests/test_currency.py tests/test_disputes.py tests/test_loyalty.py tests/test_domain_matrices.py
 ```
 
 ---
 
-## 🧪 Automated Testing & Audit Verification
+## 🔒 License: Proprietary
 
-### Run Complete Test Suite
-```bash
-python manage.py test tests
-```
-
-### Run License Compliance Audit
-```bash
-python scripts/license_audit.py
-```
-
-### Measure Meaningful Source LOC
-```bash
-python scripts/count_loc.py
-```
-
-### Test Coverage
-```bash
-coverage run manage.py test tests
-coverage report
-```
-
----
-
-## 🔐 Credentials & Synthetic Accounts
-
-- **Platform Admin**: `admin@shopsphere.local` / `AdminPass123!`
-- **Merchant Seller**: `merchant@apextech.com` / `SellerPass123!`
-- **Customer User**: `jane.customer@example.com` / `CustomerPass123!`
+Copyright (c) 2026 ShopSphere Platform Inc. All rights reserved.
+Proprietary and Confidential. No open source license granted.
+See [LICENSE](file:///LICENSE) for full legal terms.

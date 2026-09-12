@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Shipment Tracking — ShopSphere Logistics{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 900px; margin: 40px auto; padding: 0 16px;">
+    <div style="text-align: center; margin-bottom: 36px;">
+        <h1 style="font-size: 32px; font-weight: 800; color: #0f172a; margin-bottom: 8px;">Real-Time Package Tracking</h1>
+        <p style="color: #64748b; font-size: 16px;">Track your deliveries across the ShopSphere Multi-Hub Fulfillment Network</p>
+    </div>
+
+    <!-- Search Box -->
+    <div style="background: #ffffff; padding: 24px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; margin-bottom: 32px;">
+        <form method="GET" action="{% url 'logistics:track_search' %}" style="display: flex; gap: 12px;">
+            <input type="text" name="tracking_number" value="{{ tracking_number|default:'' }}" placeholder="Enter Tracking Number (e.g. TRK4A91B8C1D0)" required style="flex: 1; padding: 14px 18px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 16px; outline: none;">
+            <button type="submit" style="background: #2563eb; color: #ffffff; padding: 14px 28px; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer;">Track Package</button>
+        </form>
+    </div>
+
+    {% if parcel %}
+    <!-- Parcel Details Card -->
+    <div style="background: #ffffff; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; padding: 32px; margin-bottom: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 20px; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+            <div>
+                <span style="background: #e0f2fe; color: #0369a1; padding: 4px 12px; border-radius: 9999px; font-weight: 600; font-size: 12px; text-transform: uppercase;">{{ parcel.carrier.name }}</span>
+                <h2 style="font-size: 24px; font-weight: 700; margin-top: 8px; color: #0f172a;">{{ parcel.tracking_number }}</h2>
+                <div style="color: #64748b; font-size: 14px;">Order Ref: <strong>#{{ parcel.order.order_number }}</strong></div>
+            </div>
+            <div style="text-align: right;">
+                <div style="font-size: 13px; color: #64748b;">Current Status</div>
+                <div style="font-size: 20px; font-weight: 800; color: #16a34a; margin-top: 4px;">{{ parcel.get_status_display }}</div>
+                {% if parcel.estimated_delivery %}
+                <div style="font-size: 13px; color: #475569; margin-top: 4px;">Est. Delivery: <strong>{{ parcel.estimated_delivery|date:"M d, Y" }}</strong></div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; background: #f8fafc; padding: 18px; border-radius: 8px;">
+            <div>
+                <div style="font-size: 12px; color: #64748b; text-transform: uppercase; font-weight: 600;">Destination</div>
+                <div style="font-size: 14px; font-weight: 600; color: #1e293b; margin-top: 4px;">{{ parcel.recipient_city }}, {{ parcel.recipient_state }} {{ parcel.recipient_postal_code }}</div>
+            </div>
+            <div>
+                <div style="font-size: 12px; color: #64748b; text-transform: uppercase; font-weight: 600;">Chargeable Weight</div>
+                <div style="font-size: 14px; font-weight: 600; color: #1e293b; margin-top: 4px;">{{ parcel.actual_weight_kg }} kg (Volumetric: {{ parcel.volumetric_weight_kg }} kg)</div>
+            </div>
+            <div>
+                <div style="font-size: 12px; color: #64748b; text-transform: uppercase; font-weight: 600;">Origin Facility</div>
+                <div style="font-size: 14px; font-weight: 600; color: #1e293b; margin-top: 4px;">{{ parcel.hub.name|default:"ShopSphere Hub" }}</div>
+            </div>
+            <div>
+                <div style="font-size: 12px; color: #64748b; text-transform: uppercase; font-weight: 600;">Packing Slip</div>
+                <div style="font-size: 14px; font-weight: 600; margin-top: 4px;">
+                    <a href="{% url 'logistics:packing_slip' parcel.id %}" target="_blank" style="color: #2563eb; text-decoration: none;">{{ parcel.packing_slip_number }} ↗</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkpoints Timeline -->
+        <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 20px;">Milestone Progress</h3>
+        <div style="position: relative; padding-left: 28px; border-left: 2px solid #e2e8f0; margin-left: 12px;">
+            {% for cp in checkpoints %}
+            <div style="position: relative; margin-bottom: 28px;">
+                <div style="position: absolute; left: -36px; top: 0; width: 14px; height: 14px; border-radius: 50%; background: {% if forloop.first %}#2563eb{% else %}#94a3b8{% endif %}; border: 3px solid #ffffff; box-shadow: 0 0 0 2px {% if forloop.first %}#2563eb{% else %}#cbd5e1{% endif %};"></div>
+                <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+                    <div style="font-size: 16px; font-weight: 700; color: #0f172a;">{{ cp.milestone_name }}</div>
+                    <div style="font-size: 13px; color: #64748b;">{{ cp.recorded_at|date:"M d, Y, h:i A" }}</div>
+                </div>
+                <div style="font-size: 14px; color: #475569; margin-top: 2px;">{{ cp.facility_name }} — {{ cp.city }}, {{ cp.state }}</div>
+                {% if cp.checkpoint_notes %}
+                <div style="font-size: 13px; color: #64748b; margin-top: 4px; font-style: italic;">"{{ cp.checkpoint_notes }}"</div>
+                {% endif %}
+            </div>
+            {% empty %}
+            <p style="color: #64748b;">No checkpoint scans recorded yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+    {% elif searched %}
+    <div style="background: #fff1f2; border: 1px solid #fecdd3; border-radius: 12px; padding: 32px; text-align: center;">
+        <h3 style="color: #be123c; font-size: 18px; font-weight: 700;">Package Not Found</h3>
+        <p style="color: #9f1239; margin-top: 8px;">Please verify your tracking number and try again, or contact 24/7 customer support.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

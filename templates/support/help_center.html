@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+
+{% block title %}Help Center & Knowledge Base — ShopSphere Support{% endblock %}
+
+{% block content %}
+<div style="max-width: 1100px; margin: 0 auto; padding: 24px 20px;">
+    <!-- Hero Search Banner -->
+    <div style="text-align: center; padding: 48px 20px 40px; background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%); border: 1px solid var(--border-subtle); border-radius: 16px; margin-bottom: 36px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <span class="eyebrow" style="color: var(--accent-amber); font-weight: 800; letter-spacing: 0.1em;">SHOPSPHERE CUSTOMER CARE</span>
+        <h1 style="font-size: 2.4rem; color: #ffffff; margin: 8px 0 12px; font-weight: 800;">How Can We Help You Today?</h1>
+        <p style="color: var(--text-muted); font-size: 1.05rem; max-width: 600px; margin: 0 auto 28px;">
+            Search our curated knowledgebase of shipping policies, warranty terms, returns, and payment security.
+        </p>
+
+        <form method="GET" action="{% url 'support:help_center' %}" style="display: flex; max-width: 640px; margin: 0 auto; gap: 10px;">
+            <div style="flex: 1; position: relative;">
+                <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Search questions (e.g. tracking, returns, 2FA, refund speed)..." style="width: 100%; padding: 14px 18px; font-size: 1rem; background: rgba(15,23,42,0.95); border: 1px solid var(--border-medium); border-radius: 8px; color: #fff; box-sizing: border-box;">
+            </div>
+            <button type="submit" class="btn-primary" style="padding: 14px 28px; font-weight: 700; font-size: 1rem;">
+                Search Help
+            </button>
+            {% if query %}
+                <a href="{% url 'support:help_center' %}" class="btn-secondary" style="padding: 14px 18px; display: flex; align-items: center; justify-content: center; color: #ef4444;">Clear</a>
+            {% endif %}
+        </form>
+    </div>
+
+    <!-- 4 Quick-Action Shortcuts -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 40px;">
+        <a href="{% url 'orders:order_history' %}" style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 20px; text-decoration: none; display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(96, 165, 250, 0.15); display: flex; align-items: center; justify-content: center; color: #60a5fa; margin-bottom: 12px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+            </div>
+            <strong style="color: #ffffff; font-size: 0.95rem; margin-bottom: 4px;">Track Orders</strong>
+            <span style="color: var(--text-dim); font-size: 0.8rem;">Live shipment GPS</span>
+        </a>
+
+        <a href="{% url 'returns:return_list' %}" style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 20px; text-decoration: none; display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(245, 158, 11, 0.15); display: flex; align-items: center; justify-content: center; color: #f59e0b; margin-bottom: 12px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+            </div>
+            <strong style="color: #ffffff; font-size: 0.95rem; margin-bottom: 4px;">Returns & RMAs</strong>
+            <span style="color: var(--text-dim); font-size: 0.8rem;">Prepaid shipping labels</span>
+        </a>
+
+        <a href="{% url 'accounts:two_factor_setup' %}" style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 20px; text-decoration: none; display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center; color: #10b981; margin-bottom: 12px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <strong style="color: #ffffff; font-size: 0.95rem; margin-bottom: 4px;">Security & 2FA</strong>
+            <span style="color: var(--text-dim); font-size: 0.8rem;">Multi-factor auth</span>
+        </a>
+
+        <a href="{% url 'support:ticket_list' %}" style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 20px; text-decoration: none; display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <div style="width: 44px; height: 44px; border-radius: 10px; background: rgba(168, 85, 247, 0.15); display: flex; align-items: center; justify-content: center; color: #c084fc; margin-bottom: 12px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </div>
+            <strong style="color: #ffffff; font-size: 0.95rem; margin-bottom: 4px;">Support Tickets</strong>
+            <span style="color: var(--text-dim); font-size: 0.8rem;">Direct agent chat</span>
+        </a>
+    </div>
+
+    {% if is_search %}
+    <!-- Search Results View -->
+    <div style="margin-bottom: 40px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 style="font-size: 1.4rem; color: #ffffff; margin: 0;">Search Results for "{{ query }}"</h2>
+            <span class="count-pill">{{ search_results|length }} Result{{ search_results|length|pluralize }}</span>
+        </div>
+
+        <div style="display: grid; gap: 16px;">
+            {% for art in search_results %}
+            <details style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                <summary style="cursor: pointer; font-size: 1.05rem; font-weight: 700; color: #ffffff; outline: none; display: flex; justify-content: space-between; align-items: center;">
+                    <span>{{ art.question }}</span>
+                    <span style="font-size: 0.78rem; background: rgba(99,102,241,0.2); color: #a5b4fc; padding: 2px 8px; border-radius: 4px; font-weight: 600;">{{ art.category.title }}</span>
+                </summary>
+                <div style="margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-subtle); color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem;">
+                    {{ art.answer }}
+                    <div style="margin-top: 16px; display: flex; justify-content: flex-end; align-items: center; gap: 8px;">
+                        <button type="button" class="btn-secondary-sm btn-helpful" data-id="{{ art.id }}" style="font-size: 0.78rem;">
+                            👍 Helpful (<span class="helpful-count">{{ art.helpful_count }}</span>)
+                        </button>
+                    </div>
+                </div>
+            </details>
+            {% empty %}
+            <div style="text-align: center; padding: 48px; background: var(--bg-card); border-radius: 12px; border: 1px dashed var(--border-subtle);">
+                <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 16px;">No articles matched your query "{{ query }}".</p>
+                <a href="{% url 'support:create_ticket' %}" class="btn-primary">Contact Support Agent</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% else %}
+    <!-- Browse by Category Accordions -->
+    <div style="display: grid; gap: 32px; margin-bottom: 48px;">
+        {% for cat in categories %}
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle);">
+                <div>
+                    <h2 style="font-size: 1.3rem; color: #ffffff; margin: 0 0 4px 0;">{{ cat.title }}</h2>
+                    <p style="color: var(--text-muted); font-size: 0.88rem; margin: 0;">{{ cat.description }}</p>
+                </div>
+                <span class="count-pill">{{ cat.articles.count }} Articles</span>
+            </div>
+
+            <div style="display: grid; gap: 12px;">
+                {% for art in cat.articles.all %}
+                <details style="background: rgba(15,23,42,0.6); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 16px;">
+                    <summary style="cursor: pointer; font-size: 0.98rem; font-weight: 600; color: #ffffff; outline: none;">
+                        {{ art.question }}
+                    </summary>
+                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); color: var(--text-secondary); line-height: 1.6; font-size: 0.92rem;">
+                        {{ art.answer }}
+                        <div style="margin-top: 14px; display: flex; justify-content: flex-end; align-items: center; gap: 8px;">
+                            <button type="button" class="btn-secondary-sm btn-helpful" data-id="{{ art.id }}" style="font-size: 0.78rem;">
+                                👍 Helpful (<span class="helpful-count">{{ art.helpful_count }}</span>)
+                            </button>
+                        </div>
+                    </div>
+                </details>
+                {% empty %}
+                <p style="color: var(--text-dim); font-size: 0.85rem;">No articles published in this category yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Bottom Contact Support Box -->
+    <div style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.05) 100%); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 16px; padding: 32px; text-align: center;">
+        <h3 style="color: #ffffff; font-size: 1.4rem; margin-bottom: 8px;">Still Have Questions?</h3>
+        <p style="color: var(--text-secondary); font-size: 0.95rem; max-width: 540px; margin: 0 auto 20px;">
+            Our dedicated concierge customer care desk is standing by to resolve hardware inquiries, delivery tracking, or RMA claims.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 12px;">
+            <a href="{% url 'support:create_ticket' %}" class="btn-primary" style="padding: 12px 28px; font-weight: 700;">Open Support Ticket</a>
+            <a href="{% url 'support:ticket_list' %}" class="btn-secondary" style="padding: 12px 20px;">My Active Tickets</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const helpfulBtns = document.querySelectorAll('.btn-helpful');
+        helpfulBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const artId = this.getAttribute('data-id');
+                const countSpan = this.querySelector('.helpful-count');
+                fetch(`/support/faq/${artId}/helpful/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success && countSpan) {
+                        countSpan.textContent = data.helpful_count;
+                        this.style.color = '#10b981';
+                        this.disabled = true;
+                    }
+                })
+                .catch(err => console.error(err));
+            });
+        });
+    });
+</script>
+{% endblock %}

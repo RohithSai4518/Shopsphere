@@ -21,6 +21,19 @@ urlpatterns = [
     path('analytics/', include('apps.analytics.urls')),
     path('audit/', include('apps.audit.urls')),
     path('governance/', include('apps.administration.urls')),
+    path('logistics/', include('apps.logistics.urls')),
+    path('payouts/', include('apps.payouts.urls')),
+    path('memberships/', include('apps.memberships.urls')),
+    path('recommendations/', include('apps.recommendations.urls')),
+    path('chat/', include('apps.chat.urls')),
+    path('supply-chain/', include('apps.supply_chain.urls')),
+    path('taxation/', include('apps.taxation.urls')),
+    path('advertising/', include('apps.advertising.urls')),
+    path('subscriptions/', include('apps.subscriptions.urls')),
+    path('fraud-detection/', include('apps.fraud_detection.urls')),
+    path('currency/', include('apps.currency.urls')),
+    path('disputes/', include('apps.disputes.urls')),
+    path('loyalty/', include('apps.loyalty.urls')),
 ]
 
 if settings.DEBUG:
