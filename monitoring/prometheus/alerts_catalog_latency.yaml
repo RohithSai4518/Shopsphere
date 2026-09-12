@@ -1,0 +1,8 @@
+groups:
+- name: CatalogLatency
+  rules:
+  - alert: HighCatalogP99
+    expr: http_request_duration_seconds{quantile="0.99",handler="catalog"} > 0.25
+    for: 2m
+    labels:
+      severity: warning
