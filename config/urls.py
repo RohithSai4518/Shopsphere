@@ -21,6 +21,11 @@ urlpatterns = [
     path('analytics/', include('apps.analytics.urls')),
     path('audit/', include('apps.audit.urls')),
     path('governance/', include('apps.administration.urls')),
+    path('logistics/', include('apps.logistics.urls')),
+    path('payouts/', include('apps.payouts.urls')),
+    path('memberships/', include('apps.memberships.urls')),
+    path('recommendations/', include('apps.recommendations.urls')),
+    path('chat/', include('apps.chat.urls')),
 ]
 
 if settings.DEBUG:

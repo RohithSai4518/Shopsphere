@@ -108,14 +108,16 @@ class Product(models.Model):
     def primary_image(self):
         if hasattr(self, '_prefetched_objects_cache') and 'images' in self._prefetched_objects_cache:
             for img in self._prefetched_objects_cache['images']:
-                if img.is_primary:
+                if img.is_primary and img.image_url:
                     return img.image_url
-            if self._prefetched_objects_cache['images']:
+            if self._prefetched_objects_cache['images'] and self._prefetched_objects_cache['images'][0].image_url:
                 return self._prefetched_objects_cache['images'][0].image_url
         img = self.images.filter(is_primary=True).first()
         if not img:
             img = self.images.first()
-        return img.image_url if img else 'https://images.unsplash.com/photo-1526738549149-8e07eca6c147?auto=format&fit=crop&w=800&q=80'
+        if img and img.image_url:
+            return img.image_url
+        return f'/media/products/{self.slug}.jpg'
 
     @property
     def first_variant(self):
@@ -138,6 +140,12 @@ class ProductVariant(models.Model):
 
     def __str__(self):
         return f"{self.product.name} - {self.variant_name} ({self.sku})"
+
+    @property
+    def price(self):
+        if self.price_override is not None:
+            return self.price_override
+        return self.product.base_price
 
 
 class ProductSpecification(models.Model):

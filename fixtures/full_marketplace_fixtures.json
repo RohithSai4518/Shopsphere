@@ -139,7 +139,7 @@
     "pk": "img_seed_p1",
     "fields": {
       "product": "prd_seed_pro15",
-      "image_url": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80",
+      "image_url": "/media/products/apexpro-x15-ultra-laptop.jpg",
       "is_primary": true,
       "display_order": 1
     }

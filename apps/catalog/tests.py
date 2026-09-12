@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from apps.sellers.models import Seller
 from apps.catalog.models import Category, Brand, Product, ProductVariant
 from .tests_expanded import ExpandedCatalogTestSuite
+from .test_product_images import ProductImageMatchingTests
 
 User = get_user_model()
 

@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import F, Q
+from django.db.models.functions import Coalesce
 from .models import Seller
 from .services import SellerService, SellerAnalyticsService
 from apps.rbac.decorators import role_required
@@ -18,9 +20,12 @@ def seller_dashboard_view(request):
     
     # Low stock alerts for this seller
     low_stock_variants = ProductVariant.objects.filter(
-        product__seller=seller,
-        inventory__quantity_available__lte=5
-    ).select_related('product', 'inventory')[:10]
+        product__seller=seller
+    ).annotate(
+        avail=Coalesce(F('inventory__quantity_on_hand'), 0) -
+              Coalesce(F('inventory__quantity_reserved'), 0) -
+              Coalesce(F('inventory__quantity_damaged'), 0)
+    ).filter(avail__lte=5).select_related('product', 'inventory')[:10]
 
     seller_products = Product.objects.filter(seller=seller).order_by('name')
 
