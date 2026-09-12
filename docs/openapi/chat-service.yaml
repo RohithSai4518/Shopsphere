@@ -1,0 +1,11 @@
+openapi: 3.1.0
+info:
+  title: ShopSphere Chat API
+  version: 1.0.0
+paths:
+  /api/v1/chat/messages:
+    post:
+      summary: Send message
+      responses:
+        '200':
+          description: Success
