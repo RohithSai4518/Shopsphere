@@ -1,0 +1,1 @@
+{"$schema": "http://json-schema.org/draft-07/schema#", "title": "ShipmentManifested", "type": "object", "required": ["tracking_number", "carrier"]}
