@@ -1,0 +1,11 @@
+openapi: 3.1.0
+info:
+  title: ShopSphere Logistics API
+  version: 1.0.0
+paths:
+  /api/v1/tracking:
+    get:
+      summary: Track shipment
+      responses:
+        '200':
+          description: Success
