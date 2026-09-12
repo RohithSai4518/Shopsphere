@@ -1,0 +1,11 @@
+openapi: 3.1.0
+info:
+  title: ShopSphere Supply Chain API
+  version: 1.0.0
+paths:
+  /api/v1/inventory/reorder:
+    post:
+      summary: Automated reorder
+      responses:
+        '200':
+          description: Success
