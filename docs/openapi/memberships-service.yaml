@@ -1,0 +1,11 @@
+openapi: 3.1.0
+info:
+  title: ShopSphere Memberships API
+  version: 1.0.0
+paths:
+  /api/v1/membership/status:
+    get:
+      summary: Get membership tier
+      responses:
+        '200':
+          description: Success
