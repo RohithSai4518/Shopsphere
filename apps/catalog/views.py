@@ -171,3 +171,16 @@ def vote_qa_view(request, item_type, item_id):
             vote = QAService.vote_answer(a, request.user, is_helpful=is_helpful)
             return JsonResponse({'success': True, 'is_helpful': vote.is_helpful})
     return JsonResponse({'error': 'POST required'}, status=405)
+
+
+def error_404_view(request, exception=None):
+    return render(request, '404.html', status=404)
+
+
+def error_500_view(request):
+    return render(request, '500.html', status=500)
+
+
+def error_403_view(request, exception=None):
+    return render(request, '403.html', status=403)
+
