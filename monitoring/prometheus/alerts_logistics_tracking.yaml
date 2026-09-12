@@ -1,0 +1,8 @@
+groups:
+- name: LogisticsSLA
+  rules:
+  - alert: DispatchDeadlineMissed
+    expr: logistics_unassigned_packages > 50
+    for: 10m
+    labels:
+      severity: high
