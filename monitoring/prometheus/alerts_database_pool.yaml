@@ -1,0 +1,8 @@
+groups:
+- name: DatabasePool
+  rules:
+  - alert: ConnectionPoolNearCapacity
+    expr: pg_stat_activity_count / pg_settings_max_connections > 0.85
+    for: 3m
+    labels:
+      severity: critical
