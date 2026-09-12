@@ -34,21 +34,23 @@ export default function HomePage({ onAddToCart }) {
     <div className="container" style={{ paddingTop: '2rem' }}>
       
       {/* Hero Banner */}
-      <div className="glass-panel" style={{ padding: '3rem 2.5rem', marginBottom: '3rem', background: 'radial-gradient(circle at 100% 0%, rgba(16, 185, 129, 0.2) 0%, transparent 60%), radial-gradient(circle at 0% 100%, rgba(99, 102, 241, 0.15) 0%, transparent 50%), linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(9,13,22,0.98) 100%)', border: '1px solid rgba(16, 185, 129, 0.25)', borderRadius: 'var(--radius-lg)', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ padding: '3.5rem 3rem', marginBottom: '3rem', background: 'linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 60%, #F8FAFC 100%)', border: '1px solid #CBD5E1', borderRadius: 'var(--radius-lg)', position: 'relative', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
         <div style={{ maxWidth: '650px', position: 'relative', zIndex: 2 }}>
-          <span className="badge badge-primary" style={{ marginBottom: '1rem' }}>SHOP SPHERE MARKETPLACE</span>
-          <h1 className="heading-xl" style={{ marginBottom: '1rem' }}>
-            Discover High-Performance Tech & Lifestyle Essentials
+          <span className="badge" style={{ marginBottom: '1rem', background: '#FEF3C7', color: '#92400E', border: '1px solid #FDE68A', padding: '4px 10px' }}>
+            FEATURED COLLECTION • DEALS OF THE WEEK
+          </span>
+          <h1 className="heading-xl" style={{ marginBottom: '1rem', color: '#0F172A' }}>
+            Everything for your home, tech, and everyday life.
           </h1>
-          <p className="text-muted" style={{ fontSize: '1.1rem', marginBottom: '1.5rem' }}>
-            Explore verified merchant products with fast shipping, server-side transaction protection, and guaranteed best prices.
+          <p style={{ color: '#475569', fontSize: '1.1rem', lineHeight: '1.6', marginBottom: '1.75rem' }}>
+            Explore thousands of customer favorites, verified top-tier tech, and seasonal deals with fast free delivery and 30-day easy returns.
           </p>
-          <div style={{ display: 'flex', gap: '1rem' }}>
-            <a href="#catalog" className="btn btn-primary" style={{ padding: '0.85rem 1.8rem' }}>
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <a href="#catalog" className="btn btn-primary" style={{ padding: '0.85rem 1.8rem', borderRadius: '8px' }}>
               Explore Catalog ↓
             </a>
-            <span className="btn btn-gold" style={{ cursor: 'default' }}>
-              Coupon: WELCOME10 (10% OFF)
+            <span style={{ padding: '0.65rem 1.25rem', background: '#FEF3C7', color: '#92400E', border: '1px solid #FDE68A', borderRadius: '8px', fontWeight: 700, fontSize: '0.88rem' }}>
+              Code: WELCOME10 (10% OFF)
             </span>
           </div>
         </div>

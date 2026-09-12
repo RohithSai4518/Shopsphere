@@ -12,151 +12,177 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <!-- Top Navigation Header -->
+    <!-- Top Navigation Header (Amazon Style Professional Layout) -->
     <header class="header">
         <div class="header-container">
-            <!-- Brand Logo -->
-            <a href="{% url 'catalog:home' %}" class="logo">
-                <div class="logo-badge">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M17.5 7A4.5 4.5 0 0 0 8 8.5c0 3.5 8 2.5 8 6.5A4.5 4.5 0 0 1 7.5 17" />
-                        <circle cx="17.5" cy="7" r="1.5" fill="currentColor" stroke="none" />
-                        <circle cx="7.5" cy="17" r="1.5" fill="currentColor" stroke="none" />
-                    </svg>
-                </div>
-                <div class="logo-text">Shop<span>Sphere</span></div>
-            </a>
+            <!-- Left: Brand Logo & Delivery Target -->
+            <div class="header-left">
+                <a href="{% url 'catalog:home' %}" class="logo" title="ShopSphere Home">
+                    <div class="logo-badge">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17.5 7A4.5 4.5 0 0 0 8 8.5c0 3.5 8 2.5 8 6.5A4.5 4.5 0 0 1 7.5 17" />
+                            <circle cx="17.5" cy="7" r="1.5" fill="currentColor" stroke="none" />
+                            <circle cx="7.5" cy="17" r="1.5" fill="currentColor" stroke="none" />
+                        </svg>
+                    </div>
+                    <div class="logo-text">Shop<span>Sphere</span></div>
+                </a>
 
-            <!-- Universal Search Bar -->
-            <form action="{% url 'catalog:product_list' %}" method="GET" class="search-bar">
-                <div class="search-icon-wrap">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <div class="header-delivery" title="Delivery Location">
+                    <div class="delivery-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                    </div>
+                    <div class="delivery-text">
+                        <span class="delivery-to">Deliver to {% if user.is_authenticated %}{{ user.first_name|default:user.username }}{% else %}Guest{% endif %}</span>
+                        <span class="delivery-loc">{% if user.is_authenticated and user.addresses.first %}{{ user.addresses.first.city }} {{ user.addresses.first.postal_code }}{% else %}United States{% endif %}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center: Full Width Universal Search Bar with Category Dropdown -->
+            <form action="{% url 'catalog:product_list' %}" method="GET" class="search-bar" role="search">
+                <div class="search-category-wrap">
+                    <select name="category" class="search-category-select" aria-label="Select search category">
+                        <option value="">All</option>
+                        <option value="electronics" {% if request.GET.category == 'electronics' %}selected{% endif %}>Electronics</option>
+                        <option value="smartphones" {% if request.GET.category == 'smartphones' %}selected{% endif %}>Smartphones</option>
+                        <option value="laptops" {% if request.GET.category == 'laptops' %}selected{% endif %}>Laptops</option>
+                        <option value="audio-headphones" {% if request.GET.category == 'audio-headphones' %}selected{% endif %}>Audio</option>
+                        <option value="smartwatches" {% if request.GET.category == 'smartwatches' %}selected{% endif %}>Wearables</option>
+                        <option value="gaming-accessories" {% if request.GET.category == 'gaming-accessories' %}selected{% endif %}>Gaming</option>
+                        <option value="cameras" {% if request.GET.category == 'cameras' %}selected{% endif %}>Cameras</option>
+                        <option value="home-kitchen" {% if request.GET.category == 'home-kitchen' %}selected{% endif %}>Home & Kitchen</option>
+                        <option value="clothing" {% if request.GET.category == 'clothing' %}selected{% endif %}>Apparel</option>
+                        <option value="shoes" {% if request.GET.category == 'shoes' %}selected{% endif %}>Footwear</option>
+                        <option value="books" {% if request.GET.category == 'books' %}selected{% endif %}>Books</option>
+                    </select>
+                </div>
+                <input type="text" name="q" placeholder="Search ShopSphere..." value="{{ request.GET.q|default:'' }}" autocomplete="off" id="search-input" aria-label="Search ShopSphere">
+                <button type="submit" class="search-btn" aria-label="Search button">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
-                </div>
-                <input type="text" name="q" placeholder="Search 80 curated products, creator gear, tech & more..." value="{{ request.GET.q|default:'' }}" autocomplete="off" id="search-input">
-                <span class="search-shortcut">/</span>
-                <button type="submit" class="search-btn">Search</button>
+                </button>
             </form>
 
-            <!-- Navigation Controls -->
-            <nav class="nav-links">
-                <a href="{% url 'catalog:product_list' %}" class="nav-link">
-                    <span class="nav-link-icon">
-                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="7" height="7"></rect>
-                            <rect x="14" y="3" width="7" height="7"></rect>
-                            <rect x="14" y="14" width="7" height="7"></rect>
-                            <rect x="3" y="14" width="7" height="7"></rect>
-                        </svg>
-                    </span>
-                    <span>Catalog</span>
-                </a>
-
-                <a href="{% url 'catalog:deals' %}" class="nav-link">
-                    <span class="nav-link-icon" style="color: #f59e0b;">
-                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                        </svg>
-                    </span>
-                    <span>Deals</span>
-                </a>
-
-                <a href="{% url 'catalog:compare' %}" class="nav-link">
-                    <span class="nav-link-icon">
-                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="18" y1="20" x2="18" y2="10"></line>
-                            <line x1="12" y1="20" x2="12" y2="4"></line>
-                            <line x1="6" y1="20" x2="6" y2="14"></line>
-                        </svg>
-                    </span>
-                    <span>Compare</span>
-                </a>
-                
-                {% if user.is_authenticated %}
-                    <a href="{% url 'wishlist:wishlist_list' %}" class="nav-badge-link" title="Saved Wishlist">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                        </svg>
-                        <span class="badge-label">Wishlist</span>
-                    </a>
-
-                    <a href="{% url 'cart:cart_detail' %}" class="nav-badge-link cart-link" title="Shopping Cart">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                            <line x1="3" y1="6" x2="21" y2="6"></line>
-                            <path d="M16 10a4 4 0 0 1-8 0"></path>
-                        </svg>
-                        <span class="badge-label">Cart</span>
-                    </a>
-
-                    <a href="{% url 'orders:order_history' %}" class="nav-link">
-                        <span class="nav-link-icon">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
-                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                            </svg>
-                        </span>
-                        <span>Orders</span>
-                    </a>
-
-                    {% if user.role == 'SELLER' or user.role == 'ADMIN' %}
-                        <a href="{% url 'sellers:dashboard' %}" class="badge-seller">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-                            <span>Seller</span>
+            <!-- Right: Account, Orders, Wishlist & Cart -->
+            <nav class="header-nav">
+                <!-- User Account & Lists Dropdown -->
+                <div class="header-nav-item dropdown-wrap">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'accounts:profile' %}" class="nav-multiline">
+                            <span class="nav-line-1">Hello, {{ user.first_name|default:user.username|truncatechars:12 }}</span>
+                            <span class="nav-line-2">Account & Lists <span class="nav-arrow">▾</span></span>
                         </a>
+                        <div class="header-dropdown-menu">
+                            <div class="dropdown-header">
+                                <div class="dropdown-user-name">{{ user.first_name|default:user.username }}</div>
+                                <div class="dropdown-user-email">{{ user.email }}</div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-section-title">Your Account</div>
+                            <a href="{% url 'accounts:profile' %}" class="dropdown-item">Your Profile</a>
+                            <a href="{% url 'orders:order_history' %}" class="dropdown-item">Your Orders</a>
+                            <a href="{% url 'wishlist:wishlist_list' %}" class="dropdown-item">Your Wishlist</a>
+                            <a href="{% url 'memberships:wallet' %}" class="dropdown-item">★ Reward Wallet</a>
+                            <a href="{% url 'memberships:prime_landing' %}" class="dropdown-item">Prime Membership</a>
+                            <a href="{% url 'catalog:compare' %}" class="dropdown-item">Compare Products</a>
+
+                            {% if user.role == 'SELLER' or user.role == 'ADMIN' %}
+                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-section-title">Merchant & Seller</div>
+                                <a href="{% url 'sellers:dashboard' %}" class="dropdown-item">Seller Portal</a>
+                                <a href="{% url 'payouts:dashboard' %}" class="dropdown-item">Escrow & Payouts</a>
+                            {% endif %}
+                            {% if user.role == 'ADMIN' %}
+                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-section-title">Platform Administration</div>
+                                <a href="{% url 'administration:dashboard' %}" class="dropdown-item">Governance Console</a>
+                            {% endif %}
+
+                            <div class="dropdown-divider"></div>
+                            <a href="{% url 'accounts:logout' %}" class="dropdown-item signout-item">Sign Out</a>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}" class="nav-multiline">
+                            <span class="nav-line-1">Hello, sign in</span>
+                            <span class="nav-line-2">Account & Lists <span class="nav-arrow">▾</span></span>
+                        </a>
+                        <div class="header-dropdown-menu">
+                            <div style="text-align: center; padding: 14px 18px 10px;">
+                                <a href="{% url 'accounts:login' %}" class="btn-signin-yellow">Sign in</a>
+                                <div style="font-size: 11px; margin-top: 10px; color: #64748b;">
+                                    New customer? <a href="{% url 'accounts:register' %}" style="color: #0284c7; text-decoration: underline; font-weight: 600;">Start here.</a>
+                                </div>
+                            </div>
+                        </div>
                     {% endif %}
-                    {% if user.role == 'ADMIN' %}
-                        <a href="{% url 'administration:dashboard' %}" class="badge-admin">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                            <span>Governance</span>
-                        </a>
-                    {% endif %}
+                </div>
 
-                    <div class="user-menu-wrap">
-                        <a href="{% url 'accounts:profile' %}" class="user-pill">
-                            <div class="user-avatar">{{ user.first_name|default:user.username|slice:":1"|upper }}</div>
-                            <span>{{ user.first_name|default:user.username }}</span>
-                        </a>
-                        <a href="{% url 'accounts:logout' %}" class="btn-logout" title="Sign Out">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                                <polyline points="16 17 21 12 16 7"></polyline>
-                                <line x1="21" y1="12" x2="9" y2="12"></line>
-                            </svg>
-                        </a>
+                <!-- Returns & Orders -->
+                <a href="{% if user.is_authenticated %}{% url 'orders:order_history' %}{% else %}{% url 'accounts:login' %}{% endif %}" class="header-nav-item nav-multiline">
+                    <span class="nav-line-1">Returns</span>
+                    <span class="nav-line-2">& Orders</span>
+                </a>
+
+                <!-- Saved Wishlist -->
+                <a href="{% if user.is_authenticated %}{% url 'wishlist:wishlist_list' %}{% else %}{% url 'accounts:login' %}{% endif %}" class="header-nav-item nav-multiline wishlist-item" title="Your Wishlist">
+                    <span class="nav-line-1">Saved</span>
+                    <span class="nav-line-2">Wishlist</span>
+                </a>
+
+                <!-- Shopping Cart (Amazon Highlight) -->
+                <a href="{% url 'cart:cart_detail' %}" class="header-nav-item header-cart" title="Shopping Cart">
+                    <div class="cart-icon-wrap">
+                        <span class="cart-count-badge">{{ cart_count|default:0 }}</span>
+                        <svg width="34" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
                     </div>
-                {% else %}
-                    <a href="{% url 'accounts:login' %}" class="nav-link">Sign In</a>
-                    <a href="{% url 'accounts:register' %}" class="btn-primary-sm">Get Started</a>
-                {% endif %}
+                    <span class="cart-text">Cart</span>
+                </a>
             </nav>
         </div>
 
-        <!-- Sub-Header Quick Categories Strip -->
-        <div class="sub-nav">
+        <!-- Sub-Header Quick Navigation Bar -->
+        <nav class="sub-nav" aria-label="Department navigation">
             <div class="sub-nav-container">
-                <a href="{% url 'catalog:product_list' %}" class="sub-nav-chip {% if not category_slug %}active{% endif %}">
-                    <span>All Departments</span>
+                <a href="{% url 'catalog:product_list' %}" class="sub-nav-chip all-dept-chip">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                    <span>All</span>
                 </a>
-                <a href="{% url 'catalog:product_list' %}?category=electronics" class="sub-nav-chip {% if category_slug == 'electronics' %}active{% endif %}">Electronics</a>
-                <a href="{% url 'catalog:product_list' %}?category=smartphones" class="sub-nav-chip {% if category_slug == 'smartphones' %}active{% endif %}">Smartphones</a>
-                <a href="{% url 'catalog:product_list' %}?category=laptops" class="sub-nav-chip {% if category_slug == 'laptops' %}active{% endif %}">Laptops & PCs</a>
-                <a href="{% url 'catalog:product_list' %}?category=audio-headphones" class="sub-nav-chip {% if category_slug == 'audio-headphones' %}active{% endif %}">Headphones & Audio</a>
-                <a href="{% url 'catalog:product_list' %}?category=smartwatches" class="sub-nav-chip {% if category_slug == 'smartwatches' %}active{% endif %}">Wearables</a>
-                <a href="{% url 'catalog:product_list' %}?category=gaming-accessories" class="sub-nav-chip {% if category_slug == 'gaming-accessories' %}active{% endif %}">Gaming</a>
-                <a href="{% url 'catalog:product_list' %}?category=cameras" class="sub-nav-chip {% if category_slug == 'cameras' %}active{% endif %}">Cameras</a>
-                <a href="{% url 'catalog:product_list' %}?category=home-kitchen" class="sub-nav-chip {% if category_slug == 'home-kitchen' %}active{% endif %}">Home & Kitchen</a>
-                <a href="{% url 'catalog:product_list' %}?category=clothing" class="sub-nav-chip {% if category_slug == 'clothing' %}active{% endif %}">Apparel</a>
-                <a href="{% url 'catalog:product_list' %}?category=shoes" class="sub-nav-chip {% if category_slug == 'shoes' %}active{% endif %}">Footwear</a>
-                <a href="{% url 'catalog:deals' %}" class="sub-nav-chip" style="color: #f59e0b; font-weight: 700;">⚡ Lightning Deals</a>
-                <a href="{% url 'catalog:product_list' %}?sort=popular" class="sub-nav-chip" style="color: #fcd34d;">🔥 Bestsellers</a>
-                <a href="{% url 'catalog:product_list' %}?sort=newest" class="sub-nav-chip" style="color: #6ee7b7;">✨ New Arrivals</a>
+                <a href="{% url 'catalog:deals' %}" class="sub-nav-chip highlight-deal">⚡ Today's Deals</a>
+                <a href="{% url 'memberships:prime_landing' %}" class="sub-nav-chip highlight-prime">Prime</a>
+                <a href="{% url 'recommendations:for_you' %}" class="sub-nav-chip">Recommended For You</a>
+                <a href="{% url 'logistics:track_search' %}" class="sub-nav-chip">Track Order</a>
+                <span class="sub-nav-separator">|</span>
+                <a href="{% url 'catalog:product_list' %}?category=electronics" class="sub-nav-chip {% if request.GET.category == 'electronics' %}active{% endif %}">Electronics</a>
+                <a href="{% url 'catalog:product_list' %}?category=smartphones" class="sub-nav-chip {% if request.GET.category == 'smartphones' %}active{% endif %}">Smartphones</a>
+                <a href="{% url 'catalog:product_list' %}?category=laptops" class="sub-nav-chip {% if request.GET.category == 'laptops' %}active{% endif %}">Laptops & PCs</a>
+                <a href="{% url 'catalog:product_list' %}?category=audio-headphones" class="sub-nav-chip {% if request.GET.category == 'audio-headphones' %}active{% endif %}">Audio</a>
+                <a href="{% url 'catalog:product_list' %}?category=smartwatches" class="sub-nav-chip {% if request.GET.category == 'smartwatches' %}active{% endif %}">Wearables</a>
+                <a href="{% url 'catalog:product_list' %}?category=gaming-accessories" class="sub-nav-chip {% if request.GET.category == 'gaming-accessories' %}active{% endif %}">Gaming</a>
+                <a href="{% url 'catalog:product_list' %}?category=home-kitchen" class="sub-nav-chip {% if request.GET.category == 'home-kitchen' %}active{% endif %}">Home & Kitchen</a>
+                <a href="{% url 'catalog:product_list' %}?category=clothing" class="sub-nav-chip {% if request.GET.category == 'clothing' %}active{% endif %}">Fashion</a>
+
+                <div class="sub-nav-right">
+                    <a href="{% url 'memberships:wallet' %}" class="sub-nav-chip highlight-wallet">★ Reward Wallet</a>
+                    {% if user.role == 'SELLER' or user.role == 'ADMIN' %}
+                        <a href="{% url 'sellers:dashboard' %}" class="sub-nav-chip highlight-seller">Seller Portal</a>
+                    {% endif %}
+                </div>
             </div>
-        </div>
+        </nav>
     </header>
 
     <!-- Global Messages Alert Banner -->
@@ -203,7 +229,7 @@
                     </div>
                     <div class="logo-text">Shop<span>Sphere</span></div>
                 </a>
-                <p>Enterprise multi-vendor e-commerce platform offering 112 rigorously curated products across 16 departments with zero compromises on quality.</p>
+                <p>Your trusted marketplace for authentic products, exceptional deals, and reliable doorstep delivery from verified merchants.</p>
             </div>
             <div class="footer-col">
                 <h4>Marketplace</h4>
@@ -229,7 +255,7 @@
         </div>
         <div class="footer-bottom">
             <p>&copy; 2026 ShopSphere Marketplace Inc. All rights reserved. Powered by Harsha and Rohith.</p>
-            <p style="color: var(--text-dim); font-size: 0.8rem;">100% Guaranteed Authentic Hardware & Verified Sellers</p>
+            <p style="color: #94A3B8; font-size: 0.82rem;">100% Genuine Products • Fast Secure Delivery • 30-Day Easy Returns</p>
         </div>
     </footer>
 

@@ -10,6 +10,8 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('two-factor/verify/', views.two_factor_verify_view, name='two_factor_verify'),
     path('two-factor/setup/', views.two_factor_setup_view, name='two_factor_setup'),
+    path('2fa/setup/', views.two_factor_setup_view, name='two_factor_setup_alias'),
+    path('2fa/verify/', views.two_factor_verify_view, name='two_factor_verify_alias'),
 
     # Self-Service Password Reset
     path('password_reset/', views.password_reset_request_view, name='password_reset_request'),

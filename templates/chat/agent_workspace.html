@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Support Agent Triage Desk — ShopSphere Operations{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1200px; margin: 30px auto; padding: 0 16px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+        <div>
+            <h1 style="font-size: 28px; font-weight: 800; color: #0f172a; margin: 0;">Support Agent Workspace</h1>
+            <p style="color: #64748b; margin-top: 4px;">Live customer triage queue, active inquiries, and SLA escalations</p>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <span style="background: #fef3c7; color: #92400e; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 700;">
+                ⚠ Waiting on Agent: {{ open_channels|length }}
+            </span>
+        </div>
+    </div>
+
+    <!-- Active Tickets Queue -->
+    <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 16px rgba(0,0,0,0.05); padding: 24px; margin-bottom: 30px;">
+        <h2 style="font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 16px;">Active Inquiries Queue</h2>
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                <thead>
+                    <tr style="border-bottom: 2px solid #f1f5f9; text-align: left; color: #64748b; font-size: 12px; text-transform: uppercase;">
+                        <th style="padding: 12px;">Channel Code</th>
+                        <th style="padding: 12px;">Customer</th>
+                        <th style="padding: 12px;">Type / Subject</th>
+                        <th style="padding: 12px;">Order Ref</th>
+                        <th style="padding: 12px;">Status</th>
+                        <th style="padding: 12px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ch in open_channels %}
+                    <tr style="border-bottom: 1px solid #f8fafc;">
+                        <td style="padding: 12px; font-family: monospace; font-weight: 600;">#{{ ch.channel_code|slice:":8" }}</td>
+                        <td style="padding: 12px; font-weight: 600;">{{ ch.customer.username }}</td>
+                        <td style="padding: 12px;">{{ ch.subject }}</td>
+                        <td style="padding: 12px;">{% if ch.order %}#{{ ch.order.order_number }}{% else %}—{% endif %}</td>
+                        <td style="padding: 12px;">
+                            <span style="background: {% if ch.status == 'WAITING_ON_AGENT' %}#fee2e2; color: #991b1b;{% else %}#f1f5f9; color: #334155;{% endif %} padding: 4px 10px; border-radius: 9999px; font-size: 11px; font-weight: 700;">
+                                {{ ch.get_status_display }}
+                            </span>
+                        </td>
+                        <td style="padding: 12px;">
+                            <a href="{% url 'chat:chat_room_detail' ch.channel_code %}" style="background: #2563eb; color: white; padding: 6px 14px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: 700; display: inline-block;">
+                                Join Chat →
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6" style="padding: 24px; text-align: center; color: #64748b;">No open support inquiries right now.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

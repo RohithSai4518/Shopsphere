@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Settlement Statement {{ batch.batch_reference }} — ShopSphere Payouts{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1000px; margin: 30px auto; padding: 0 16px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+        <div>
+            <a href="{% url 'payouts:dashboard' %}" style="color: #64748b; text-decoration: none; font-size: 14px;">← Back to Financial Dashboard</a>
+            <h1 style="font-size: 26px; font-weight: 800; color: #0f172a; margin-top: 8px;">Settlement Statement</h1>
+            <p style="color: #64748b; margin: 0;">Batch Reference: <strong>{{ batch.batch_reference }}</strong></p>
+        </div>
+        <div>
+            <a href="?format=csv" style="background: #0f172a; color: white; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; display: inline-block;">
+                📥 Export CSV Statement
+            </a>
+        </div>
+    </div>
+
+    <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 24px; margin-bottom: 24px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
+            <div>
+                <div style="font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase;">Cycle Period</div>
+                <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-top: 4px;">{{ batch.cycle_start }} to {{ batch.cycle_end }}</div>
+            </div>
+            <div>
+                <div style="font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase;">Disbursed Total</div>
+                <div style="font-size: 18px; font-weight: 800; color: #16a34a; margin-top: 4px;">${{ batch.total_net_disbursed|floatformat:2 }}</div>
+            </div>
+            <div>
+                <div style="font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase;">Sellers Settled</div>
+                <div style="font-size: 18px; font-weight: 800; color: #2563eb; margin-top: 4px;">{{ batch.total_sellers_count }}</div>
+            </div>
+            <div>
+                <div style="font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase;">Batch Status</div>
+                <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-top: 4px;">{{ batch.get_status_display }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 24px;">
+        <h2 style="font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 16px;">Itemized Seller Disbursements</h2>
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                <thead>
+                    <tr style="border-bottom: 2px solid #f1f5f9; text-align: left; color: #64748b; font-size: 12px; text-transform: uppercase;">
+                        <th style="padding: 12px;">Merchant</th>
+                        <th style="padding: 12px;">Disbursement Account</th>
+                        <th style="padding: 12px;">Gross Sales</th>
+                        <th style="padding: 12px;">Platform Commission</th>
+                        <th style="padding: 12px;">Net Payout</th>
+                        <th style="padding: 12px;">Transfer Reference</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr style="border-bottom: 1px solid #f8fafc;">
+                        <td style="padding: 12px; font-weight: 600;">{{ item.seller.business_name }}</td>
+                        <td style="padding: 12px; color: #64748b;">
+                            {% if item.bank_account %}{{ item.bank_account.bank_name }} (*{{ item.bank_account.account_number_last4 }}){% else %}Default Wire{% endif %}
+                        </td>
+                        <td style="padding: 12px;">${{ item.gross_sales|floatformat:2 }}</td>
+                        <td style="padding: 12px; color: #be123c;">-${{ item.platform_fee|floatformat:2 }}</td>
+                        <td style="padding: 12px; font-weight: 700; color: #16a34a;">${{ item.net_payout|floatformat:2 }}</td>
+                        <td style="padding: 12px; font-family: monospace; font-size: 12px; color: #475569;">{{ item.transfer_reference }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6" style="padding: 24px; text-align: center; color: #64748b;">No disbursement items in this batch.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
