@@ -1,0 +1,8 @@
+groups:
+- name: InventoryDrift
+  rules:
+  - alert: StockDiscrepancyDetected
+    expr: abs(warehouse_physical_count - catalog_recorded_count) > 0
+    for: 15m
+    labels:
+      severity: warning
