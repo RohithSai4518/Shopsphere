@@ -1,0 +1,1 @@
+{"$schema": "http://json-schema.org/draft-07/schema#", "title": "PayoutDisbursed", "type": "object", "required": ["payout_id", "reference_number"]}
