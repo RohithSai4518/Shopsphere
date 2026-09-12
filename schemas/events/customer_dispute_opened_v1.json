@@ -1,0 +1,1 @@
+{"$schema": "http://json-schema.org/draft-07/schema#", "title": "DisputeOpened", "type": "object", "required": ["dispute_id", "order_id", "reason_code"]}
