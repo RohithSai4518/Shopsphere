@@ -1,0 +1,6 @@
+from django.apps import AppConfig
+
+class AdvertisingConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'apps.advertising'
+    verbose_name = 'Sponsored Products & PPC Auction Engine'

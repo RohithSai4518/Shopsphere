@@ -44,6 +44,14 @@ INSTALLED_APPS = [
     'apps.memberships',
     'apps.recommendations',
     'apps.chat',
+    'apps.supply_chain',
+    'apps.taxation',
+    'apps.advertising',
+    'apps.subscriptions',
+    'apps.fraud_detection',
+    'apps.currency',
+    'apps.disputes',
+    'apps.loyalty',
 ]
 
 MIDDLEWARE = [

@@ -1,4 +1,5 @@
-from django.test import TestCase, Client
+import unittest
+from unittest import TestCase, Client
 from django.urls import reverse
 from decimal import Decimal
 from datetime import timedelta

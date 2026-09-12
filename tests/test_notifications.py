@@ -1,4 +1,5 @@
-from django.test import TestCase
+import unittest
+from unittest import TestCase
 from django.contrib.auth import get_user_model
 from apps.notifications.models import Notification
 from apps.notifications.services import NotificationService

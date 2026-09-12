@@ -1,4 +1,5 @@
-from django.test import TestCase
+import unittest
+from unittest import TestCase
 from django.contrib.auth import get_user_model
 from apps.sellers.models import Seller
 from apps.catalog.models import Category, Product, ProductVariant

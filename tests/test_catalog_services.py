@@ -1,4 +1,5 @@
-from django.test import TestCase
+import unittest
+from unittest import TestCase
 from apps.sellers.models import Seller
 from apps.catalog.models import Category, Product, Brand, ProductBundle, BundleItem
 from apps.catalog.services import CatalogService

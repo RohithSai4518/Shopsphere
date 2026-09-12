@@ -1,4 +1,5 @@
-from django.test import TestCase, RequestFactory
+import unittest
+from unittest import TestCase, RequestFactory
 from django.contrib.auth import get_user_model
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.contrib.messages.middleware import MessageMiddleware
