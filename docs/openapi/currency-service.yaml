@@ -1,0 +1,11 @@
+openapi: 3.1.0
+info:
+  title: ShopSphere Currency API
+  version: 1.0.0
+paths:
+  /api/v1/currency/rates:
+    get:
+      summary: Get exchange rates
+      responses:
+        '200':
+          description: Success
